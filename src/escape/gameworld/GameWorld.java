@@ -63,6 +63,7 @@ public class GameWorld {
 		items.put("Bench", new Item("Kitchen Table", "An old, wooden kitchen table", false, false));
 		items.put("Frame", new Item("Frame", "An empty picture frame",false, false));
 		items.put("Portrait", new Item("Portrait", "A family portrait", false, false));
+		items.put("Table", new Item("Table", "A centre table", false, false));
 	}
 
 	/**
@@ -196,6 +197,41 @@ public class GameWorld {
 		}
 		return false;
 	}
+	
+	/*GETTERS AND SETTERS*/
+	
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
+	}
+
+	public HashMap<String, Room> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(HashMap<String, Room> rooms) {
+		this.rooms = rooms;
+	}
+
+	public HashMap<String, Container> getContainers() {
+		return containers;
+	}
+
+	public void setContainers(HashMap<String, Container> containers) {
+		this.containers = containers;
+	}
+
+	public HashMap<String, Item> getItems() {
+		return items;
+	}
+
+	public void setItems(HashMap<String, Item> items) {
+		this.items = items;
+	}
+
 	
 	/* 2D ARRAYS FOR EACH DIRECTION IN THE STUDY ROOM */
 	private String[][] STUDY_NORTH = {

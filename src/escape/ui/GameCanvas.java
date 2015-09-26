@@ -83,7 +83,7 @@ public class GameCanvas extends JPanel {
 					break;
 				}
 //				currentRoom.getBin().draw(g, currentRoom);
-				for (Item i : currentRoom.getItem()){
+				for (Item i : currentRoom.getItems()){
 					i.draw(g, currentRoom);
 				}
 //				

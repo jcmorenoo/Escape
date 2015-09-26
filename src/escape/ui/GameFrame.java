@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import escape.gameworld.GameWorld;
+import escape.gameworld.Item;
 import escape.gameworld.Player;
 import escape.gameworld.Room;
 
@@ -158,13 +160,19 @@ public class GameFrame extends JFrame implements ActionListener {
 				
 
 					// Testing
-					GameWorld game = new GameWorld(gameID.toString());					
+					GameWorld game = new GameWorld(gameID.toString());	
 					game.addPlayer(player); //NullPointerException occurs when trying to add a player to the game
 					System.out.println("Game Created");
 					System.out.println("Number of players: " + numPlayers);
 					System.out.println(username + " is in the "
 							+ player.getRoom().getName());
 					System.out.println("Game ID: " + gameID);
+					
+					System.out.println("[test] \nLiving Room Items:");
+					ArrayList<Item> it = game.getRooms().get("Living Room").getItems(); 
+					for(int i = 0; i < it.size(); i++){
+						System.out.println(it.get(i).getName());
+					}
 
 
 					// Testing purposes

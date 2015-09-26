@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class Room {
 	private String name;
 
-	private ArrayList<Item> item = new ArrayList<Item>();
+	private ArrayList<Item> items = new ArrayList<Item>();
 	private ArrayList<Container> container = new ArrayList<Container>();
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private HashMap<String, String[][]> itemsByDirection = new HashMap<>(); 
@@ -74,19 +74,19 @@ public class Room {
 	}
 
 	public void addItem(Item item) {
-		this.item.add(item);
+		this.items.add(item);
 	}
 
 	public void addContainer(Container container) {
 		this.container.add(container);
 	}
 
-	public ArrayList<Item> getItem() {
-		return item;
+	public ArrayList<Item> getItems() {
+		return items;
 	}
 
-	public void setItem(ArrayList<Item> item) {
-		this.item = item;
+	public void setItems(ArrayList<Item> item) {
+		this.items = item;
 	}
 
 	public ArrayList<Container> getContainer() {
