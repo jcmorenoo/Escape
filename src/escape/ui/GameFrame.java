@@ -28,6 +28,7 @@ public class GameFrame extends JFrame implements ActionListener {
 	private final JPanel btnPanel;
 	private static Player player;
 	private JPanel mouse = new JPanel();
+	private GameWorld game;
 
 	// Testing purposes for now
 	private static int state;
@@ -56,8 +57,6 @@ public class GameFrame extends JFrame implements ActionListener {
 		headerMenu.add(help);
 		headerMenu.add(exit);
 
-
-		
 		// Initialise Menu Screen Buttons
 		menuBtns();
 
@@ -74,12 +73,12 @@ public class GameFrame extends JFrame implements ActionListener {
 				}
 			}
 		});
-		
+
 		frame.addMouseListener(new MouseEvents());
-//		JPanel mouse = new JPanel();
-//		mouse.setBackground(Color.BLACK);
-//		mouse.addMouseListener(new MouseEvents());
-//		frame.add(mouse);
+		// JPanel mouse = new JPanel();
+		// mouse.setBackground(Color.BLACK);
+		// mouse.addMouseListener(new MouseEvents());
+		// frame.add(mouse);
 
 		frame.add(menuCanvas, BorderLayout.NORTH);
 		frame.add(btnPanel);
@@ -108,15 +107,19 @@ public class GameFrame extends JFrame implements ActionListener {
 	void navBtns() {
 		JButton northButton = new JButton("^");
 		btnPanel.add(northButton);
+		north(northButton);
 
 		JButton southButton = new JButton("v");
 		btnPanel.add(southButton);
+		south(southButton);
 
 		JButton eastButton = new JButton(">");
 		btnPanel.add(eastButton);
+		east(eastButton);
 
 		JButton westButton = new JButton("<");
 		btnPanel.add(westButton);
+		west(westButton);
 	}
 
 	/*---------------BUTTON LISTENERS---------------*/
@@ -147,33 +150,35 @@ public class GameFrame extends JFrame implements ActionListener {
 					final String username = JOptionPane.showInputDialog(null,
 							usernamePrompt, "Player Username",
 							JOptionPane.INFORMATION_MESSAGE);
-					player = new Player(1, username, new Room("Main Hall", false, "No key"));
+					player = new Player(1, username, new Room("Main Hall",
+							false, "No key"));
 
-
-					//Lets the host to specify a unique Game ID for other players wanting to join, to enter in 
+					// Lets the host to specify a unique Game ID for other
+					// players wanting to join, to enter in
 					JTextField gameIdInput = new JTextField();
 					Object[] gameIdPrompt = { "Enter a Game ID: ",
 							gameIdInput.getText() };
 					final String gameID = JOptionPane.showInputDialog(null,
 							gameIdPrompt, "Game ID",
 							JOptionPane.INFORMATION_MESSAGE);
-				
 
 					// Testing
-					GameWorld game = new GameWorld(gameID.toString());	
-					game.addPlayer(player); //NullPointerException occurs when trying to add a player to the game
+					game = new GameWorld(gameID.toString());
+					game.addPlayer(player); // NullPointerException occurs when
+					// trying to add a player to the
+					// game
 					System.out.println("Game Created");
 					System.out.println("Number of players: " + numPlayers);
 					System.out.println(username + " is in the "
 							+ player.getRoom().getName());
 					System.out.println("Game ID: " + gameID);
-					
+
 					System.out.println("[test] \nLiving Room Items:");
-					ArrayList<Item> it = game.getRooms().get("Living Room").getItems(); 
-					for(int i = 0; i < it.size(); i++){
+					ArrayList<Item> it = game.getRooms().get("Living Room")
+							.getItems();
+					for (int i = 0; i < it.size(); i++) {
 						System.out.println(it.get(i).getName());
 					}
-
 
 					// Testing purposes
 					setSt(1);
@@ -190,7 +195,7 @@ public class GameFrame extends JFrame implements ActionListener {
 				// Join a game
 				if (gameType == 0) {
 					System.out.println("Join a game");
-					
+
 					// Lets the player enter a username
 					JTextField nameInput = new JTextField();
 					Object[] usernamePrompt = { "Enter a username: ",
@@ -198,35 +203,36 @@ public class GameFrame extends JFrame implements ActionListener {
 					final String username = JOptionPane.showInputDialog(null,
 							usernamePrompt, "Player Username",
 							JOptionPane.INFORMATION_MESSAGE);
-					player = new Player(1, username, new Room("Main Hall", false, "No key"));
-					
+					player = new Player(1, username, new Room("Main Hall",
+							false, "No key"));
 
-					//Lets the player enter IP address of the server
+					// Lets the player enter IP address of the server
 					JTextField serverAddrInput = new JTextField();
-					Object[] serverAddrPrompt = { "Enter IP address of server: ",
+					Object[] serverAddrPrompt = {
+							"Enter IP address of server: ",
 							serverAddrInput.getText() };
 					final String serverAddr = JOptionPane.showInputDialog(null,
 							serverAddrPrompt, "Server IP Address",
 							JOptionPane.INFORMATION_MESSAGE);
 
-					//Lets the player enter a Game ID to join that game 
+					// Lets the player enter a Game ID to join that game
 					JTextField gameIdInput = new JTextField();
 					Object[] gameIdPrompt = { "Enter a Game ID: ",
 							gameIdInput.getText() };
 					final String gameID = JOptionPane.showInputDialog(null,
 							gameIdPrompt, "Game ID",
 							JOptionPane.INFORMATION_MESSAGE);
-					
-					//Testing
+
+					// Testing
 					System.out.println(username + " is in the "
 							+ player.getRoom().getName());
 					System.out.println("Server IP Address: " + serverAddr);
 					System.out.println("Game ID: " + gameID);
-					
+
 					// Testing purposes
 					setSt(1);
 					System.out.println(state);
-					
+
 					frame.remove(menuCanvas);
 					menuCanvas = new GameCanvas(player);
 					btnPanel.removeAll();
@@ -262,25 +268,98 @@ public class GameFrame extends JFrame implements ActionListener {
 		});
 	}
 
+	public void north(JButton north) {
+		north.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("North Button pressed");
+			}
+		});
+	}
+
+	public void east(JButton east) {
+		east.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("East Button pressed");
+				switch (player.getRoom().getName()) {
+				case "Main Hall":
+					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
+					break;
+				case "Hall - Bedroom":
+					player.enterRoom(game.getRooms().get("Hall - Living Room"));
+					break;
+				case "Hall - Living Room":
+					System.out.println("No more rooms that way!");
+					break;
+				case "Hall - Study":
+					player.enterRoom(game.getRooms().get("Main Hall"));
+					break;
+				case "Hall - Kitchen":
+					player.enterRoom(game.getRooms().get("Hall - Study"));
+					break;
+				}
+			}
+		});
+	}
+
+	public void south(JButton south) {
+		south.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("South Button pressed");
+			}
+		});
+	}
+
+	public void west(JButton west) {
+		west.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("West Button pressed");
+				switch (player.getRoom().getName()) {
+				case "Main Hall":
+					player.enterRoom(game.getRooms().get("Hall - Study"));
+					break;
+				case "Hall - Study":
+					player.enterRoom(game.getRooms().get("Hall - Kitchen"));
+					break;
+				case "Hall - Kitchen":
+					System.out.println("No more rooms that way!");
+					break;
+				case "Hall - Bedroom":
+					player.enterRoom(game.getRooms().get("Main Hall"));
+					break;
+				case "Hall - Living Room":
+					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
+					break;
+				}
+			}
+		});
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
-	
 	/*---------------MOUSE LISTENER---------------*/
-	
+
 	class MouseEvents implements MouseListener {
 		public void mousePressed(MouseEvent e) {
 
-//			if (player.getRoom().getName().equals("Hall")){
-//				if (e.getX() > 36 && e.getX() < 116 && e.getY() > 220 && e.getY() < 377){
-//					System.out.println("Clicked on Living Room Door");
-//					player.leaveRoom();
-//					player.enterRoom(new Room("Living Room", false, "No key"));
-//				}
-//			}
+			// if (player.getRoom().getName().equals("Hall")){
+			// if (e.getX() > 36 && e.getX() < 116 && e.getY() > 220 && e.getY()
+			// < 377){
+			// System.out.println("Clicked on Living Room Door");
+			// player.leaveRoom();
+			// player.enterRoom(new Room("Living Room", false, "No key"));
+			// }
+			// }
 		}
 
 		@Override
@@ -299,8 +378,8 @@ public class GameFrame extends JFrame implements ActionListener {
 		public void mouseExited(MouseEvent e) {
 		}
 	}
+
 	public static void main(String[] args) throws IOException {
 		GameFrame display = new GameFrame();
-
 	}
 }

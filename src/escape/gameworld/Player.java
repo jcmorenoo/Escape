@@ -3,18 +3,17 @@ package escape.gameworld;
 import java.util.ArrayList;
 
 public class Player {
+
 	private int id;
 	private String name;
-	
 	private Room room;
 	private ArrayList<Item> items;
-
-	private enum Direction {
+	
+	public enum Direction {
 		NORTH, EAST, WEST, SOUTH
 	}
 
 	private Direction direction;
-	
 	private int points;
 
 	public Player(int id, String name, Room room) {
@@ -22,7 +21,7 @@ public class Player {
 		this.room = room;
 		this.name = name;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -45,6 +44,7 @@ public class Player {
 
 	public void setItems(ArrayList<Item> items) {
 		this.items = items;
+
 	}
 
 	public Direction getDirection() {
@@ -63,47 +63,49 @@ public class Player {
 		this.points = points;
 	}
 
-	public void movePlayer(Direction d){
-		switch(d){
-			case NORTH:
-				this.direction = Direction.NORTH;
-				break;
-			case EAST:
-				this.direction = Direction.EAST;
-				break;
-			case WEST:
-				this.direction = Direction.WEST;
-				break;
-			case SOUTH:
-				this.direction = Direction.SOUTH;
-				break;
+	public void movePlayer(Direction d) {
+		switch (d) {
+		case NORTH:
+			this.direction = Direction.NORTH;
+			break;
+		case EAST:
+			this.direction = Direction.EAST;
+			break;
+		case WEST:
+			this.direction = Direction.WEST;
+			break;
+		case SOUTH:
+			this.direction = Direction.SOUTH;
+			break;
 		}
 	}
-	
+
 	public boolean pickUpItem(Item i) {
 		if (!i.isMovable())
 			return false;
+		
 		items.add(i);
 		return true;
 	}
 
-	public boolean dropItem(Item i){
-		if(room == null) 
+	public boolean dropItem(Item i) {
+		if (room == null)
 			return false;
+		
 		items.remove(i);
 		room.getBin().add(i);
 		return true;
 	}
-	
-	public String examineItem(Item i){
+
+	public String examineItem(Item i) {
 		return i.getDescription();
 	}
-	
-	public void enterRoom(Room r){
+
+	public void enterRoom(Room r) {
 		this.room = r;
 	}
-	
-	public void leaveRoom(){
+
+	public void leaveRoom() {
 		this.room = null;
 	}
 
@@ -114,5 +116,5 @@ public class Player {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 }
