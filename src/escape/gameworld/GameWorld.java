@@ -57,6 +57,8 @@ public class GameWorld {
 				"A modern-look key", true, true));
 		items.put("Cupboard Key", new Item("Cupboard Key", "A small key", true,
 				true));
+		items.put("Study Room Key", new Item("Study Room Key", "A room key", true,
+				true));
 		// items.put("Lamp", new Item("Lamp", "An old-fashioned lamp", true,
 		// true));
 		items.put("Kitchen Picture", new Item("Kitchen Picture",
@@ -72,7 +74,7 @@ public class GameWorld {
 		items.put("Chair", new Item("Chair", "An comfortable working chair",
 				false, false));
 		items.put("Bed", new Item("Bed", "A neatly made bed", false, false));
-		items.put("Bench", new Item("Kitchen Table",
+		items.put("Kitchen Table", new Item("Kitchen Table",
 				"An old, wooden kitchen table", false, false));
 		items.put("Frame", new Item("Frame", "An empty picture frame", false,
 				false));
@@ -95,7 +97,7 @@ public class GameWorld {
 				"A rubbish bin", false, false, false, null));
 		containers.put("Living Room Bin", new Container("Living Room Bin",
 				"A rubbish bin", false, false, false, null));
-		containers.put("Bedroom Room Bin", new Container("Bedroom Room Bin",
+		containers.put("Bedroom Bin", new Container("Bedroom Bin",
 				"A rubbish bin", false, false, false, null));
 		containers.put("Kitchen Bin", new Container("Kitchen Bin",
 				"A rubbish bin", false, false, false, null));
@@ -119,13 +121,15 @@ public class GameWorld {
 		containers.get("Bookshelf").add(items.get("Paper"));
 		containers.put("Sidetable", new Container("Sidetable",
 				"A wooden side table.", false, false, false, null));
-		containers.get("Sidetable").add(items.get("Picture"));
+		containers.get("Sidetable").add(items.get("Study Room Key"));
 		containers
 				.put("Cupboard", new Container("Cupboard",
 						"A cupboard covered with spiderweb", false, false,
 						false, null));
 		containers.get("Cupboard").add(items.get("Matches"));
 		containers.put("Lamp", new Container("Lamp", "An old-fashioned lamp",
+				true, true, true, "Matches"));
+		containers.put("Bedroom Lamp", new Container("Bedroom Lamp", "An old-fashioned lamp",
 				true, true, true, "Matches"));
 	}
 
@@ -134,6 +138,7 @@ public class GameWorld {
 	 * containers in designated rooms.
 	 */
 	public void initialiseRooms() {
+		
 		rooms.put("Kitchen", new Room("Kitchen", false, null));
 		this.kitchen = rooms.get("Kitchen");
 		rooms.put("Study", new Room("Study", true, "Study Room Key"));
@@ -177,10 +182,11 @@ public class GameWorld {
 
 		bedroom.addItem(items.get("Bed"));
 		bedroom.addItem(items.get("Table"));
-		bedroom.addItem(containers.get("Lamp"));
+		bedroom.addContainer(containers.get("Bedroom Lamp"));
 		bedroom.addContainer(containers.get("Bedroom Bin"));
 		bedroom.addContainer(containers.get("Bedroom Safe"));
 		bedroom.addContainer(containers.get("Sidetable"));
+		
 		assignItemsToRooms();
 
 	}
@@ -199,10 +205,12 @@ public class GameWorld {
 		livingRoom.setItemsByDirection("East", LIVING_EAST);
 		livingRoom.setItemsByDirection("South", LIVING_SOUTH);
 		livingRoom.setItemsByDirection("West", LIVING_WEST);
+		
 		bedroom.setItemsByDirection("North", BEDROOM_NORTH);
 		bedroom.setItemsByDirection("East", BEDROOM_EAST);
 		bedroom.setItemsByDirection("South", BEDROOM_SOUTH);
 		bedroom.setItemsByDirection("West", BEDROOM_WEST);
+		
 		kitchen.setItemsByDirection("North", KITCHEN_NORTH);
 		kitchen.setItemsByDirection("East", KITCHEN_EAST);
 		kitchen.setItemsByDirection("South", KITCHEN_SOUTH);
@@ -234,6 +242,21 @@ public class GameWorld {
 	}
 
 	/* GETTERS AND SETTERS */
+	
+	/**
+	 * Returns the list of rooms from the hashmap
+	 * 
+	 * @return
+	 */
+	public ArrayList<Room> getRoomList() {
+		ArrayList<Room> r = new ArrayList<Room>();
+		for(Room rm : rooms.values()){
+			r.add(rm);
+		}
+		return r;
+	}
+
+	
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
@@ -243,9 +266,9 @@ public class GameWorld {
 	}
 
 	public HashMap<String, Room> getRooms() {
-		return rooms;
+		return this.rooms;
 	}
-
+	
 	public void setRooms(HashMap<String, Room> rooms) {
 		this.rooms = rooms;
 	}
@@ -268,71 +291,90 @@ public class GameWorld {
 
 	/* 2D ARRAYS FOR EACH DIRECTION IN THE STUDY ROOM */
 	private String[][] STUDY_NORTH = {
-			{ "Study Room Bin", null, null, null, null, "Study Room Safe" },
-			{ null, null, null, "Chair", null, null },
-			{ null, null, null, "Desk", "Desk", null } };
+			{"Study Room Bin", "", "", "", "", "Study Room Safe"},
+			{"", "", "", "Chair", "", ""},
+			{"", "", "", "Desk", "Desk", ""}
+		};
 	private String[][] STUDY_EAST = {
-			{ "Study Room Safe", null, null, null, null, "Lamp" },
-			{ null, null, null, "Desk", null, null, null },
-			{ null, "Chair", "Desk", null, null, null } };
+			{"Study Room Safe", "", "", "", "", "Lamp"},
+			{"", "", "", "Desk", "", "", ""},
+			{"", "Chair", "Desk", "", "", ""}
+		};
 	private String[][] STUDY_SOUTH = {
-			{ "Lamp", null, "Door", "Door", null, null },
-			{ null, null, null, null, null, "Bookshelf" },
-			{ null, null, null, null, null, "Bookshelf" } };
+			{"Lamp", "", "Door", "Door", "", ""},
+			{"", "", "", "", "", "Bookshelf"},
+			{"", "", "", "", "", "Bookshelf"}
+		};
 	private String[][] STUDY_WEST = {
-			{ null, "Bookshelf", "Bookshelf", null, null, "Study Room Bin" },
-			{ null, null, null, null, null, null },
-			{ null, null, null, null, null, null } };
+			{"", "Bookshelf", "Bookshelf", "", "", "Study Room Bin"},
+			{"", "", "", "", "", ""},
+			{"", "", "", "", "", ""}
+		};
+	
 	/* 2D ARRAYS FOR EACH DIRECTION IN THE LIVING ROOM */
 	private String[][] LIVING_NORTH = {
-			{ "Living Room Bin", null, null, "Sofa", "Sofa", null },
-			{ null, null, null, null, null, null },
-			{ null, null, null, "Table", "Table", null } };
-	private String[][] LIVING_EAST = { // added a family portrait
-	{ null, "Portrait", null, "Frame", null, "Living Room Picture" },
-			{ "Sofa", null, "Table", null, null, null },
-			{ "Sofa", null, "Table", null, null, null } };
+			{"Living Room Bin", "", "", "Sofa", "Sofa", ""},
+			{"", "", "", "", "", ""},
+			{"", "", "", "Table", "Table", ""}
+		};
+	private String[][] LIVING_EAST = {	//added a family portrait 
+			{"", "Portrait", "", "Frame", "", "Living Room Picture"},
+			{"Sofa", "", "Table", "", "", ""},
+			{"Sofa", "", "Table", "", "", ""}
+		};
 	private String[][] LIVING_SOUTH = {
-			{ null, null, "Door", "Door", null, "Living Room Safe" },
-			{ null, null, null, null, null, null },
-			{ null, null, null, null, null, null } };
+			{"", "", "Door", "Door", "", "Living Room Safe"},
+			{"", "", "", "", "", ""},
+			{"", "", "", "", "", ""}
+		};
 	private String[][] LIVING_WEST = {
-			{ "Safe", null, null, null, null, "Living Room Bin" },
-			{ null, null, null, null, null, null },
-			{ null, null, null, null, null, null } };
+			{"Safe", "", "", "", "", "Living Room Bin"},
+			{"", "", "", "", "", ""},
+			{"", "", "", "", "", ""}
+		};
 
 	/* 2D ARRAYS FOR EACH DIRECTION IN THE KITCHEN */
 	private String[][] KITCHEN_NORTH = {
-			{ "Kitchen Bin", null, null, null, null, "Fridge" },
-			{ null, null, null, "Kitchen Table", "Kitchen Table", null },
-			{ null, null, null, null, null, null } };
+			{"Kitchen Bin", "", "", "", "", "Fridge"},
+			{"", "", "", "Kitchen Table", "Kitchen Table", ""},
+			{"", "", "", "", "", ""}
+		};
 	private String[][] KITCHEN_EAST = {
-			{ "Fridge", null, null, null, null, "Kitchen Picture" },
-			{ null, "Kitchen Table", null, null, null, null },
-			{ null, "Kitchen Table", null, null, null, null } };
+			{"Fridge", "", "", "", "", "Kitchen Picture"},
+			{"", "Kitchen Table", "", "", "", ""},
+			{"", "Kitchen Table", "", "", "", ""}
+		};
 	private String[][] KITCHEN_SOUTH = {
-			{ "Kitchen Picture", null, "Door", "Door", null, null },
-			{ null, null, null, null, null, "Cupboard" },
-			{ null, null, null, null, null, "Cupboard" } };
+			{"Kitchen Picture", "", "Door", "Door", "", ""},
+			{"", "", "", "", "", "Cupboard"},
+			{"", "", "", "", "", "Cupboard"}
+		};
 	private String[][] KITCHEN_WEST = {
-			{ null, "Cupboard", "Cupboard", null, null, "Kitchen Bin" },
-			{ null, null, null, null, null, null },
-			{ null, null, null, null, null, null } };
+			{"", "Cupboard", "Cupboard", "", "", "Kitchen Bin"},
+			{"", "", "", "", "", ""},
+			{"", "", "", "", "", ""}
+		};
+	
 	/* 2D ARRAYS FOR EACH DIRECTION IN THE BEDROOM */
 	private String[][] BEDROOM_NORTH = {
-			{ "Bedroom Bin", null, null, null, null, "Lamp" },
-			{ null, "Table", null, null, "Bed", "Bed" },
-			{ null, null, null, null, null, "Side Table" } };
+			{"Bedroom Bin", "", "", "", "", "Lamp"},
+			{"", "Table", "", "", "Bed", "Bed"},
+			{"", "", "", "", "", "Side Table"}
+		};
 	private String[][] BEDROOM_EAST = {
-			{ "Lamp", "Bed", "Side Table", null, null, null },
-			{ null, "Bed", null, null, null, null },
-			{ null, null, null, null, null, null } };
+			{"Lamp", "Bed", "Side Table", "", "", ""},
+			{"", "Bed", "", "", "", ""},
+			{"", "", "", "", "", ""}
+		};
 	private String[][] BEDROOM_SOUTH = {
-			{ null, null, "Door", "Door", null, "Bedroom Safe" },
-			{ null, null, null, null, null, null },
-			{ null, null, null, null, null, null } };
+			{"", "", "Door", "Door", "", "Bedroom Safe"},
+			{"", "", "", "", "", ""},
+			{"", "", "", "", "", ""}
+		};
 	private String[][] BEDROOM_WEST = {
-			{ "Bedroom Safe", null, null, null, null, "Bedroom Bin" },
-			{ null, null, null, null, "Table", null },
-			{ null, null, null, null, null, null } };
+			{"Bedroom Safe", "", "", "", "", "Bedroom Bin"},
+			{"", "", "", "", "Table", ""},
+			{"", "", "", "", "", ""}
+		};
+
 }

@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import escape.gameworld.Container;
 import escape.gameworld.GameWorld;
 import escape.gameworld.Item;
 import escape.gameworld.Player;
@@ -173,11 +175,24 @@ public class GameFrame extends JFrame implements ActionListener {
 							+ player.getRoom().getName());
 					System.out.println("Game ID: " + gameID);
 
-					System.out.println("[test] \nLiving Room Items:");
-					ArrayList<Item> it = game.getRooms().get("Living Room")
-							.getItems();
+					//TESTING: rooms, containers, items
+					ArrayList<Room> it = game.getRoomList();
 					for (int i = 0; i < it.size(); i++) {
-						System.out.println(it.get(i).getName());
+						Room r = it.get(i);
+						System.out.println("\n  ROOMS:");
+						System.out.println(r.getName());
+						System.out.println("  ITEMS IN ROOM:");
+						for(Item item : r.getItems()){
+							System.out.println(item.getName());
+						}
+						for(Container c : r.getContainer()){
+							System.out.println("  CONTAINERS:");
+							System.out.println(c.getName());
+							System.out.println("  ITEMS IN CONTAINER:");
+							for(Item item : c.getItems()){
+								System.out.println(item.getName());
+							}
+						}
 					}
 
 					// Testing purposes
