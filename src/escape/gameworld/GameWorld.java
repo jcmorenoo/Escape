@@ -357,12 +357,12 @@ public class GameWorld {
 	
 	/* 2D ARRAYS FOR EACH DIRECTION IN THE BEDROOM */
 	private String[][] BEDROOM_NORTH = {
-			{"Bedroom Bin", "", "", "", "", "Lamp"},
+			{"Bedroom Bin", "", "", "", "", "Bedroom Lamp"},
 			{"", "Table", "", "", "Bed", "Bed"},
-			{"", "", "", "", "", "Side Table"}
+			{"", "", "", "", "", "Sidetable"}
 		};
 	private String[][] BEDROOM_EAST = {
-			{"Lamp", "Bed", "Side Table", "", "", ""},
+			{"Bedroom Lamp", "Bed", "Sidetable", "", "", ""},
 			{"", "Bed", "", "", "", ""},
 			{"", "", "", "", "", ""}
 		};
