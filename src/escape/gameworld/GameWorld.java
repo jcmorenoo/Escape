@@ -335,7 +335,7 @@ public class GameWorld {
 			{"Sofa", "", "Table", "", "", ""}
 		};
 	private String[][] LIVING_SOUTH = {
-			{"", "", "Door", "Door", "", "Living Room Safe"},
+			{"", "", "", "", "", "Living Room Safe"},
 			{"", "", "", "", "", ""},
 			{"", "", "", "", "", ""}
 		};
@@ -357,7 +357,7 @@ public class GameWorld {
 			{"", "Kitchen Table", "", "", "", ""}
 		};
 	private String[][] KITCHEN_SOUTH = {
-			{"Kitchen Picture", "", "Door", "Door", "", ""},
+			{"Kitchen Picture", "", "", "", "", ""},
 			{"", "", "", "", "", "Cupboard"},
 			{"", "", "", "", "", "Cupboard"}
 		};
