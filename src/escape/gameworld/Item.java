@@ -161,8 +161,6 @@ public class Item {
 						scaleImgWidth(safe), scaleImgHeight(safe), null);
 			}
 		}
-
-		// return itemImg;
 	}
 
 	/*---------------ITEM IMAGE SCALING---------------*/
