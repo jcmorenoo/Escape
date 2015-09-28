@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import escape.gameworld.Container;
 import escape.gameworld.GameWorld;
 import escape.gameworld.Item;
 import escape.gameworld.Player;
@@ -164,20 +166,32 @@ public class GameFrame extends JFrame implements ActionListener {
 
 					// Testing
 					game = new GameWorld(gameID.toString());
-					game.addPlayer(player); // NullPointerException occurs when
-					// trying to add a player to the
-					// game
+					game.addPlayer(player); 
 					System.out.println("Game Created");
 					System.out.println("Number of players: " + numPlayers);
 					System.out.println(username + " is in the "
 							+ player.getRoom().getName());
 					System.out.println("Game ID: " + gameID);
+					System.out.println(player.getDirection().toString());
 
-					System.out.println("[test] \nLiving Room Items:");
-					ArrayList<Item> it = game.getRooms().get("Living Room")
-							.getItems();
+					//TESTING: rooms, containers, items
+					ArrayList<Room> it = game.getRoomList();
 					for (int i = 0; i < it.size(); i++) {
-						System.out.println(it.get(i).getName());
+						Room r = it.get(i);
+						System.out.println("\n  ROOMS:");
+						System.out.println(r.getName());
+						System.out.println("  ITEMS IN ROOM:");
+						for(Item item : r.getItems()){
+							System.out.println(item.getName());
+						}
+						for(Container c : r.getContainer()){
+							System.out.println("  CONTAINERS:");
+							System.out.println(c.getName());
+							System.out.println("  ITEMS IN CONTAINER:");
+							for(Item item : c.getItems()){
+								System.out.println(item.getName());
+							}
+						}
 					}
 
 					// Testing purposes
@@ -253,7 +267,6 @@ public class GameFrame extends JFrame implements ActionListener {
 				// player = new Player(name, new Room("Hall"));
 				// System.out.println(name + " is in the "
 				// + player.getRoom().getName());
-
 			}
 		});
 	}
@@ -274,6 +287,31 @@ public class GameFrame extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("North Button pressed");
+				switch (player.getRoom().getName()) {
+				case "Main Hall":
+					System.out.println("Going through Main Door");
+					break;
+				case "Hall - Bedroom":
+					player.enterRoom(game.getRooms().get("Bedroom"));
+					break;
+				case "Hall - Living Room":
+					player.enterRoom(game.getRooms().get("Living Room"));
+					break;
+				case "Hall - Study":
+					player.enterRoom(game.getRooms().get("Study"));
+					break;
+				case "Hall - Kitchen":
+					player.enterRoom(game.getRooms().get("Kitchen"));
+					break;
+				}
+				
+				switch (player.getRoom().getName()){
+				case "Living Room":
+				case "Kitchen":
+				case "Bedroom":
+				case "Study":
+					player.movePlayer(Player.Direction.NORTH);
+				}
 			}
 		});
 	}
@@ -300,6 +338,14 @@ public class GameFrame extends JFrame implements ActionListener {
 				case "Hall - Kitchen":
 					player.enterRoom(game.getRooms().get("Hall - Study"));
 					break;
+				}
+				
+				switch (player.getRoom().getName()){
+				case "Living Room":
+				case "Kitchen":
+				case "Bedroom":
+				case "Study":
+					player.movePlayer(Player.Direction.EAST);
 				}
 			}
 		});

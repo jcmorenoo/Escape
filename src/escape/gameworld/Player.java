@@ -20,6 +20,7 @@ public class Player {
 		this.setId(id);
 		this.room = room;
 		this.name = name;
+		setDirection(Direction.NORTH);
 	}
 
 	public String getName() {

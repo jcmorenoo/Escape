@@ -28,9 +28,10 @@ public class GameCanvas extends JPanel {
 	private static final Image hallLeftKitchen = loadImage("/images/hallLeftKitchen.png");
 	private static final Image hallRightLivingRoom = loadImage("/images/hallRightLivingRoom.png");
 	private static final Image mainMenu = loadImage("/images/mainMenu.png");
-	public Player player;
-	public Room currentRoom;
-	public int state;
+	private Player player;
+	private Room currentRoom;
+	private Player.Direction currentDirection;
+	private int state;
 	private static final double WINDOW_HEIGHT_SCALE = 0.6;
 	private static final double WINDOW_WIDTH_SCALE = 0.375;
 	private static final double BACKGROUND_WIDTH_SCALE = 0.8;
@@ -60,6 +61,8 @@ public class GameCanvas extends JPanel {
 		} else if (state == 1) {
 			if (player.getRoom() != null) {
 				currentRoom = player.getRoom();
+				currentDirection = player.getDirection();
+
 				switch (currentRoom.getName()) {
 				case "Main Hall":
 					g.drawImage(hallMain, 0, 0, scaleImgWidth(hallMain),
@@ -91,14 +94,15 @@ public class GameCanvas extends JPanel {
 				case "Living Room":
 				case "Kitchen":
 				case "Study":
-					g.drawImage(wall, 0, 0, (int) (wall.getWidth(null) * 0.8),
-							(int) (wall.getHeight(null) * 0.814), null);
+					g.drawImage(wall, 0, 0, scaleImgWidth(wall),
+							scaleImgHeight(wall), null);
 					break;
 				}
 				// currentRoom.getBin().draw(g, currentRoom);
 				for (Item i : currentRoom.getItems()) {
-					i.draw(g, currentRoom);
+					i.draw(g, currentRoom, currentDirection);
 				}
+
 				//
 				// for (Container c : currentRoom.getContainer()){
 				// c.draw(g);
@@ -143,7 +147,6 @@ public class GameCanvas extends JPanel {
 		} catch (IOException e) {
 			throw new RuntimeException("Unable to load image");
 		}
-
 	}
 
 }
