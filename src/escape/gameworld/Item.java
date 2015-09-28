@@ -96,13 +96,53 @@ public class Item {
 		String itemName = i.getName();
 
 		switch (itemName) {
-		case "Living Room Bin":
+		case "Chair":
 			switch (d) {
 			case NORTH:
-				g.drawImage(bin, scaleImgPos(18), scaleImgPos(245),
-						scaleImgWidth(bin), scaleImgHeight(bin), null);
+				g.drawImage(chair, scaleImgPos(250), scaleImgPos(185),
+						scaleImgWidth(chair), scaleImgHeight(chair), null);
+				break;
+			case EAST:
+				g.drawImage(chairSide, scaleImgPos(100), scaleImgPos(220),
+						scaleImgWidth(chairSide), scaleImgHeight(chairSide), null);
 				break;
 			}
+			break;
+		
+		case "Frame":
+			switch (d) {
+			case EAST:
+				g.drawImage(pictureFrame, scaleImgPos(224), scaleImgPos(80),
+						scaleImgWidth(pictureFrame), scaleImgHeight(pictureFrame), null);
+				break;
+			}
+			break;
+			
+		case "Desk":
+			switch (d) {
+			case NORTH:
+				g.drawImage(desk, scaleImgPos(175), scaleImgPos(240),
+						scaleImgWidth(desk), scaleImgHeight(desk), null);
+				break;
+			case EAST:
+				g.drawImage(deskSide, scaleImgPos(160), scaleImgPos(260),
+						scaleImgWidth(deskSide), scaleImgHeight(deskSide), null);
+				break;
+			}
+			break;
+			
+		case "Lamp":
+			switch (d) {
+			case EAST:
+				g.drawImage(lamp, scaleImgPos(490), scaleImgPos(275),
+						scaleImgWidth(lamp), scaleImgHeight(lamp), null);
+				break;
+			case SOUTH:
+				g.drawImage(lamp, scaleImgPos(10), scaleImgPos(275),
+						scaleImgWidth(lamp), scaleImgHeight(lamp), null);
+				break;
+			}
+			break;
 			
 		case "Living Room Picture":
 			switch (d) {
@@ -111,36 +151,9 @@ public class Item {
 						scaleImgWidth(livingRoomPicture), scaleImgHeight(livingRoomPicture), null);
 				break;
 			}
+			break;
 			
-		case "Frame":
-			switch (d) {
-			case EAST:
-				g.drawImage(pictureFrame, scaleImgPos(224), scaleImgPos(80),
-						scaleImgWidth(pictureFrame), scaleImgHeight(pictureFrame), null);
-				break;
-			}
-
-		case "Portrait":
-			switch (d) {
-			case EAST:
-				g.drawImage(portrait, scaleImgPos(60), scaleImgPos(80),
-						scaleImgWidth(portrait), scaleImgHeight(portrait), null);
-				break;
-			}
-
-		case "Sofa":
-			switch (d) {
-			case NORTH:
-				g.drawImage(sofa, scaleImgPos(200), scaleImgPos(200),
-						scaleImgWidth(sofa), scaleImgHeight(sofa), null);
-				break;
-			case EAST:
-				g.drawImage(sofaLeft, scaleImgPos(15), scaleImgPos(220),
-						scaleImgWidth(sofaLeft), scaleImgHeight(sofaLeft), null);
-				break;
-			}
-
-		case "Table":
+		case "Long Table":
 			switch (d) {
 			case NORTH:
 				g.drawImage(longTable, scaleImgPos(227), scaleImgPos(292),
@@ -153,13 +166,38 @@ public class Item {
 						null);
 				break;
 			}
+			break;
+			
+		case "Portrait":
+			switch (d) {
+			case EAST:
+				g.drawImage(portrait, scaleImgPos(60), scaleImgPos(80),
+						scaleImgWidth(portrait), scaleImgHeight(portrait), null);
+				break;
+			}
+			break;
 
-		case "Safe":
+		case "Sofa":
+			switch (d) {
+			case NORTH:
+				g.drawImage(sofa, scaleImgPos(200), scaleImgPos(200),
+						scaleImgWidth(sofa), scaleImgHeight(sofa), null);
+				break;
+			case EAST:
+				g.drawImage(sofaLeft, scaleImgPos(15), scaleImgPos(220),
+						scaleImgWidth(sofaLeft), scaleImgHeight(sofaLeft), null);
+				break;
+			}
+			break;
+
+		case "Study Door":
 			switch (d) {
 			case SOUTH:
-				g.drawImage(safe, scaleImgPos(250), scaleImgPos(324),
-						scaleImgWidth(safe), scaleImgHeight(safe), null);
+				g.drawImage(studyDoor, scaleImgPos(239), scaleImgPos(95),
+						scaleImgWidth(studyDoor), scaleImgHeight(studyDoor), null);
+				break;
 			}
+			break;
 		}
 	}
 
@@ -181,14 +219,17 @@ public class Item {
 	}
 
 	/*---------------LOAD ITEM IMAGES---------------*/
-	private static final Image bin = GameCanvas.loadImage("/images/bin.png");
+	private static final Image chair = GameCanvas.loadImage("/images/chair.png");
+	private static final Image chairSide = GameCanvas.loadImage("/images/chairSide.png");
+	private static final Image desk = GameCanvas.loadImage("/images/desk.png");
+	private static final Image deskSide = GameCanvas.loadImage("/images/deskSide.png");
+	private static final Image lamp = GameCanvas.loadImage("/images/lamp.png");
 	private static final Image livingRoomPicture = GameCanvas.loadImage("/images/livingRoomPicture.png");
 	private static final Image longTable = GameCanvas.loadImage("/images/longTable.png");
 	private static final Image longTableSide = GameCanvas.loadImage("/images/longTableSide.png");
 	private static final Image mainDoor = GameCanvas.loadImage("/images/mainDoor.png");
 	private static final Image pictureFrame = GameCanvas.loadImage("/images/pictureFrame.png");
 	private static final Image portrait = GameCanvas.loadImage("/images/portrait.png");
-	private static final Image safe = GameCanvas.loadImage("/images/safe.png");
 	private static final Image sofa = GameCanvas.loadImage("/images/sofa.png");
 	private static final Image sofaLeft = GameCanvas.loadImage("/images/sofaLeftSide.png");
 	private static final Image studyDoor = GameCanvas.loadImage("/images/studyDoor.png");

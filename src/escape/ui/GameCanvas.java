@@ -28,14 +28,17 @@ public class GameCanvas extends JPanel {
 	private static final Image hallLeftKitchen = loadImage("/images/hallLeftKitchen.png");
 	private static final Image hallRightLivingRoom = loadImage("/images/hallRightLivingRoom.png");
 	private static final Image mainMenu = loadImage("/images/mainMenu.png");
+	
 	private Player player;
 	private Room currentRoom;
 	private Player.Direction currentDirection;
 	private int state;
+	
 	private static final double WINDOW_HEIGHT_SCALE = 0.6;
 	private static final double WINDOW_WIDTH_SCALE = 0.375;
 	private static final double BACKGROUND_WIDTH_SCALE = 0.8;
 	private static final double BACKGROUND_HEIGHT_SCALE = 0.814;
+	
 	private Toolkit t = Toolkit.getDefaultToolkit();;
 	private Dimension d = t.getScreenSize();
 	private int h = (int) (d.height * WINDOW_HEIGHT_SCALE);
@@ -98,15 +101,14 @@ public class GameCanvas extends JPanel {
 							scaleImgHeight(wall), null);
 					break;
 				}
-				// currentRoom.getBin().draw(g, currentRoom);
 				for (Item i : currentRoom.getItems()) {
 					i.draw(g, currentRoom, currentDirection);
 				}
 
-				//
-				// for (Container c : currentRoom.getContainer()){
-				// c.draw(g);
-				// }
+				for (Container c : currentRoom.getContainer()) {
+					c.draw(g, currentRoom, currentDirection);
+				}
+
 			}
 		}
 		repaint();

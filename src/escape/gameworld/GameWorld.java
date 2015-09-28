@@ -83,7 +83,10 @@ public class GameWorld {
 				false));
 		items.put("Portrait", new Item("Portrait", "A family portrait", false,
 				false));
-		items.put("Table", new Item("Table", "A centre table", false, false));
+		items.put("Long Table", new Item("Long Table", "A centre table", false, false));
+		items.put("Short Table", new Item("Short Table", "A small modern table", false, false));
+		
+		items.put("Study Door", new Item("Study Door", "Door leading back to the Hall", false, false));
 	}
 
 	/**
@@ -134,6 +137,7 @@ public class GameWorld {
 				true, true, true, "Matches"));
 		containers.put("Bedroom Lamp", new Container("Bedroom Lamp", "An old-fashioned lamp",
 				true, true, true, "Matches"));
+		
 	}
 
 	/**
@@ -153,9 +157,9 @@ public class GameWorld {
 		// Hall Rooms
 		rooms.put("Main Hall", new Room("Main Hall", false, null));
 		this.mainHall = rooms.get("Main Hall");
-		rooms.put("Hall - Study", new Room("Hall - Study", false, null));
+		rooms.put("Hall - Study", new Room("Hall - Study", true, null));
 		this.hallLeftStudy = rooms.get("Hall - Study");
-		rooms.put("Hall - Bedroom", new Room("Hall - Bedroom", false, null));
+		rooms.put("Hall - Bedroom", new Room("Hall - Bedroom", true, null));
 		this.hallRightBedroom = rooms.get("Hall - Bedroom");
 		rooms.put("Hall - Living Room", new Room("Hall - Living Room", false,
 				null));
@@ -171,20 +175,22 @@ public class GameWorld {
 
 		study.addItem(items.get("Chair"));
 		study.addItem(items.get("Desk"));
+		study.addItem(items.get("Study Door"));
 		study.addContainer(containers.get("Study Room Bin"));
 		study.addContainer(containers.get("Bookshelf"));
 		study.addContainer(containers.get("Study Room Safe"));
 		study.addItem(containers.get("Lamp"));
 
-		livingRoom.addItem(items.get("Table"));
 		livingRoom.addItem(items.get("Sofa"));
+		livingRoom.addItem(items.get("Long Table"));
 		livingRoom.addItem(items.get("Living Room Picture"));
 		livingRoom.addItem(items.get("Portrait"));
+		livingRoom.addItem(items.get("Frame"));
 		livingRoom.addContainer(containers.get("Living Room Bin"));
 		livingRoom.addContainer(containers.get("Living Room Safe"));
 
 		bedroom.addItem(items.get("Bed"));
-		bedroom.addItem(items.get("Table"));
+		bedroom.addItem(items.get("Short Table"));
 		bedroom.addContainer(containers.get("Bedroom Lamp"));
 		bedroom.addContainer(containers.get("Bedroom Bin"));
 		bedroom.addContainer(containers.get("Bedroom Safe"));
@@ -296,7 +302,7 @@ public class GameWorld {
 		selectedItem = i; 
 	}
 	
-	public void setSelectedIventory(Item i){
+	public void setSelectedInventory(Item i){
 		selectedInventory = i; 
 	}
 
@@ -327,15 +333,15 @@ public class GameWorld {
 	private String[][] LIVING_NORTH = {
 			{"Living Room Bin", "", "", "Sofa", "Sofa", ""},
 			{"", "", "", "", "", ""},
-			{"", "", "", "Table", "Table", ""}
+			{"", "", "", "Long Table", "Long Table", ""}
 		};
 	private String[][] LIVING_EAST = {	//added a family portrait 
 			{"", "Portrait", "", "Frame", "", "Living Room Picture"},
-			{"Sofa", "", "Table", "", "", ""},
-			{"Sofa", "", "Table", "", "", ""}
+			{"Sofa", "", "Long Table", "", "", ""},
+			{"Sofa", "", "Long Table", "", "", ""}
 		};
 	private String[][] LIVING_SOUTH = {
-			{"", "", "", "", "", "Living Room Safe"},
+			{"", "", "Door", "Door", "", "Living Room Safe"},
 			{"", "", "", "", "", ""},
 			{"", "", "", "", "", ""}
 		};
@@ -357,7 +363,7 @@ public class GameWorld {
 			{"", "Kitchen Table", "", "", "", ""}
 		};
 	private String[][] KITCHEN_SOUTH = {
-			{"Kitchen Picture", "", "", "", "", ""},
+			{"Kitchen Picture", "", "Door", "Door", "", ""},
 			{"", "", "", "", "", "Cupboard"},
 			{"", "", "", "", "", "Cupboard"}
 		};
@@ -370,7 +376,7 @@ public class GameWorld {
 	/* 2D ARRAYS FOR EACH DIRECTION IN THE BEDROOM */
 	private String[][] BEDROOM_NORTH = {
 			{"Bedroom Bin", "", "", "", "", "Bedroom Lamp"},
-			{"", "Table", "", "", "Bed", "Bed"},
+			{"", "Short Table", "", "", "Bed", "Bed"},
 			{"", "", "", "", "", "Sidetable"}
 		};
 	private String[][] BEDROOM_EAST = {
@@ -385,7 +391,7 @@ public class GameWorld {
 		};
 	private String[][] BEDROOM_WEST = {
 			{"Bedroom Safe", "", "", "", "", "Bedroom Bin"},
-			{"", "", "", "", "Table", ""},
+			{"", "", "", "", "Short Table", ""},
 			{"", "", "", "", "", ""}
 		};
 

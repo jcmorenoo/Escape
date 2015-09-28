@@ -256,17 +256,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					frame.add(mouse);
 					frame.pack();
 				}
-
-				// New Player - Name input
-				// JTextField nameInput = new JTextField();
-				// Object[] namePrompt = { "Enter a name: ", nameInput.getText()
-				// };
-				// final String name = JOptionPane.showInputDialog(null,
-				// namePrompt,
-				// "Player Name", JOptionPane.INFORMATION_MESSAGE);
-				// player = new Player(name, new Room("Hall"));
-				// System.out.println(name + " is in the "
-				// + player.getRoom().getName());
 			}
 		});
 	}
@@ -357,7 +346,15 @@ public class GameFrame extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("South Button pressed");
-			}
+				
+				switch (player.getRoom().getName()){
+				case "Living Room":
+				case "Kitchen":
+				case "Bedroom":
+				case "Study":
+					player.movePlayer(Player.Direction.SOUTH);
+				}
+			}	
 		});
 	}
 
@@ -382,6 +379,14 @@ public class GameFrame extends JFrame implements ActionListener {
 				case "Hall - Living Room":
 					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
 					break;
+				}
+				
+				switch (player.getRoom().getName()){
+				case "Living Room":
+				case "Kitchen":
+				case "Bedroom":
+				case "Study":
+					player.movePlayer(Player.Direction.WEST);
 				}
 			}
 		});
