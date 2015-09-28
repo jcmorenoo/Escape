@@ -15,7 +15,10 @@ public class GameWorld {
 	private HashMap<String, Room> rooms = new HashMap<>();
 	private HashMap<String, Container> containers = new HashMap<>();
 	private HashMap<String, Item> items = new HashMap<>();
-
+	
+	private Item selectedInventory;
+	private Item selectedItem;
+	
 	private Room kitchen;
 	private Room study;
 	private Room livingRoom;
@@ -288,6 +291,15 @@ public class GameWorld {
 	public void setItems(HashMap<String, Item> items) {
 		this.items = items;
 	}
+	
+	public void setSelectedItem(Item i){
+		selectedItem = i; 
+	}
+	
+	public void setSelectedIventory(Item i){
+		selectedInventory = i; 
+	}
+
 
 	/* 2D ARRAYS FOR EACH DIRECTION IN THE STUDY ROOM */
 	private String[][] STUDY_NORTH = {
@@ -377,4 +389,109 @@ public class GameWorld {
 			{"", "", "", "", "", ""}
 		};
 
+	
+
+	/**
+	 * Allow player to enter room
+	 * 
+	 * @param p	the player
+	 * @param r	the room that player wants to enter
+	 * 
+	 * @return true if the player enter the room, false if the player cannot
+	 */
+	public boolean enterRoom(Player p, Room r){
+		// if the room is a locked door, check if the player have the key
+		if (r.isLocked()){
+			if (selectedInventory.getName().equals(r.getKey())){
+				p.enterRoom(r);
+				return true;
+			}
+			return false;
+		}
+		// if not locked, let the player enter the room
+		p.enterRoom(r);
+		return true;
+	}
+	
+	/**
+	 * Allow player to leave the room
+	 * 
+	 * @param p the player
+	 * 
+	 * @return true if the player leave the room
+	 */
+	public void leaveRoom(Player p) throws EscapeException{
+		//if the player is not in a room, throw exception
+		if (p.getRoom() == null){
+			throw new EscapeException("Player is in the hallway!!!");
+		}
+		p.leaveRoom();
+		selectedItem = null;
+	}
+	
+	/**
+	 * Allow player to open container and get items inside
+	 * 
+	 * @param p the player
+	 * @param con the container that needs to be opened
+	 * 
+	 * @return true if player can open the container, false if the player cannot
+	 */
+	public boolean openContainer(Player p, Container con){
+		// check if the container is locked
+		if (con.isLocked()){
+			if (useItem(con, selectedInventory.getName())){
+				if (con.getItems().isEmpty()){
+					return true;//if there is no item in the container, do nothing
+				}
+				for (Item j: con.getItems()){
+					p.pickUpItem(j);
+				}
+				return true;
+			}
+			return false;//if there is no appropriate key, do nothing.
+		}
+		
+		if (con.getItems().isEmpty()){
+			return false;
+		}
+		for (Item j: con.getItems()){
+			p.pickUpItem(j);
+		}
+		return true;
+	}
+	
+	/**
+	 * Allows player to pick up item
+	 * 
+	 * @param p the player
+	 * @param i the item player want to pick up
+	 * 
+	 * @return true if player can pick up item, false if the player cannot
+	 */
+	public boolean pickUpItem(Player p, Item i){
+		if (!i.isPickable()){
+			return false; // return false if item cannot be picked up;
+		}
+		p.pickUpItem(i);
+		return true;
+	}
+	
+	/**
+	 * Allows player to drop item
+	 * 
+	 * @param p the player
+	 * @param i the item player want to drop
+	 * 
+	 * @return true if player can dropp item, false if the player cannot
+	 */
+	public boolean dropItem(Player p){
+		if (p.getRoom() == null){
+			return false;//cannot drop item in the hallway
+		}
+		p.getRoom().getBin().add(selectedInventory);
+		p.getItems().remove(selectedInventory);
+		selectedInventory = null;
+		return true;
+	}
 }
