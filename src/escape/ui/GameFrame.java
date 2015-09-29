@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import escape.client.Client;
 import escape.gameworld.Container;
 import escape.gameworld.GameWorld;
 import escape.gameworld.Item;
@@ -31,6 +31,8 @@ public class GameFrame extends JFrame implements ActionListener {
 	private static Player player;
 	private JPanel mouse = new JPanel();
 	private GameWorld game;
+	
+	private Client client;
 
 	// Testing purposes for now
 	private static int state;
@@ -428,6 +430,14 @@ public class GameFrame extends JFrame implements ActionListener {
 		@Override
 		public void mouseExited(MouseEvent e) {
 		}
+	}
+	
+	public void setClient(Client c){
+		this.client = c;
+	}
+	
+	public Client getClient(){
+		return this.client;
 	}
 
 	public static void main(String[] args) throws IOException {

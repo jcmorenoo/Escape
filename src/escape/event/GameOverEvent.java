@@ -12,10 +12,18 @@ public class GameOverEvent {
 	
 	private Player player;
 	
+	/**
+	 * Constructor for GameOverEvent
+	 * @param player
+	 */
 	public GameOverEvent(Player player){
 		this.player = player;
 	}
 	
+	/**
+	 * Method returning the player who won the game.
+	 * @return player
+	 */
 	public Player getPlayer(){
 		return this.player;
 	}

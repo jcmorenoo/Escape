@@ -106,10 +106,18 @@ public class Server extends Thread{
 
 	}
 
+	/**
+	 * Method which returns the Queue of Updates
+	 * @return BlockingQueue<Update>
+	 */
 	public BlockingQueue<Update> getUpdates(){
 		return this.updates;
 	}
 
+	/**
+	 * Methoc which returns a map of Connections to clients
+	 * @return Map<Integer,Connection>
+	 */
 	public Map<Integer,Connection> getClients(){
 		return this.clients;
 	}
@@ -137,6 +145,10 @@ public class Server extends Thread{
 		this.game.setGameID(id);
 	}
 	
+	/**
+	 * Method which returns the current game.
+	 * @return GameWorld
+	 */
 	public GameWorld getGameWorld(){
 		return this.game;
 	}

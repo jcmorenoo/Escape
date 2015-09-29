@@ -19,11 +19,22 @@ public class ServerThread extends Thread {
 	private ObjectInputStream input;
 
 
+	/**
+	 * Creator for ServerThread
+	 * @param socket 
+	 * @param server
+	 * @param id
+	 */
 	public ServerThread(Socket socket, Server server, int id){
 		this.server = server;
 		this.id = id;
 		this.socket = socket;
 	}
+	
+	/**
+	 * Method which will start the Thread. Will keep listening to the socket, if there is an update, 
+	 * the update will be pushed to the Queue of updates in the server.
+	 */
 	public void run(){
 		this.input = null;
 		Object object = null;

@@ -26,6 +26,10 @@ public class UpdateThread extends Thread {
 	private Server server;
 //	private Game game; field containing the game
 	
+	/**
+	 * Constructor for UpdateThread
+	 * @param server
+	 */
 	public UpdateThread(Server server){
 		this.server = server;
 		setDaemon(true);// daemon meaning low prio, and stops when no user thread running... idk what it means really
@@ -33,6 +37,10 @@ public class UpdateThread extends Thread {
 		
 	}
 	
+	/**
+	 * Method which starts the UpdateThread.
+	 * This will handle all the updates and what will be done when the update is received.
+	 */
 	public void run(){
 		Update update = null;
 		Event event = null;

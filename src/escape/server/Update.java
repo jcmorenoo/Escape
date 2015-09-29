@@ -12,12 +12,20 @@ import escape.event.Event;
 public class Update {
 	private final Event event;
 	
+	/**
+	 * Constructor of an update
+	 * @param event
+	 */
 	public Update(Event event){
 		this.event = event;
 		
 		
 	}
 	
+	/**
+	 * Method which returns the event in the update
+	 * @return
+	 */
 	public Event getEvent(){
 		return this.event;
 	}
