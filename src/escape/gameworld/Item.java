@@ -198,6 +198,30 @@ public class Item {
 				break;
 			}
 			break;
+		
+		case "Kitchen Picture":
+			switch (d) {
+			case EAST:
+				g.drawImage(kitchenPicture, scaleImgPos(490), scaleImgPos(370),
+						scaleImgWidth(kitchenPicture), scaleImgHeight(kitchenPicture), null);
+				break;
+			case SOUTH:
+				g.drawImage(kitchenPicture, scaleImgPos(100), scaleImgPos(370),
+						scaleImgWidth(kitchenPicture), scaleImgHeight(kitchenPicture), null);
+				break;
+			}
+			break;
+		case "Kitchen Table":
+			switch(d) {
+			case NORTH:
+				g.drawImage(kitchenTable, scaleImgPos(140), scaleImgPos(250),
+						scaleImgWidth(kitchenTable), scaleImgHeight(kitchenTable), null);
+				break;
+			case EAST:
+				g.drawImage(kitchenTableLeft, scaleImgPos(160), scaleImgPos(250),
+						scaleImgWidth(kitchenTableLeft), scaleImgHeight(kitchenTableLeft), null);
+				break;
+			}
 		}
 	}
 
@@ -233,6 +257,8 @@ public class Item {
 	private static final Image sofa = GameCanvas.loadImage("/images/sofa.png");
 	private static final Image sofaLeft = GameCanvas.loadImage("/images/sofaLeftSide.png");
 	private static final Image studyDoor = GameCanvas.loadImage("/images/studyDoor.png");
-
+	private static final Image kitchenPicture = GameCanvas.loadImage("/images/kitchenpicture.png");
+	private static final Image kitchenTable = GameCanvas.loadImage("/images/kitchentable.png");
+	private static final Image kitchenTableLeft = GameCanvas.loadImage("/images/kitchentableleft.png");
 
 }
