@@ -14,6 +14,7 @@ import escape.event.Event;
 import escape.event.GameOverEvent;
 import escape.event.GameWorldUpdateEvent;
 import escape.event.TestEvent;
+import escape.event.UserSetupEvent;
 import escape.gameworld.Item;
 import escape.gameworld.Player;
 import escape.gameworld.Room;
@@ -38,7 +39,7 @@ public class Client extends Thread {
 	private String ipAddress;
 	
 	private User user;
-	private Player player;
+	private Player player = null;
 	private Room room;
 	private ArrayList<Item> items = new ArrayList<Item>();
 	
@@ -124,15 +125,30 @@ public class Client extends Thread {
 		else if(e instanceof ConnectionAcceptedEvent){
 			ConnectionAcceptedEvent event = ((ConnectionAcceptedEvent)e);
 			//we prob wont need this user.setid thing..
-			this.user.setId(event.getId());
+			this.user.setId(event.getId()); //prob not need this one
+
 			
 			this.id = id;
+			
+			//send this to the server so the server knows the name and can initiate player
+			Event setup = new UserSetupEvent(this.username, this.id);
+			sendEvent(setup);
+			
+			
+			
 		}
 		else if(e instanceof GameWorldUpdateEvent){
 			//player changing direction.. changing the view of the user.
 			GameWorldUpdateEvent event = ((GameWorldUpdateEvent)e);
+			
 			//update the player and the room.
 			if (event.getPlayer().getName().equals(this.player.getName())){
+				this.player = event.getPlayer();
+				this.room = event.getRoom();
+			}
+			
+			//if no player has been set to the client.
+			else if(this.player == null && event.getPlayer().getId() == this.id){
 				this.player = event.getPlayer();
 				this.room = event.getRoom();
 			}

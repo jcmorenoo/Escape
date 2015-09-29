@@ -6,10 +6,12 @@ import escape.event.ChangeRoomEvent;
 import escape.event.DropItemEvent;
 import escape.event.EnterRoomEvent;
 import escape.event.Event;
+import escape.event.GameWorldUpdateEvent;
 import escape.event.InspectItemEvent;
 import escape.event.PickUpItemEvent;
 import escape.event.TestEvent;
 import escape.event.UserSetupEvent;
+import escape.gameworld.GameWorld;
 import escape.gameworld.Player;
 import escape.gameworld.Room;
 
@@ -24,6 +26,7 @@ import escape.gameworld.Room;
 public class UpdateThread extends Thread {
 	
 	private Server server;
+	private GameWorld game;
 //	private Game game; field containing the game
 	
 	/**
@@ -33,6 +36,7 @@ public class UpdateThread extends Thread {
 	public UpdateThread(Server server){
 		this.server = server;
 		setDaemon(true);// daemon meaning low prio, and stops when no user thread running... idk what it means really
+		this.game = server.getGameWorld();
 		
 		
 	}
@@ -63,6 +67,18 @@ public class UpdateThread extends Thread {
 				
 				else if(event instanceof UserSetupEvent){
 					UserSetupEvent setup = (UserSetupEvent)event;
+					int id = setup.getId();
+					String username = setup.getName();
+					Room startingRoom = server.getGameWorld().getRooms().get("Main Hall");
+					//initialise a new player ..
+					Player p = new Player(id,username,startingRoom);
+					
+					//hmm maybe we should send this to everyone??
+					Event e = new GameWorldUpdateEvent(p,startingRoom);
+					
+					//send to client
+					sendClient(e,server.getClients().get(id));
+					
 					
 					
 				}
