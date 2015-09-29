@@ -12,6 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import escape.event.ConnectionAcceptedEvent;
 import escape.event.ConnectionDeniedEvent;
 import escape.event.Event;
+import escape.gameworld.GameWorld;
 import escape.gameworld.Player;
 
 /**
@@ -33,6 +34,7 @@ public class Server extends Thread{
 	private BlockingQueue<Update> updates = new LinkedBlockingQueue<Update>();
 	private boolean stopped = true;
 	private int limit;
+	private GameWorld game;
 
 	//should pass game
 	public Server(int players){
@@ -46,6 +48,8 @@ public class Server extends Thread{
 		}
 		
 		//initialise gameworld
+		game = new GameWorld(null);
+		
 
 
 
@@ -76,6 +80,9 @@ public class Server extends Thread{
 				
 				ConnectionAcceptedEvent e = new ConnectionAcceptedEvent(id);
 				updateThread.sendClient((Event)e, getClients().get(id));
+				
+				
+				
 				//create a new player with an id.
 				//then we should add this player into the game.
 //				Player player = new Player(id);
@@ -107,6 +114,9 @@ public class Server extends Thread{
 		return this.clients;
 	}
 
+	/**
+	 * Method to shut down the server and stop the threads.
+	 */
 	public synchronized void shutdown(){
 		stopped= true;
 		try { 
@@ -117,6 +127,18 @@ public class Server extends Thread{
 		try{
 			this.join(); 
 		} catch (InterruptedException e) { e.printStackTrace();}
+	}
+	
+	/**
+	 * Method which sets game id.
+	 * @param id
+	 */
+	public void setGameId(String id){
+		this.game.setGameID(id);
+	}
+	
+	public GameWorld getGameWorld(){
+		return this.game;
 	}
 
 

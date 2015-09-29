@@ -9,6 +9,9 @@ import escape.event.Event;
 import escape.event.InspectItemEvent;
 import escape.event.PickUpItemEvent;
 import escape.event.TestEvent;
+import escape.event.UserSetupEvent;
+import escape.gameworld.Player;
+import escape.gameworld.Room;
 
 
 
@@ -47,10 +50,21 @@ public class UpdateThread extends Thread {
 				if(event instanceof TestEvent){
 					TestEvent testEvent = (TestEvent) event;
 					System.out.println(testEvent.message);
+					
+				}
+				
+				else if(event instanceof UserSetupEvent){
+					UserSetupEvent setup = (UserSetupEvent)event;
+					
+					
 				}
 				
 				else if(event instanceof ChangeRoomEvent){
 					ChangeRoomEvent e = (ChangeRoomEvent) event;
+					Player player = e.getPlayer();
+					Room room = e.getRoom();
+					//try to make the player enter the room
+					//if exception.. send new event containing current room.
 				}
 				else if(event instanceof ChangeDirectionEvent){
 					ChangeDirectionEvent e = (ChangeDirectionEvent) event;
@@ -67,19 +81,38 @@ public class UpdateThread extends Thread {
 				else if(event instanceof PickUpItemEvent){
 					PickUpItemEvent e = (PickUpItemEvent) event;
 				}
-				
-				
-				
+							
 		}
 	}
 	
-	//send an event to a player
+	/**
+	 * Send an event to the player.
+	 * @param event
+	 * @param player
+	 */
 	public void sendClient(Event event, Connection player){
 		try {
 			player.getOutput().reset();
 			player.getOutput().writeObject(event);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Method to send an event to all players in the game.
+	 * @param event
+	 * 
+	 */
+	public void sentToAllClients(Event event){
+		for(int i = 0; i<server.getClients().size(); i++){
+			Connection p = server.getClients().get(i);
+			try {
+				p.getOutput().reset();
+				p.getOutput().writeObject(event);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
