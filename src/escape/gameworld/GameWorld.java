@@ -77,6 +77,8 @@ public class GameWorld {
 		items.put("Chair", new Item("Chair", "An comfortable working chair",
 				false, false));
 		items.put("Bed", new Item("Bed", "A neatly made bed", false, false));
+		items.put("Bedroom Lamp", new Item("Bedroom Lamp", "An old-fashioned lamp",
+				false, false));
 		items.put("Kitchen Table", new Item("Kitchen Table",
 				"An old, wooden kitchen table", false, false));
 		items.put("Frame", new Item("Frame", "An empty picture frame", false,
@@ -87,6 +89,7 @@ public class GameWorld {
 		items.put("Short Table", new Item("Short Table", "A small modern table", false, false));
 		
 		items.put("Study Door", new Item("Study Door", "Door leading back to the Hall", false, false));
+		items.put("Bedroom Door", new Item("Bedroom Door", "Door leading back to the Hall", false, false));
 	}
 
 	/**
@@ -135,8 +138,7 @@ public class GameWorld {
 		containers.get("Cupboard").add(items.get("Matches"));
 		containers.put("Lamp", new Container("Lamp", "An old-fashioned lamp",
 				true, true, true, "Matches"));
-		containers.put("Bedroom Lamp", new Container("Bedroom Lamp", "An old-fashioned lamp",
-				true, true, true, "Matches"));
+
 		
 	}
 
@@ -167,6 +169,7 @@ public class GameWorld {
 		rooms.put("Hall - Kitchen", new Room("Hall - Kitchen", false, null));
 		this.hallLeftKitchen = rooms.get("Hall - Kitchen");
 
+
 		kitchen.addItem(items.get("Kitchen Table"));
 		kitchen.addItem(items.get("Kitchen Picture"));
 		kitchen.addContainer(containers.get("Fridge"));
@@ -189,9 +192,10 @@ public class GameWorld {
 		livingRoom.addContainer(containers.get("Living Room Bin"));
 		livingRoom.addContainer(containers.get("Living Room Safe"));
 
+		bedroom.addItem(items.get("Bedroom Lamp"));
 		bedroom.addItem(items.get("Bed"));
 		bedroom.addItem(items.get("Short Table"));
-		bedroom.addContainer(containers.get("Bedroom Lamp"));
+		bedroom.addItem(items.get("Bedroom Door"));
 		bedroom.addContainer(containers.get("Bedroom Bin"));
 		bedroom.addContainer(containers.get("Bedroom Safe"));
 		bedroom.addContainer(containers.get("Sidetable"));

@@ -85,14 +85,16 @@ public class GameCanvas extends JPanel {
 					g.drawImage(hallLeftKitchen, 0, 0,
 							scaleImgWidth(hallLeftStudy),
 							scaleImgHeight(hallLeftStudy), null);
+					//Need to display Kitchen + items from a distance
 					break;
 				case "Hall - Living Room":
 					g.drawImage(hallRightLivingRoom, 0, 0,
 							scaleImgWidth(hallRightLivingRoom),
 							scaleImgHeight(hallRightLivingRoom), null);
+					//Need to display Living Room + items from a distance
 					break;
 				case "Bedroom":
-					g.drawImage(darkWall, 0, 0, null);
+					g.drawImage(darkWall, 0, 0, scaleImgWidth(darkWall), scaleImgHeight(darkWall), null);
 					break;
 				case "Living Room":
 				case "Kitchen":
@@ -101,6 +103,7 @@ public class GameCanvas extends JPanel {
 							scaleImgHeight(wall), null);
 					break;
 				}
+
 				for (Item i : currentRoom.getItems()) {
 					i.draw(g, currentRoom, currentDirection);
 				}
@@ -108,6 +111,8 @@ public class GameCanvas extends JPanel {
 				for (Container c : currentRoom.getContainer()) {
 					c.draw(g, currentRoom, currentDirection);
 				}
+				
+				
 
 			}
 		}
