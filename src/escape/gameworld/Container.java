@@ -21,8 +21,7 @@ public class Container extends Item {
 		NORTH, EAST, WEST, SOUTH
 	}
 
-	public Container(String n, String d, boolean movable, boolean pickable,
-			boolean l, String key) {
+	public Container(String n, String d, boolean movable, boolean pickable, boolean l, String key) {
 		super(n, d, movable, pickable);
 		this.locked = l;
 		this.key = key;
@@ -75,70 +74,95 @@ public class Container extends Item {
 		case "Bookshelf":
 			switch (d) {
 			case SOUTH:
-				g.drawImage(bookshelfSide, scaleImgPos(490), scaleImgPos(55),
-						scaleImgWidth(bookshelfSide), scaleImgHeight(bookshelfSide), null);
+				g.drawImage(bookshelfSide, scaleImgPos(490), scaleImgPos(55), scaleImgWidth(bookshelfSide),
+						scaleImgHeight(bookshelfSide), null);
 				break;
 			case WEST:
-				g.drawImage(bookshelf, scaleImgPos(20), scaleImgPos(35),
-						scaleImgWidth(bookshelf), scaleImgHeight(bookshelf), null);
+				g.drawImage(bookshelf, scaleImgPos(20), scaleImgPos(35), scaleImgWidth(bookshelf),
+						scaleImgHeight(bookshelf), null);
+				break;
+			}
+			break;
+
+		case "Living Room Bin":
+			switch (d) {
+			case NORTH:
+				g.drawImage(bin, scaleImgPos(18), scaleImgPos(255), scaleImgWidth(bin), scaleImgHeight(bin), null);
+				break;
+			case WEST:
+				g.drawImage(bin, scaleImgPos(490), scaleImgPos(255), scaleImgWidth(bin), scaleImgHeight(bin), null);
+				break;
+			}
+			break;
+
+		case "Living Room Safe":
+			switch (d) {
+			case SOUTH:
+				g.drawImage(safe, scaleImgPos(480), scaleImgPos(255), scaleImgWidth(safe), scaleImgHeight(safe), null);
+				break;
+			case WEST:
+				g.drawImage(safe, scaleImgPos(18), scaleImgPos(255), scaleImgWidth(safe), scaleImgHeight(safe), null);
+				break;
+			}
+			break;
+
+		case "Study Room Bin":
+			switch (d) {
+			case NORTH:
+				g.drawImage(bin, scaleImgPos(18), scaleImgPos(255), scaleImgWidth(bin), scaleImgHeight(bin), null);
+				break;
+			case WEST:
+				g.drawImage(bin, scaleImgPos(490), scaleImgPos(255), scaleImgWidth(bin), scaleImgHeight(bin), null);
+				break;
+			}
+			break;
+
+		case "Study Room Safe":
+			switch (d) {
+			case NORTH:
+				g.drawImage(safe, scaleImgPos(480), scaleImgPos(265), scaleImgWidth(safe), scaleImgHeight(safe), null);
+				break;
+			case EAST:
+				g.drawImage(safe, scaleImgPos(15), scaleImgPos(255), scaleImgWidth(safe), scaleImgHeight(safe), null);
+				break;
+			}
+			break;
+			
+		case "Kitchen Bin":
+			switch (d) {
+			case NORTH:
+				g.drawImage(bin, scaleImgPos(18), scaleImgPos(255), scaleImgWidth(bin), scaleImgHeight(bin), null);
+				break;
+			case WEST:
+				g.drawImage(bin, scaleImgPos(490), scaleImgPos(255), scaleImgWidth(bin), scaleImgHeight(bin), null);
+				break;
+			}
+			break;
+			
+		case "Fridge": 
+			switch(d) {
+			case NORTH:
+				g.drawImage(fridge, scaleImgPos(345), scaleImgPos(110), scaleImgWidth(fridge), scaleImgHeight(fridge), null);
+				break;
+			case EAST: //needs to be side view
+				g.drawImage(fridge, scaleImgPos(0), scaleImgPos(110), scaleImgWidth(fridge), scaleImgHeight(fridge), null);
 				break;
 			}
 			break;
 		
-		case "Living Room Bin":
-			switch (d) {
-			case NORTH:
-				g.drawImage(bin, scaleImgPos(18), scaleImgPos(255),
-						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				break;
+		case "Cupboard":
+			switch(d){
 			case WEST:
-				g.drawImage(bin, scaleImgPos(490), scaleImgPos(255),
-						scaleImgWidth(bin), scaleImgHeight(bin), null);
+				g.drawImage(cupboard,  scaleImgPos(30), scaleImgPos(220), scaleImgWidth(cupboard), scaleImgHeight(cupboard), null);
+				break;
+			case SOUTH: //needs to be side view
+				g.drawImage(cupboard,  scaleImgPos(410), scaleImgPos(220), scaleImgWidth(cupboard), scaleImgHeight(cupboard), null);
 				break;
 			}
 			break;
+		
 			
-		case "Living Room Safe":
-			switch (d) {
-			case SOUTH:
-				g.drawImage(safe, scaleImgPos(480), scaleImgPos(255),
-						scaleImgWidth(safe), scaleImgHeight(safe), null);
-				break;
-			case WEST:
-				g.drawImage(safe, scaleImgPos(18), scaleImgPos(255),
-						scaleImgWidth(safe), scaleImgHeight(safe), null);
-				break;
-			}
-			break;
-			
-		case "Study Room Bin":
-			switch (d) {
-			case NORTH:
-				g.drawImage(bin, scaleImgPos(18), scaleImgPos(255),
-						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				break;
-			case WEST:
-				g.drawImage(bin, scaleImgPos(490), scaleImgPos(255),
-						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				break;
-			}
-			break;
-			
-		case "Study Room Safe":
-			switch (d) {
-			case NORTH:
-				g.drawImage(safe, scaleImgPos(480), scaleImgPos(265),
-						scaleImgWidth(safe), scaleImgHeight(safe), null);
-				break;
-			case EAST:
-				g.drawImage(safe, scaleImgPos(15), scaleImgPos(255),
-						scaleImgWidth(safe), scaleImgHeight(safe), null);
-				break;
-			}
-			break;
-
 		}
-
 	}
 
 	/*---------------ITEM IMAGE SCALING---------------*/
@@ -163,5 +187,7 @@ public class Container extends Item {
 	private static final Image bookshelfSide = GameCanvas.loadImage("/images/bookshelfSide.png");
 	private static final Image bin = GameCanvas.loadImage("/images/bin.png");
 	private static final Image safe = GameCanvas.loadImage("/images/safe.png");
+	private static final Image fridge = GameCanvas.loadImage("/images/fridge.png");
+	private static final Image cupboard = GameCanvas.loadImage("/images/moderncupboard.png");
 
 }
