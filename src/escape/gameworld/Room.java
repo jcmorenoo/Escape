@@ -1,5 +1,6 @@
 package escape.gameworld;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,7 +13,7 @@ import java.util.HashMap;
  * @author semillkasz
  *
  */
-public class Room {
+public class Room implements Serializable {
 	private String name;
 
 	private ArrayList<Item> items = new ArrayList<Item>();

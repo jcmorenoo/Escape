@@ -123,9 +123,9 @@ public class GameCanvas extends JPanel {
 				}
 				
 				//TO DO: Draw items currently in player's inventory 
-				for (Item i : player.getItems()){
-					i.drawInventoryItem(g);
-				}
+//				for (Item i : player.getItems()){
+//					i.drawInventoryItem(g);
+//				}
 
 			}
 		}

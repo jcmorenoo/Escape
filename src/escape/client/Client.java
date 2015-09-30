@@ -31,28 +31,28 @@ public class Client extends Thread {
 
 	private String username; 
 	private int id;
-	
+
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
-	
+
 	private Socket socket;
 	private String ipAddress;
-	
+
 	private User user;
 	private Player player = null;
-	
+
 	public Player getPlayer() {
 		return player;
 	}
 
 	private Room room;
 	private ArrayList<Item> items = new ArrayList<Item>();
-	
+
 	private boolean winner = false;
 	private boolean running = true;
-	
+
 	private BlockingQueue<Event> events = new LinkedBlockingQueue<Event>();
-	
+
 	/**
 	 * Constructor for Client
 	 * @param ipAddress - empty means localhost
@@ -83,7 +83,7 @@ public class Client extends Thread {
 		initialiseConnection();
 
 	}
-	
+
 	/**
 	 * Method returning the user. Probably not needed
 	 * @return User
@@ -92,13 +92,13 @@ public class Client extends Thread {
 		return this.user;
 	}
 
-	
+
 	/**
 	 * Method which initialises connection to the Server. Called when constructing a new Client.
 	 */
-	
+
 	public void initialiseConnection(){
-		
+
 		try{
 			InetAddress ip = InetAddress.getByName(ipAddress);
 			this.socket = new Socket(ip, Server.PORT);
@@ -122,7 +122,7 @@ public class Client extends Thread {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		if(e instanceof TestEvent){
 			testSend();
 			//test.. keep sending testevent
@@ -130,35 +130,37 @@ public class Client extends Thread {
 		else if(e instanceof ConnectionAcceptedEvent){
 			ConnectionAcceptedEvent event = ((ConnectionAcceptedEvent)e);
 			//we prob wont need this user.setid thing..
-			this.user.setId(event.getId()); //prob not need this one
+			//			this.user.setId(event.getId()); //prob not need this one
 
-			
-			this.id = id;
-			
+
+			this.id = event.getId();
+
 			//send this to the server so the server knows the name and can initiate player
 			Event setup = new UserSetupEvent(this.username, this.id);
 			sendEvent(setup);
-			
-			
-			
+
+
+
 		}
 		else if(e instanceof GameWorldUpdateEvent){
 			//player changing direction.. changing the view of the user.
 			GameWorldUpdateEvent event = ((GameWorldUpdateEvent)e);
-			
+
 			//update the player and the room.
-			if (event.getPlayer().getName().equals(this.player.getName())){
-				this.player = event.getPlayer();
-				this.room = event.getRoom();
+			if(this.player != null){
+				if (event.getPlayer().getName().equals(this.player.getName())){
+					this.player = event.getPlayer();
+					this.room = event.getRoom();
+				}
 			}
-			
+
 			//if no player has been set to the client.
 			else if(this.player == null && event.getPlayer().getId() == this.id){
 				this.player = event.getPlayer();
 				this.room = event.getRoom();
 			}
 		}
-		
+
 		else if(e instanceof GameOverEvent){
 			GameOverEvent event = ((GameOverEvent)e);
 			//if the winner is this player then set player to winner. else false
@@ -166,12 +168,12 @@ public class Client extends Thread {
 				this.winner = true;
 				//call some function to say that the player won...
 			}
-			
+
 		}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * Method to send an Event to the server. Called when the user makes a movement, pickup item, 
 	 * drop item, or enter the room.
@@ -185,7 +187,7 @@ public class Client extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Client run method which will keep getting input from the server. If the input from the server is instance of
 	 * an Event, then push it into the queue of events.
@@ -193,9 +195,9 @@ public class Client extends Thread {
 	public void run(){
 		while(running){
 			//this will jst keep getting input from server and add it into the queue
-			
+
 			Object in = null;
-			
+
 			try {
 				in = input.readObject();
 			} catch (ClassNotFoundException e) {
@@ -203,12 +205,12 @@ public class Client extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			//if in is null, do nothing
 			if(in == null){
 				continue;
 			}
-			
+
 			//if in is not an event... do nothing..
 			if(!(in instanceof Event)){
 				continue;
@@ -218,10 +220,11 @@ public class Client extends Thread {
 				this.events.offer((Event) in);
 			}
 			//for testing only, will keep sending test event to server.
-//			testSend();
+			//			testSend();
+			update();
 		}
 	}
-	
+
 	/**
 	 * Send Event object TestEvent to the Server.
 	 */
@@ -230,7 +233,7 @@ public class Client extends Thread {
 			Event e = new TestEvent();
 			output.writeObject(e);
 			output.flush();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
