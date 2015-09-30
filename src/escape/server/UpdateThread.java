@@ -24,11 +24,11 @@ import escape.gameworld.Room;
  */
 
 public class UpdateThread extends Thread {
-	
+
 	private Server server;
 	private GameWorld game;
-//	private Game game; field containing the game
-	
+	//	private Game game; field containing the game
+
 	/**
 	 * Constructor for UpdateThread
 	 * @param server
@@ -37,78 +37,80 @@ public class UpdateThread extends Thread {
 		this.server = server;
 		setDaemon(true);// daemon meaning low prio, and stops when no user thread running... idk what it means really
 		this.game = server.getGameWorld();
-		
-		
+
+
 	}
-	
+
 	/**
 	 * Method which starts the UpdateThread.
 	 * This will handle all the updates and what will be done when the update is received.
 	 */
 	public void run(){
-		Update update = null;
-		Event event = null;
-		
+
+
 		while(true){
-				// handles all updates?? updates to game and then send game updates to players?
-				try {
-					update = server.getUpdates().take();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				
-				event = update.getEvent();
-				
-				if(event instanceof TestEvent){
-					TestEvent testEvent = (TestEvent) event;
-					System.out.println(testEvent.message);
-					
-				}
-				
-				else if(event instanceof UserSetupEvent){
-					UserSetupEvent setup = (UserSetupEvent)event;
-					int id = setup.getId();
-					String username = setup.getName();
-					Room startingRoom = server.getGameWorld().getRooms().get("Main Hall");
-					//initialise a new player ..
-					Player p = new Player(id,username,startingRoom);
-					
-					//hmm maybe we should send this to everyone??
-					GameWorldUpdateEvent e = new GameWorldUpdateEvent(p,startingRoom);
-					
-					//send to client
-					sendClient((Event)e,server.getClients().get(id));
-					
-					
-					
-				}
-				
-				else if(event instanceof ChangeRoomEvent){
-					ChangeRoomEvent e = (ChangeRoomEvent) event;
-					Player player = e.getPlayer();
-					Room room = e.getRoom();
-					//try to make the player enter the room
-					//if exception.. send new event containing current room.
-				}
-				else if(event instanceof ChangeDirectionEvent){
-					ChangeDirectionEvent e = (ChangeDirectionEvent) event;
-				}
-				else if(event instanceof DropItemEvent){
-					DropItemEvent e = (DropItemEvent) event;
-				}
-				else if(event instanceof EnterRoomEvent){
-					EnterRoomEvent e = (EnterRoomEvent) event;
-				}
-				else if(event instanceof InspectItemEvent){
-					InspectItemEvent e = (InspectItemEvent) event;
-				}
-				else if(event instanceof PickUpItemEvent){
-					PickUpItemEvent e = (PickUpItemEvent) event;
-				}
-							
+			Update update = null;
+			Event event = null;
+			// handles all updates?? updates to game and then send game updates to players?
+			try {
+				update = server.getUpdates().take();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			event = update.getEvent();
+
+			if(event instanceof TestEvent){
+				TestEvent testEvent = (TestEvent) event;
+				System.out.println(testEvent.message);
+
+			}
+
+			else if(event instanceof UserSetupEvent){
+				System.out.println("setup received");
+				UserSetupEvent setup = (UserSetupEvent)event;
+				int id = setup.getId();
+				String username = setup.getName();
+				Room startingRoom = server.getGameWorld().getRooms().get("Main Hall");
+				//initialise a new player ..
+				Player p = new Player(id,username,startingRoom);
+
+				//hmm maybe we should send this to everyone??
+				GameWorldUpdateEvent e = new GameWorldUpdateEvent(p,startingRoom);
+
+				//send to client
+				sendClient((Event)e,server.getClients().get(id));
+
+
+
+			}
+
+			else if(event instanceof ChangeRoomEvent){
+				ChangeRoomEvent e = (ChangeRoomEvent) event;
+				Player player = e.getPlayer();
+				Room room = e.getRoom();
+				//try to make the player enter the room
+				//if exception.. send new event containing current room.
+			}
+			else if(event instanceof ChangeDirectionEvent){
+				ChangeDirectionEvent e = (ChangeDirectionEvent) event;
+			}
+			else if(event instanceof DropItemEvent){
+				DropItemEvent e = (DropItemEvent) event;
+			}
+			else if(event instanceof EnterRoomEvent){
+				EnterRoomEvent e = (EnterRoomEvent) event;
+			}
+			else if(event instanceof InspectItemEvent){
+				InspectItemEvent e = (InspectItemEvent) event;
+			}
+			else if(event instanceof PickUpItemEvent){
+				PickUpItemEvent e = (PickUpItemEvent) event;
+			}
+
 		}
 	}
-	
+
 	/**
 	 * Send an event to the player.
 	 * @param event
@@ -116,13 +118,13 @@ public class UpdateThread extends Thread {
 	 */
 	public void sendClient(Event event, Connection player){
 		try {
-			player.getOutput().reset();
+//			player.getOutput().reset();
 			player.getOutput().writeObject(event);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Method to send an event to all players in the game.
 	 * @param event
