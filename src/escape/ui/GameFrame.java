@@ -119,7 +119,11 @@ public class GameFrame extends JFrame implements ActionListener {
 		this.loadGame(loadGameButton);
 	}
 
-	void navBtns() {
+	void gameBtns() {
+		JButton goForwardButton = new JButton("Forward");
+		btnPanel.add(goForwardButton);
+		forward(goForwardButton);
+
 		JButton northButton = new JButton("^");
 		btnPanel.add(northButton);
 		north(northButton);
@@ -176,39 +180,39 @@ public class GameFrame extends JFrame implements ActionListener {
 					final String gameID = JOptionPane.showInputDialog(null,
 							gameIdPrompt, "Game ID",
 							JOptionPane.INFORMATION_MESSAGE);
-					
+
 					server = new Server(numPlayers, gameID.toString());
 					server.start();
-					
+
 					// Testing
-//					game = new GameWorld(gameID.toString());
-//					game.addPlayer(player);
+					game = new GameWorld(gameID.toString());
+					game.addPlayer(player);
 					System.out.println("Game Created");
 					System.out.println("Number of players: " + numPlayers);
 					System.out.println(username + " is in the "
 							+ player.getRoom().getName());
 					System.out.println("Game ID: " + gameID);
-//					System.out.println(player.getDirection().toString());
+					// System.out.println(player.getDirection().toString());
 
 					// TESTING: rooms, containers, items
-//					ArrayList<Room> it = game.getRoomList();
-//					for (int i = 0; i < it.size(); i++) {
-//						Room r = it.get(i);
-//						System.out.println("\n  ROOMS:");
-//						System.out.println(r.getName());
-//						System.out.println("  ITEMS IN ROOM:");
-//						for (Item item : r.getItems()) {
-//							System.out.println(item.getName());
-//						}
-//						for (Container c : r.getContainer()) {
-//							System.out.println("  CONTAINERS:");
-//							System.out.println(c.getName());
-//							System.out.println("  ITEMS IN CONTAINER:");
-//							for (Item item : c.getItems()) {
-//								System.out.println(item.getName());
-//							}
-//						}
-//					}
+					// ArrayList<Room> it = game.getRoomList();
+					// for (int i = 0; i < it.size(); i++) {
+					// Room r = it.get(i);
+					// System.out.println("\n  ROOMS:");
+					// System.out.println(r.getName());
+					// System.out.println("  ITEMS IN ROOM:");
+					// for (Item item : r.getItems()) {
+					// System.out.println(item.getName());
+					// }
+					// for (Container c : r.getContainer()) {
+					// System.out.println("  CONTAINERS:");
+					// System.out.println(c.getName());
+					// System.out.println("  ITEMS IN CONTAINER:");
+					// for (Item item : c.getItems()) {
+					// System.out.println(item.getName());
+					// }
+					// }
+					// }
 
 					// Testing purposes
 					setSt(1);
@@ -217,14 +221,14 @@ public class GameFrame extends JFrame implements ActionListener {
 					frame.remove(menuCanvas);
 					menuCanvas = new GameCanvas(player);
 					btnPanel.removeAll();
-					navBtns();
+					gameBtns();
 					frame.add(menuCanvas, BorderLayout.NORTH);
 					frame.pack();
 				}
 
 				// Join a game
 				if (gameType == 0) {
-					System.out.println("Join a game");
+					// System.out.println("Join a game");
 
 					// Lets the player enter a username
 					JTextField nameInput = new JTextField();
@@ -233,8 +237,8 @@ public class GameFrame extends JFrame implements ActionListener {
 					final String username = JOptionPane.showInputDialog(null,
 							usernamePrompt, "Player Username",
 							JOptionPane.INFORMATION_MESSAGE);
-//					player = new Player(1, username, new Room("Main Hall",
-//							false, "No key"));
+					// player = new Player(1, username, new Room("Main Hall",
+					// false, "No key"));
 
 					// Lets the player enter IP address of the server
 					JTextField serverAddrInput = new JTextField();
@@ -252,24 +256,24 @@ public class GameFrame extends JFrame implements ActionListener {
 					final String gameID = JOptionPane.showInputDialog(null,
 							gameIdPrompt, "Game ID",
 							JOptionPane.INFORMATION_MESSAGE);
-					
+
 					client = new Client(serverAddr.toString(), username);
 					client.start();
-					
-					while (client.getPlayer() == null){
-						if (client.getPlayer() != null){
-							System.out.println("Client player name:" + client.getPlayer().getName());
-							break;
-						}
-					}
 
-					
+					// while (client.getPlayer() == null){
+					if (client.getPlayer() == null) {
+						// System.out.println("Client player name:" +
+						// client.getPlayer().getName());
+						// break;
+						System.out.println("Client has no player");
+					}
+					// }
 
 					// Testing
-//					System.out.println(username + " is in the "
-//							+ player.getRoom().getName());
-//					System.out.println("Server IP Address: " + serverAddr);
-//					System.out.println("Game ID: " + gameID);
+					// System.out.println(username + " is in the "
+					// + player.getRoom().getName());
+					// System.out.println("Server IP Address: " + serverAddr);
+					// System.out.println("Game ID: " + gameID);
 
 					// Testing purposes
 					setSt(1);
@@ -278,7 +282,7 @@ public class GameFrame extends JFrame implements ActionListener {
 					frame.remove(menuCanvas);
 					menuCanvas = new GameCanvas(client.getPlayer());
 					btnPanel.removeAll();
-					navBtns();
+					gameBtns();
 					frame.add(menuCanvas, BorderLayout.NORTH);
 					mouse.addMouseListener(new MouseEvents());
 					frame.add(mouse);
@@ -298,19 +302,20 @@ public class GameFrame extends JFrame implements ActionListener {
 		});
 	}
 
-	public void north(JButton north) {
-		north.addActionListener(new ActionListener() {
+	public void forward(JButton goForward) {
+		goForward.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("North Button pressed");
+				System.out.println("Walking Forward");
 				switch (player.getRoom().getName()) {
 				case "Main Hall":
 					System.out.println("Going through Main Door");
 					break;
 				case "Hall - Bedroom":
 					player.enterRoom(game.getRooms().get("Bedroom"));
-					client.sendEvent(new EnterRoomEvent(client.getPlayer(), server.getGameWorld().getRooms().get("Bedroom")));
+					// client.sendEvent(new EnterRoomEvent(client.getPlayer(),
+					// server.getGameWorld().getRooms().get("Bedroom")));
 					break;
 				case "Hall - Living Room":
 					player.enterRoom(game.getRooms().get("Living Room"));
@@ -322,6 +327,57 @@ public class GameFrame extends JFrame implements ActionListener {
 					player.enterRoom(game.getRooms().get("Kitchen"));
 					break;
 				}
+
+				if (player.getDirection().equals(Player.Direction.SOUTH)) {
+					switch (player.getRoom().getName()) {
+					case "Kitchen":
+						player.enterRoom(game.getRooms().get("Hall - Kitchen"));
+						// client.sendEvent(new
+						// EnterRoomEvent(client.getPlayer(),
+						// server.getGameWorld().getRooms().get("Bedroom")));
+						break;
+					case "Living Room":
+						player.enterRoom(game.getRooms().get(
+								"Hall - Living Room"));
+						break;
+					case "Study":
+						player.enterRoom(game.getRooms().get("Hall - Study"));
+						break;
+					case "Bedroom":
+						player.enterRoom(game.getRooms().get("Hall - Bedroom"));
+						break;
+					}
+					player.setDirection(Player.Direction.NORTH);
+				}
+			}
+		});
+	}
+
+	public void north(JButton north) {
+		north.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("North Button pressed");
+				// switch (player.getRoom().getName()) {
+				// case "Main Hall":
+				// System.out.println("Going through Main Door");
+				// break;
+				// case "Hall - Bedroom":
+				// player.enterRoom(game.getRooms().get("Bedroom"));
+				// client.sendEvent(new EnterRoomEvent(client.getPlayer(),
+				// server.getGameWorld().getRooms().get("Bedroom")));
+				// break;
+				// case "Hall - Living Room":
+				// player.enterRoom(game.getRooms().get("Living Room"));
+				// break;
+				// case "Hall - Study":
+				// player.enterRoom(game.getRooms().get("Study"));
+				// break;
+				// case "Hall - Kitchen":
+				// player.enterRoom(game.getRooms().get("Kitchen"));
+				// break;
+				// }
 
 				switch (player.getRoom().getName()) {
 				case "Living Room":
@@ -342,8 +398,9 @@ public class GameFrame extends JFrame implements ActionListener {
 				System.out.println("East Button pressed");
 				switch (player.getRoom().getName()) {
 				case "Main Hall":
-//					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
-					client.sendEvent(new EnterRoomEvent(client.getPlayer(), server.getGameWorld().getRooms().get("Hall - Bedroom")));
+					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
+					// client.sendEvent(new EnterRoomEvent(client.getPlayer(),
+					// server.getGameWorld().getRooms().get("Hall - Bedroom")));
 
 					break;
 				case "Hall - Bedroom":
@@ -434,15 +491,14 @@ public class GameFrame extends JFrame implements ActionListener {
 	class MouseEvents implements MouseListener {
 		public void mousePressed(MouseEvent e) {
 
-			
-//			if (player.getRoom().getName().equals("Hall")) {
-//				if (e.getX() > 36 && e.getX() < 116 && e.getY() > 220
-//						&& e.getY() < 377) {
-//					System.out.println("Clicked on Living Room Door");
-//					player.leaveRoom();
-//					player.enterRoom(new Room("Living Room", false, "No key"));
-//				}
-//			}
+			// if (player.getRoom().getName().equals("Hall")) {
+			// if (e.getX() > 36 && e.getX() < 116 && e.getY() > 220
+			// && e.getY() < 377) {
+			// System.out.println("Clicked on Living Room Door");
+			// player.leaveRoom();
+			// player.enterRoom(new Room("Living Room", false, "No key"));
+			// }
+			// }
 		}
 
 		@Override
@@ -469,6 +525,5 @@ public class GameFrame extends JFrame implements ActionListener {
 	public Client getClient() {
 		return this.client;
 	}
-
 
 }
