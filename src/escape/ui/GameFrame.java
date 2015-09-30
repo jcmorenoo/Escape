@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +23,7 @@ import escape.gameworld.Container;
 import escape.gameworld.GameWorld;
 import escape.gameworld.Item;
 import escape.gameworld.Player;
+import escape.gameworld.Player.Direction;
 import escape.gameworld.Room;
 
 public class GameFrame extends JFrame implements ActionListener {
@@ -413,6 +415,52 @@ public class GameFrame extends JFrame implements ActionListener {
 			// player.enterRoom(new Room("Living Room", false, "No key"));
 			// }
 			// }
+			
+			if(player.getRoom().getName().equals("Main Hall")){
+				return;
+			}
+			else{
+				HashMap<String, String[][]> currentLoc =  player.getRoom().getItemsByDirection();
+				Direction d = player.getDirection();
+				if (currentLoc==null){
+					System.out.println("currentLoc null");
+				}
+				String[][] items = null;
+				items = currentLoc.get("North");
+				
+				System.out.println(currentLoc.get("North"));
+				switch (d){
+					case NORTH:
+						items = (String[][]) currentLoc.get("North");
+						break;
+					case SOUTH:
+						items = (String[][]) currentLoc.get("South");
+						break;
+					case EAST:
+						items = (String[][]) currentLoc.get("East");
+						break;
+					case WEST:
+						items = (String[][]) currentLoc.get("West");
+						break;
+				}
+				if(items == null) System.out.println("Items null");
+				for(int i = 5; i >= 0; i--){
+					for(int j = 2; j >=0; j--){
+						if (!items[j][i].equals("")){
+							Item it = player.getRoom().getItem(items[j][i]);
+							if(it.getBoundingBox().contains(e.getX(), e.getY())){
+								game.setSelectedItem(it);
+								System.out.println(game.getSelectedItem().getName());
+								return;
+							}
+						}
+						
+					}
+				}
+				
+			}
+			
+			
 		}
 
 		@Override

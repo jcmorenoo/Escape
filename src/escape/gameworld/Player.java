@@ -82,7 +82,7 @@ public class Player {
 	}
 
 	public boolean pickUpItem(Item i) {
-		if (!i.isMovable())
+		if (!i.isPickable())
 			return false;
 		
 		items.add(i);

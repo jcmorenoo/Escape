@@ -45,6 +45,10 @@ public class GameWorld {
 		players.add(p);
 
 	}
+	
+	public Item getItem(String s){
+		return items.get(s);
+	}
 
 	/**
 	 * Initialises all the items in the game.
@@ -52,44 +56,44 @@ public class GameWorld {
 	 */
 	public void initialiseItems() {
 		// Pickable
-		items.put("Paper", new Item("Paper", "A scrap of paper.", true, true));
-		items.put("Key", new Item("Key", "A door key.", true, true));
+		items.put("Paper", new Item("Paper", "A scrap of paper.", true));
+		items.put("Key", new Item("Key", "A door key.", true));
 		items.put("Study Room Safe Key", new Item("Study Room Safe Key",
-				"A modern-looking key", true, true));
+				"A modern-looking key", true));
 		items.put("Bedroom Safe Key", new Item("Bedroom Safe Key",
-				"A modern-look key", true, true));
-		items.put("Cupboard Key", new Item("Cupboard Key", "A small key", true,
+				"A modern-look key", true));
+		items.put("Cupboard Key", new Item("Cupboard Key", "A small key",
 				true));
-		items.put("Study Room Key", new Item("Study Room Key", "A room key", true,
+		items.put("Study Room Key", new Item("Study Room Key", "A room key",
 				true));
 		// items.put("Lamp", new Item("Lamp", "An old-fashioned lamp", true,
 		// true));
 		items.put("Kitchen Picture", new Item("Kitchen Picture",
-				"A family picture", true, true));
+				"A family picture", true));
 		items.put("Living Room Picture", new Item("Living Room Picture",
-				"A family picture", true, true));
+				"A family picture", true));
 		items.put("Matches", new Item("Matches",
-				"Matches! Might be useful in the future", true, true));
+				"Matches! Might be useful in the future", true));
 		// Unmovables
 		items.put("Sofa", new Item("Sofa", "A red sofa fill of cat fur.",
-				false, false));
-		items.put("Desk", new Item("Desk", "An office desk", false, false));
+				 false));
+		items.put("Desk", new Item("Desk", "An office desk",  false));
 		items.put("Chair", new Item("Chair", "An comfortable working chair",
-				false, false));
-		items.put("Bed", new Item("Bed", "A neatly made bed", false, false));
+				 false));
+		items.put("Bed", new Item("Bed", "A neatly made bed",  false));
 		items.put("Bedroom Lamp", new Item("Bedroom Lamp", "An old-fashioned lamp",
-				false, false));
+				false));
 		items.put("Kitchen Table", new Item("Kitchen Table",
-				"An old, wooden kitchen table", false, false));
-		items.put("Frame", new Item("Frame", "An empty picture frame", false,
+				"An old, wooden kitchen table", false));
+		items.put("Frame", new Item("Frame", "An empty picture frame", 
 				false));
-		items.put("Portrait", new Item("Portrait", "A family portrait", false,
+		items.put("Portrait", new Item("Portrait", "A family portrait", 
 				false));
-		items.put("Long Table", new Item("Long Table", "A centre table", false, false));
-		items.put("Short Table", new Item("Short Table", "A small modern table", false, false));
+		items.put("Long Table", new Item("Long Table", "A centre table", false));
+		items.put("Short Table", new Item("Short Table", "A small modern table",  false));
 		
-		items.put("Study Door", new Item("Study Door", "Door leading back to the Hall", false, false));
-		items.put("Bedroom Door", new Item("Bedroom Door", "Door leading back to the Hall", false, false));
+		items.put("Study Door", new Item("Study Door", "Door leading back to the Hall", false));
+		items.put("Bedroom Door", new Item("Bedroom Door", "Door leading back to the Hall",false));
 	}
 
 	/**
@@ -100,44 +104,44 @@ public class GameWorld {
 	public void initialiseContainers() {
 		// empty containers
 		containers.put("Fridge", new Container("Fridge",
-				"An old, empty fridge.", false, false, false, null));
+				"An old, empty fridge.", false, false, null));
 		// rubbish bins
 		containers.put("Study Room Bin", new Container("Study Room Bin",
-				"A rubbish bin", false, false, false, null));
+				"A rubbish bin", false, false, null));
 		containers.put("Living Room Bin", new Container("Living Room Bin",
-				"A rubbish bin", false, false, false, null));
+				"A rubbish bin", false, false, null));
 		containers.put("Bedroom Bin", new Container("Bedroom Bin",
-				"A rubbish bin", false, false, false, null));
+				"A rubbish bin",  false, false, null));
 		containers.put("Kitchen Bin", new Container("Kitchen Bin",
-				"A rubbish bin", false, false, false, null));
+				"A rubbish bin", false, false, null));
 		// Safe
 		containers.put("Study Room Safe", new Container("Study Room Safe",
-				"This safe can be opened by a number combination", false,
+				"This safe can be opened by a number combination", 
 				false, true, ("Paper")));
 		containers.get("Study Room Safe").add(items.get("Bedroom Safe Key"));
 		containers.put("Living Room Safe", new Container("Living Room Safe",
-				"This safe can be opened by a photo", false, false, true,
+				"This safe can be opened by a photo",  false, true,
 				("Kitchen Picture")));
 		containers.get("Living Room Safe").add(items.get("Cupboard Key"));
 		containers.put("Bedroom Safe", new Container("Bedroom Safe",
-				"This safe can be opened by a key", false, false, true,
+				"This safe can be opened by a key", false, true,
 				("Study Rooms Safe Key")));
 		containers.get("Bedroom Safe").add(items.get("Key"));
 		// Clue containers
 		containers.put("Bookshelf", new Container("Bookshelf",
-				"A bookshelf with alphabetically arranged books.", false,
+				"A bookshelf with alphabetically arranged books.",
 				false, false, null));
 		containers.get("Bookshelf").add(items.get("Paper"));
 		containers.put("Sidetable", new Container("Sidetable",
-				"A wooden side table.", false, false, false, null));
+				"A wooden side table.", false, false, null));
 		containers.get("Sidetable").add(items.get("Study Room Key"));
 		containers
 				.put("Cupboard", new Container("Cupboard",
-						"A cupboard covered with spiderweb", false, false,
+						"A cupboard covered with spiderweb", false,
 						false, null));
 		containers.get("Cupboard").add(items.get("Matches"));
 		containers.put("Lamp", new Container("Lamp", "An old-fashioned lamp",
-				true, true, true, "Matches"));
+			 true, true, "Matches"));
 
 		
 	}
@@ -304,6 +308,9 @@ public class GameWorld {
 	
 	public void setSelectedItem(Item i){
 		selectedItem = i; 
+	}
+	public Item getSelectedItem(){
+		return this.selectedItem; 
 	}
 	
 	public void setSelectedInventory(Item i){

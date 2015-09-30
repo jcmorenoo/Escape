@@ -31,6 +31,20 @@ public class Room {
 		this.key = key;
 //		container.add(getBin());
 	}
+	
+	public Item getItem(String s){
+		for (Item i: items){
+			if (i.getName().equals(s)){
+				return i;
+			}
+		}
+		for (Container con : container){
+			if (con.getName().equals(s)){
+				return con;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Add player to the list of players.
@@ -121,8 +135,6 @@ public class Room {
 	 * @param items
 	 */
 	public void setItemsByDirection(String s, String[][] items) {
-		HashMap<String, String[][]> directionItems = new HashMap<>();
-		directionItems.put(s, items);
-		this.itemsByDirection = directionItems;
+		this.itemsByDirection.put(s, items);
 	}
 }
