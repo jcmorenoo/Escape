@@ -9,7 +9,7 @@ import escape.gameworld.Room;
  */
 public class EnterRoomEvent implements Event {
 
-	private Room room;
+	private String room;
 	private Player player;
 	
 	/**
@@ -17,7 +17,7 @@ public class EnterRoomEvent implements Event {
 	 * @param player
 	 * @param room
 	 */
-	public EnterRoomEvent(Player player, Room room){
+	public EnterRoomEvent(Player player, String room){
 		this.player = player;
 		this.room = room;
 	}
@@ -34,7 +34,7 @@ public class EnterRoomEvent implements Event {
 	 * Method returning the Room which the player wants to enter.
 	 * @return Room
 	 */
-	public Room getRoom(){
+	public String getRoom(){
 		return this.room;
 	}
 	

@@ -74,7 +74,8 @@ public class UpdateThread extends Thread {
 				Room startingRoom = server.getGameWorld().getRooms().get("Main Hall");
 				//initialise a new player ..
 				Player p = new Player(id,username,startingRoom);
-
+				
+				game.addPlayer(p);
 				//hmm maybe we should send this to everyone??
 				GameWorldUpdateEvent e = new GameWorldUpdateEvent(p,startingRoom);
 
@@ -100,6 +101,17 @@ public class UpdateThread extends Thread {
 			}
 			else if(event instanceof EnterRoomEvent){
 				EnterRoomEvent e = (EnterRoomEvent) event;
+				String roomName = e.getRoom();
+				Room room = game.getRooms().get(roomName);
+				Player p = e.getPlayer();
+				
+				game.enterRoom(p, room);
+				
+				Room newRoom = p.getRoom();
+				
+				GameWorldUpdateEvent ev = new GameWorldUpdateEvent(p,newRoom);
+				sendClient((Event)ev,server.getClients().get(p.getId()));
+				
 			}
 			else if(event instanceof InspectItemEvent){
 				InspectItemEvent e = (InspectItemEvent) event;

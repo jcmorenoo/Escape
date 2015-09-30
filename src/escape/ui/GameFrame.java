@@ -264,6 +264,7 @@ public class GameFrame extends JFrame implements ActionListener {
 						System.out.println("Client has no player");
 						if (client.getPlayer() != null) {
 							System.out.println("Client player name:" + client.getPlayer().getName());
+							player = client.getPlayer();
 							break;
 							
 						}

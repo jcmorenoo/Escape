@@ -154,7 +154,6 @@ public class Client extends Thread {
 				if (event.getPlayer().getName().equals(this.player.getName())){
 					this.player = event.getPlayer();
 					this.room = event.getRoom();
-					System.out.println("client initialised");
 				}
 			}
 
