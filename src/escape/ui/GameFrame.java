@@ -31,7 +31,7 @@ public class GameFrame extends JFrame implements ActionListener {
 	private static Player player;
 	private JPanel mouse = new JPanel();
 	private GameWorld game;
-	
+
 	private Client client;
 
 	// Testing purposes for now
@@ -55,14 +55,22 @@ public class GameFrame extends JFrame implements ActionListener {
 		setTitle("Escape!");
 		JMenuBar headerMenu = new JMenuBar();
 
+		JMenuItem saveGame = new JMenuItem("Save Game");
 		JMenuItem help = new JMenuItem("Help");
 		JMenuItem exit = new JMenuItem("Exit");
 
+		headerMenu.add(saveGame);
 		headerMenu.add(help);
 		headerMenu.add(exit);
 
 		// Initialise Menu Screen Buttons
 		menuBtns();
+
+		saveGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Save Game");
+			}
+		});
 
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -168,7 +176,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
 					// Testing
 					game = new GameWorld(gameID.toString());
-					game.addPlayer(player); 
+					game.addPlayer(player);
 					System.out.println("Game Created");
 					System.out.println("Number of players: " + numPlayers);
 					System.out.println(username + " is in the "
@@ -176,21 +184,21 @@ public class GameFrame extends JFrame implements ActionListener {
 					System.out.println("Game ID: " + gameID);
 					System.out.println(player.getDirection().toString());
 
-					//TESTING: rooms, containers, items
+					// TESTING: rooms, containers, items
 					ArrayList<Room> it = game.getRoomList();
 					for (int i = 0; i < it.size(); i++) {
 						Room r = it.get(i);
 						System.out.println("\n  ROOMS:");
 						System.out.println(r.getName());
 						System.out.println("  ITEMS IN ROOM:");
-						for(Item item : r.getItems()){
+						for (Item item : r.getItems()) {
 							System.out.println(item.getName());
 						}
-						for(Container c : r.getContainer()){
+						for (Container c : r.getContainer()) {
 							System.out.println("  CONTAINERS:");
 							System.out.println(c.getName());
 							System.out.println("  ITEMS IN CONTAINER:");
-							for(Item item : c.getItems()){
+							for (Item item : c.getItems()) {
 								System.out.println(item.getName());
 							}
 						}
@@ -295,8 +303,8 @@ public class GameFrame extends JFrame implements ActionListener {
 					player.enterRoom(game.getRooms().get("Kitchen"));
 					break;
 				}
-				
-				switch (player.getRoom().getName()){
+
+				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
@@ -330,8 +338,8 @@ public class GameFrame extends JFrame implements ActionListener {
 					player.enterRoom(game.getRooms().get("Hall - Study"));
 					break;
 				}
-				
-				switch (player.getRoom().getName()){
+
+				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
@@ -348,15 +356,15 @@ public class GameFrame extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("South Button pressed");
-				
-				switch (player.getRoom().getName()){
+
+				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
 				case "Study":
 					player.movePlayer(Player.Direction.SOUTH);
 				}
-			}	
+			}
 		});
 	}
 
@@ -382,8 +390,8 @@ public class GameFrame extends JFrame implements ActionListener {
 					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
 					break;
 				}
-				
-				switch (player.getRoom().getName()){
+
+				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
@@ -431,12 +439,12 @@ public class GameFrame extends JFrame implements ActionListener {
 		public void mouseExited(MouseEvent e) {
 		}
 	}
-	
-	public void setClient(Client c){
+
+	public void setClient(Client c) {
 		this.client = c;
 	}
-	
-	public Client getClient(){
+
+	public Client getClient() {
 		return this.client;
 	}
 

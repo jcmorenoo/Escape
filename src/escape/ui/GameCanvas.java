@@ -47,7 +47,6 @@ public class GameCanvas extends JPanel {
 	public GameCanvas(Player p) {
 		player = p;
 		getPreferredSize();
-
 	}
 
 	public void paint(Graphics g) {
