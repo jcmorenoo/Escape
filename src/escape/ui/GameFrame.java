@@ -98,7 +98,7 @@ public class GameFrame extends JFrame implements ActionListener {
 		// frame.add(mouse);
 
 		frame.add(menuCanvas, BorderLayout.NORTH);
-		frame.add(btnPanel);
+		frame.add(btnPanel, BorderLayout.SOUTH);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setJMenuBar(headerMenu);
