@@ -52,7 +52,6 @@ public class GameWorld {
 
 	/**
 	 * Initialises all the items in the game.
-	 * 
 	 */
 	public void initialiseItems() {
 		// Pickable

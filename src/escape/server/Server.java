@@ -37,7 +37,7 @@ public class Server extends Thread{
 	private GameWorld game;
 
 	//should pass game
-	public Server(int players){
+	public Server(int players, String gameID ){
 		this.limit = players;
 		try {
 			this.serverSocket = new ServerSocket();

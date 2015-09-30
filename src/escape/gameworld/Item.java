@@ -12,22 +12,22 @@ public class Item {
 	private double y;
 	private String name;
 	private String description;
-//	private int positionX;
-//	private int positionY;
+	// private int positionX;
+	// private int positionY;
 
-//	private enum direction {
-//		NORTH, EAST, WEST, SOUTH
-//	}
+	// private enum direction {
+	// NORTH, EAST, WEST, SOUTH
+	// }
 
-	//private boolean movable;
+	// private boolean movable;
 	private boolean pickable;
-	
+
 	private Rectangle boundingBox;
 
-	public Item(String n, String d,  boolean pickable) {
+	public Item(String n, String d, boolean pickable) {
 		this.name = n;
 		this.description = d;
-		//this.movable = movable;
+		// this.movable = movable;
 		this.pickable = pickable;
 	}
 
@@ -39,7 +39,6 @@ public class Item {
 		this.boundingBox = boundingBox;
 	}
 
-	
 	public double getX() {
 		return x;
 	}
@@ -72,13 +71,13 @@ public class Item {
 		this.description = description;
 	}
 
-//	public boolean isMovable() {
-//		return movable;
-//	}
-//
-//	public void setMovable(boolean movable) {
-//		this.movable = movable;
-//	}
+	// public boolean isMovable() {
+	// return movable;
+	// }
+	//
+	// public void setMovable(boolean movable) {
+	// this.movable = movable;
+	// }
 
 	public boolean isPickable() {
 		return pickable;
@@ -91,33 +90,55 @@ public class Item {
 	public void pickUp(Player p) {
 		p.pickUpItem(this);
 	}
-	
+
 	/**
 	 * Creates a bounding box for this item
 	 * 
 	 * 
-	 * @param x x position in the game canvas
-	 * @param y y position in the game canvas
-	 * @param w width of the item
-	 * @param h height of the item
+	 * @param x
+	 *            x position in the game canvas
+	 * @param y
+	 *            y position in the game canvas
+	 * @param w
+	 *            width of the item
+	 * @param h
+	 *            height of the item
 	 */
-	public void boundingBox(int x, int y, int w, int h){
+	public void boundingBox(int x, int y, int w, int h) {
 		this.boundingBox = new Rectangle(x, y, w, h);
 	}
 
-	/*---------------DRAWING ITEM IMAGE---------------*/
+	/**
+	 * Draws all the items in the room the player is currently in, and in the
+	 * direction that the player is facing
+	 * 
+	 * @param g
+	 *            Graphics
+	 * @param r
+	 *            Current room player is in
+	 * @param d
+	 *            Direction player is facing
+	 */
 	public void draw(Graphics g, Room r, Direction d) {
-		// String roomName = r.getName();
 
 		for (Item i : r.getItems()) {
 			drawItem(g, i, d);
 		}
 	}
-	
 
 	/*---------------ITEM IMAGE DIRECTION HELPER METHOD---------------*/
 
-	
+	/**
+	 * Draws an item depending on the player's direction
+	 * 
+	 * @param g
+	 *            Graphics
+	 * @param i
+	 *            Item to be drawn
+	 * @param d
+	 *            Player's current direction
+	 */
+
 	private void drawItem(Graphics g, Item i, Direction d) {
 		String itemName = i.getName();
 
@@ -138,7 +159,7 @@ public class Item {
 				break;
 			}
 			break;
-			
+
 		case "Bedroom Door":
 			switch (d) {
 			case SOUTH:
@@ -149,11 +170,12 @@ public class Item {
 				break;
 			}
 			break;
-			
+
 		case "Bedroom Lamp":
 			switch (d) {
 			case NORTH:
-				g.drawImage(bedroomLamp, scaleImgPos(490), scaleImgPos(120), scaleImgWidth(bedroomLamp),
+				g.drawImage(bedroomLamp, scaleImgPos(490), scaleImgPos(120),
+						scaleImgWidth(bedroomLamp),
 						scaleImgHeight(bedroomLamp), null);
 				boundingBox(scaleImgPos(490), scaleImgPos(120), scaleImgWidth(bedroomLamp),
 						scaleImgHeight(bedroomLamp));
@@ -161,14 +183,15 @@ public class Item {
 				
 				break;
 			case EAST:
-				g.drawImage(bedroomLamp, scaleImgPos(18), scaleImgPos(120), scaleImgWidth(bedroomLamp),
+				g.drawImage(bedroomLamp, scaleImgPos(18), scaleImgPos(120),
+						scaleImgWidth(bedroomLamp),
 						scaleImgHeight(bedroomLamp), null);
 				boundingBox(scaleImgPos(18), scaleImgPos(120), scaleImgWidth(bedroomLamp),
 						scaleImgHeight(bedroomLamp));
 				break;
 			}
 			break;
-		
+
 		case "Chair":
 			switch (d) {
 			case NORTH:
@@ -182,10 +205,12 @@ public class Item {
 						scaleImgWidth(chairSide), scaleImgHeight(chairSide), null);
 				boundingBox(scaleImgPos(100), scaleImgPos(220),
 						scaleImgWidth(chairSide), scaleImgHeight(chairSide));
+
+
 				break;
 			}
 			break;
-		
+
 		case "Frame":
 			switch (d) {
 			case EAST:
@@ -196,7 +221,7 @@ public class Item {
 				break;
 			}
 			break;
-			
+
 		case "Desk":
 			switch (d) {
 			case NORTH:
@@ -213,7 +238,7 @@ public class Item {
 				break;
 			}
 			break;
-			
+
 		case "Kitchen Picture":
 			switch (d) {
 			case EAST:
@@ -227,12 +252,13 @@ public class Item {
 						scaleImgWidth(kitchenPicture), scaleImgHeight(kitchenPicture), null);
 				boundingBox(scaleImgPos(100), scaleImgPos(370),
 						scaleImgWidth(kitchenPicture), scaleImgHeight(kitchenPicture));
+
 				break;
 			}
 			break;
-			
+
 		case "Kitchen Table":
-			switch(d) {
+			switch (d) {
 			case NORTH:
 				g.drawImage(kitchenTable, scaleImgPos(140), scaleImgPos(250),
 						scaleImgWidth(kitchenTable), scaleImgHeight(kitchenTable), null);
@@ -244,10 +270,11 @@ public class Item {
 						scaleImgWidth(kitchenTableLeft), scaleImgHeight(kitchenTableLeft), null);
 				boundingBox(scaleImgPos(160), scaleImgPos(250),
 						scaleImgWidth(kitchenTableLeft), scaleImgHeight(kitchenTableLeft));
+
 				break;
 			}
 			break;
-			
+
 		case "Lamp":
 			switch (d) {
 			case EAST:
@@ -275,7 +302,7 @@ public class Item {
 				break;
 			}
 			break;
-			
+
 		case "Long Table":
 			switch (d) {
 			case NORTH:
@@ -294,7 +321,7 @@ public class Item {
 				break;
 			}
 			break;
-			
+
 		case "Portrait":
 			switch (d) {
 			case EAST:
@@ -305,7 +332,7 @@ public class Item {
 				break;
 			}
 			break;
-			
+
 		case "Short Table":
 			switch (d) {
 			case NORTH:
@@ -319,6 +346,7 @@ public class Item {
 						scaleImgWidth(shortTableSide), scaleImgHeight(shortTableSide), null);
 				boundingBox(scaleImgPos(325), scaleImgPos(285),
 						scaleImgWidth(shortTableSide), scaleImgHeight(shortTableSide));
+
 				break;
 			}
 			break;
@@ -347,15 +375,22 @@ public class Item {
 						scaleImgWidth(studyDoor), scaleImgHeight(studyDoor), null);
 				boundingBox(scaleImgPos(239), scaleImgPos(95),
 						scaleImgWidth(studyDoor), scaleImgHeight(studyDoor));
+
 				break;
 			}
 			break;
-		
-
 		}
 	}
 
-	/*---------------ITEM IMAGE SCALING---------------*/
+	public void drawInventoryItem(Graphics g) {
+
+	}
+
+	/*---------------ITEM IMAGE SCALING---------------
+	 * These constants and methods help with scaling the item in accordance
+	 * to the player's screen resolution
+	 */
+
 	private static final double IMG_POS_RESCALE = 0.8;
 	private static final double IMG_WIDTH_RESCALE = 0.8;
 	private static final double IMG_HEIGHT_RESCALE = 0.814;
