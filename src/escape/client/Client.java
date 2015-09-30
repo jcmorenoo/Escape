@@ -40,6 +40,11 @@ public class Client extends Thread {
 	
 	private User user;
 	private Player player = null;
+	
+	public Player getPlayer() {
+		return player;
+	}
+
 	private Room room;
 	private ArrayList<Item> items = new ArrayList<Item>();
 	
@@ -213,7 +218,7 @@ public class Client extends Thread {
 				this.events.offer((Event) in);
 			}
 			//for testing only, will keep sending test event to server.
-			testSend();
+//			testSend();
 		}
 	}
 	

@@ -121,8 +121,8 @@ public class GameCanvas extends JPanel {
 	public Dimension getPreferredSize() {
 
 		d.setSize(w, h);
-		System.out.println("Width: " + w);
-		System.out.println("Height: " + h);
+//		System.out.println("Width: " + w);
+//		System.out.println("Height: " + h);
 		return d;
 		// return new Dimension(600, 600);
 	}
