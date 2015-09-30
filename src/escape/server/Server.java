@@ -25,9 +25,10 @@ import escape.gameworld.Player;
 public class Server extends Thread{
 
 	//should also have the game as a field
+	
+	
+	
 	public static final int PORT = 12608;
-	
-	
 	
 	private Map<Integer,Connection> clients = new HashMap<Integer,Connection>();
 	private ServerSocket serverSocket;
@@ -64,7 +65,7 @@ public class Server extends Thread{
 			updateThread.start();
 			System.out.println("Waiting for connections");
 			stopped = false;
-			while(!stopped){
+			while(clients.size()<limit){
 				Socket clientSocket = serverSocket.accept(); 
 				System.out.println("Client + " + id + " connected");
 				this.clients.put(id, new Connection(clientSocket, new ObjectOutputStream(clientSocket.getOutputStream())));
