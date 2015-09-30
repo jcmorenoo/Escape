@@ -2,12 +2,16 @@ package escape.gameworld;
 
 import java.awt.Graphics;
 import java.awt.Image;
+
 import java.awt.Rectangle;
+
+import java.io.Serializable;
+
 
 import escape.gameworld.Player.Direction;
 import escape.ui.GameCanvas;
 
-public class Item {
+public class Item implements Serializable {
 	private double x;
 	private double y;
 	private String name;

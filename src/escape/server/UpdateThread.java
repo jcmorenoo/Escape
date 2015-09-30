@@ -74,10 +74,10 @@ public class UpdateThread extends Thread {
 					Player p = new Player(id,username,startingRoom);
 					
 					//hmm maybe we should send this to everyone??
-					Event e = new GameWorldUpdateEvent(p,startingRoom);
+					GameWorldUpdateEvent e = new GameWorldUpdateEvent(p,startingRoom);
 					
 					//send to client
-					sendClient(e,server.getClients().get(id));
+					sendClient((Event)e,server.getClients().get(id));
 					
 					
 					
