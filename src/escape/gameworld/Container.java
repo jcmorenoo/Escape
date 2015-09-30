@@ -95,7 +95,6 @@ public class Container extends Item {
 
 	private void drawContainer(Graphics g, Item i, Direction d) {
 		String containerName = i.getName();
-
 		
 		switch (containerName) {
 		case "Bedroom Bin":
@@ -147,7 +146,7 @@ public class Container extends Item {
 				g.drawImage(cupboard,  scaleImgPos(30), scaleImgPos(220), scaleImgWidth(cupboard), scaleImgHeight(cupboard), null);
 				boundingBox(scaleImgPos(30), scaleImgPos(220), scaleImgWidth(cupboard), scaleImgHeight(cupboard));
 				break;
-			case SOUTH: //needs to be side view
+			case SOUTH:
 				g.drawImage(cupboardSide,  scaleImgPos(450), scaleImgPos(220), scaleImgWidth(cupboardSide), scaleImgHeight(cupboardSide), null);
 				boundingBox(scaleImgPos(450), scaleImgPos(220), scaleImgWidth(cupboardSide), scaleImgHeight(cupboardSide));
 				break;
@@ -244,10 +243,6 @@ public class Container extends Item {
 				break;
 			}
 			break;
-
-		
-
-			
 		}
 	}
 

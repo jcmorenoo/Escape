@@ -268,7 +268,6 @@ public class GameFrame extends JFrame implements ActionListener {
 							System.out.println("Client player name:" + client.getPlayer().getName());
 							player = client.getPlayer();
 							break;
-							
 						}
 					}
 
@@ -311,6 +310,9 @@ public class GameFrame extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Walking Forward");
+				
+				//EVENT
+				// - Player enters a room
 				switch (player.getRoom().getName()) {
 				case "Main Hall":
 					System.out.println("Going through Main Door");
@@ -331,13 +333,12 @@ public class GameFrame extends JFrame implements ActionListener {
 					break;
 				}
 
+				//EVENT
+				// - Player enters a room
+				// - Change player direction to NORTH if leaving one of these rooms
 				if (player.getDirection().equals(Player.Direction.SOUTH)) {
 					switch (player.getRoom().getName()) {
 					case "Kitchen":
-						player.enterRoom(game.getRooms().get("Hall - Kitchen"));
-						// client.sendEvent(new
-						// EnterRoomEvent(client.getPlayer(),
-						// server.getGameWorld().getRooms().get("Bedroom")));
 						break;
 					case "Living Room":
 						player.enterRoom(game.getRooms().get(
@@ -350,6 +351,7 @@ public class GameFrame extends JFrame implements ActionListener {
 						player.enterRoom(game.getRooms().get("Hall - Bedroom"));
 						break;
 					}
+					//Should this be setDirection or movePlayer?
 					player.setDirection(Player.Direction.NORTH);
 				}
 			}
@@ -362,26 +364,9 @@ public class GameFrame extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("North Button pressed");
-				// switch (player.getRoom().getName()) {
-				// case "Main Hall":
-				// System.out.println("Going through Main Door");
-				// break;
-				// case "Hall - Bedroom":
-				// player.enterRoom(game.getRooms().get("Bedroom"));
-				// client.sendEvent(new EnterRoomEvent(client.getPlayer(),
-				// server.getGameWorld().getRooms().get("Bedroom")));
-				// break;
-				// case "Hall - Living Room":
-				// player.enterRoom(game.getRooms().get("Living Room"));
-				// break;
-				// case "Hall - Study":
-				// player.enterRoom(game.getRooms().get("Study"));
-				// break;
-				// case "Hall - Kitchen":
-				// player.enterRoom(game.getRooms().get("Kitchen"));
-				// break;
-				// }
 
+				//EVENT
+				// - Change player direction to NORTH when in one of these rooms
 				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
@@ -398,13 +383,12 @@ public class GameFrame extends JFrame implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("East Button pressed");
+				
+				//EVENT
+				// - Player should enter a room
 				switch (player.getRoom().getName()) {
 				case "Main Hall":
 					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
-					// client.sendEvent(new EnterRoomEvent(client.getPlayer(),
-					// server.getGameWorld().getRooms().get("Hall - Bedroom")));
-
 					break;
 				case "Hall - Bedroom":
 					player.enterRoom(game.getRooms().get("Hall - Living Room"));
@@ -420,6 +404,8 @@ public class GameFrame extends JFrame implements ActionListener {
 					break;
 				}
 
+				//EVENT
+				// - Change player direction to EAST when in these rooms
 				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
@@ -436,8 +422,9 @@ public class GameFrame extends JFrame implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("South Button pressed");
 
+				//EVENT
+				// - Change player direction to SOUTH when in these rooms
 				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
@@ -453,7 +440,9 @@ public class GameFrame extends JFrame implements ActionListener {
 		west.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("West Button pressed");
+
+				//EVENT
+				// - Player should enter a room
 				switch (player.getRoom().getName()) {
 				case "Main Hall":
 					player.enterRoom(game.getRooms().get("Hall - Study"));
@@ -472,6 +461,8 @@ public class GameFrame extends JFrame implements ActionListener {
 					break;
 				}
 
+				//EVENT
+				// - Change player direction to WEST when in these rooms
 				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
