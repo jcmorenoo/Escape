@@ -127,6 +127,9 @@ public class Client extends Thread {
 			testSend();
 			//test.. keep sending testevent
 		}
+		
+		
+		
 		else if(e instanceof ConnectionAcceptedEvent){
 			ConnectionAcceptedEvent event = ((ConnectionAcceptedEvent)e);
 			//we prob wont need this user.setid thing..
@@ -145,7 +148,7 @@ public class Client extends Thread {
 		else if(e instanceof GameWorldUpdateEvent){
 			//player changing direction.. changing the view of the user.
 			GameWorldUpdateEvent event = ((GameWorldUpdateEvent)e);
-
+			System.out.println("gameworldupdate");
 			//update the player and the room.
 			if(this.player != null){
 				if (event.getPlayer().getName().equals(this.player.getName())){

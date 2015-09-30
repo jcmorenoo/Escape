@@ -262,14 +262,15 @@ public class GameFrame extends JFrame implements ActionListener {
 					client = new Client(serverAddr.toString(), username);
 					client.start();
 
-					// while (client.getPlayer() == null){
-					if (client.getPlayer() == null) {
-						// System.out.println("Client player name:" +
-						// client.getPlayer().getName());
-						// break;
+					while (client.getPlayer() == null){
 						System.out.println("Client has no player");
+						if (client.getPlayer() != null) {
+							System.out.println("Client player name:" + client.getPlayer().getName());
+							player = client.getPlayer();
+							break;
+							
+						}
 					}
-					// }
 
 					// Testing
 					// System.out.println(username + " is in the "
