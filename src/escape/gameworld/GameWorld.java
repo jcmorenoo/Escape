@@ -162,7 +162,7 @@ public class GameWorld {
 		// Hall Rooms
 		rooms.put("Main Hall", new Room("Main Hall", false, null));
 		this.mainHall = rooms.get("Main Hall");
-		rooms.put("Hall - Study", new Room("Hall - Study", true, null));
+		rooms.put("Hall - Study", new Room("Hall - Study", false, null));
 		this.hallLeftStudy = rooms.get("Hall - Study");
 		rooms.put("Hall - Bedroom", new Room("Hall - Bedroom", false, null));
 		this.hallRightBedroom = rooms.get("Hall - Bedroom");

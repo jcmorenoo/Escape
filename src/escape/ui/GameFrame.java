@@ -31,13 +31,14 @@ import escape.server.Server;
 
 public class GameFrame extends JFrame implements ActionListener {
 	public GameFrame f;
-	
+
 	public static JFrame frame;
 	private GameCanvas menuCanvas;
 	private final JPanel btnPanel;
 	private static Player player;
 	private JPanel mouse = new JPanel();
 	private GameWorld game;
+	private String currentRoom;
 
 	private Server server;
 	private Client client;
@@ -126,6 +127,9 @@ public class GameFrame extends JFrame implements ActionListener {
 	}
 
 	void gameBtns() {
+		initialiseCurrentRoom(client);
+		player = client.getPlayer();
+
 		JButton goForwardButton = new JButton("Forward");
 		btnPanel.add(goForwardButton);
 		forward(goForwardButton);
@@ -175,8 +179,8 @@ public class GameFrame extends JFrame implements ActionListener {
 					final String username = JOptionPane.showInputDialog(null,
 							usernamePrompt, "Player Username",
 							JOptionPane.INFORMATION_MESSAGE);
-					player = new Player(1, username, new Room("Main Hall",
-							false, "No key"));
+					// player = new Player(1, username, new Room("Main Hall",
+					// false, "No key"));
 
 					// Lets the host to specify a unique Game ID for other
 					// players wanting to join, to enter in
@@ -204,16 +208,6 @@ public class GameFrame extends JFrame implements ActionListener {
 						}
 					}
 
-					// Testing
-//					game = new GameWorld(gameID.toString());
-//					game.addPlayer(player);
-//					System.out.println("Game Created");
-//					System.out.println("Number of players: " + numPlayers);
-//					System.out.println(username + " is in the "
-//							+ player.getRoom().getName());
-//					System.out.println("Game ID: " + gameID);
-					// System.out.println(player.getDirection().toString());
-
 					// TESTING: rooms, containers, items
 					// ArrayList<Room> it = game.getRoomList();
 					// for (int i = 0; i < it.size(); i++) {
@@ -236,19 +230,10 @@ public class GameFrame extends JFrame implements ActionListener {
 
 					// Testing purposes
 					setSt(1);
-					System.out.println(state);
-
-//					frame.remove(menuCanvas);
-//					menuCanvas = new GameCanvas(client.getPlayer());
-//					btnPanel.removeAll();
-//					gameBtns();
-//					frame.add(menuCanvas, BorderLayout.NORTH);
-//					frame.pack();
 				}
 
 				// Join a game
 				if (gameType == 0) {
-					// System.out.println("Join a game");
 
 					// Lets the player enter a username
 					JTextField nameInput = new JTextField();
@@ -257,8 +242,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					final String username = JOptionPane.showInputDialog(null,
 							usernamePrompt, "Player Username",
 							JOptionPane.INFORMATION_MESSAGE);
-					// player = new Player(1, username, new Room("Main Hall",
-					// false, "No key"));
 
 					// Lets the player enter IP address of the server
 					JTextField serverAddrInput = new JTextField();
@@ -280,7 +263,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					client = new Client(serverAddr.toString(), username);
 					client.setFrame(f);
 					client.start();
-					
 
 					while (client.getPlayer() == null) {
 						System.out.println("Client has no player");
@@ -292,30 +274,18 @@ public class GameFrame extends JFrame implements ActionListener {
 						}
 					}
 
-
-					// Testing
-					// System.out.println(username + " is in the "
-					// + player.getRoom().getName());
-					// System.out.println("Server IP Address: " + serverAddr);
-					// System.out.println("Game ID: " + gameID);
-
 					// Testing purposes
 					setSt(1);
-					System.out.println(state);
-
-//					frame.remove(menuCanvas);
-////					while (client.isRunning()) {
-//						menuCanvas = new GameCanvas(client);
-////					}
-//					btnPanel.removeAll();
-//					gameBtns();
-//					frame.add(menuCanvas, BorderLayout.NORTH);
-//					mouse.addMouseListener(new MouseEvents());
-//					frame.add(mouse);
-//					frame.pack();
 				}
 			}
 		});
+	}
+
+	/*
+	 * Stores the room a player is currently in, as a String
+	 */
+	protected void initialiseCurrentRoom(Client c) {
+		currentRoom = c.getPlayer().getRoom().getName();
 	}
 
 	public void loadGame(JButton loadGame) {
@@ -328,187 +298,206 @@ public class GameFrame extends JFrame implements ActionListener {
 		});
 	}
 
+	/*
+	 * Moves player forward to enter/leave a room 
+	 */
 	public void forward(JButton goForward) {
 		goForward.addActionListener(new ActionListener() {
-			
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				System.out.println("Walking Forward");
 
-				// EVENT
-				// - Player enters a room
-				switch (client.getPlayer().getRoom().getName()) {
+				switch (currentRoom) {
 				case "Main Hall":
 					System.out.println("Going through Main Door");
 					break;
 				case "Hall - Bedroom":
-//					player.enterRoom(game.getRooms().get("Bedroom"));
-					client.sendEvent(new EnterRoomEvent(client.getPlayer(),
-							"Bedroom"));
+					client.sendEvent(new EnterRoomEvent(player, "Bedroom"));
 					break;
 				case "Hall - Living Room":
-					player.enterRoom(game.getRooms().get("Living Room"));
+					client.sendEvent(new EnterRoomEvent(player, "Living Room"));
 					break;
 				case "Hall - Study":
-					player.enterRoom(game.getRooms().get("Study"));
+					client.sendEvent(new EnterRoomEvent(player, "Study"));
 					break;
 				case "Hall - Kitchen":
-					player.enterRoom(game.getRooms().get("Kitchen"));
+					client.sendEvent(new EnterRoomEvent(player, "Kitchen"));
 					break;
 				}
 
-				// EVENT
-				// - Player enters a room
-				// - Change player direction to NORTH if leaving one of these
-				// rooms
-				if (client.getPlayer().getDirection().equals(Player.Direction.SOUTH)) {
-					switch (client.getPlayer().getRoom().getName()) {
+				// TESTING
+				System.out.println(player.getName() + " is facing "
+						+ player.getDirection().toString());
+
+				// If player is leaving any of these rooms: Kitchen, Living
+				// Room, Study, Bedroom
+				if (player.getDirection().equals(Direction.SOUTH)) {
+					switch (currentRoom) {
 					case "Kitchen":
+						client.sendEvent(new EnterRoomEvent(player,
+								"Hall - Kitchen"));
 						break;
 					case "Living Room":
-						player.enterRoom(game.getRooms().get(
+						client.sendEvent(new EnterRoomEvent(player,
 								"Hall - Living Room"));
 						break;
 					case "Study":
-						player.enterRoom(game.getRooms().get("Hall - Study"));
+						client.sendEvent(new EnterRoomEvent(player,
+								"Hall - Study"));
 						break;
 					case "Bedroom":
-//						player.enterRoom(game.getRooms().get("Hall - Bedroom"));
-						client.sendEvent(new EnterRoomEvent(client.getPlayer(),
+						client.sendEvent(new EnterRoomEvent(player,
 								"Hall - Bedroom"));
 						break;
 					}
-//					player.setDirection(Player.Direction.NORTH);
-					client.sendEvent(new ChangeDirectionEvent(client.getPlayer(),
-							"SOUTH"));
 					
-					System.out.println(client.getPlayer().getName() + " is in "
-							+ client.getPlayer().getRoom().getName());
+					// !----Direction not changing back to NORTH when entering room----!
+					client.sendEvent(new ChangeDirectionEvent(player, "NORTH"));
 				}
+
+				// TESTING
+				System.out.println(player.getName() + " is in the "
+						+ currentRoom);
 			}
 		});
 	}
 
+	/*
+	 * Changes the player's direction to face NORTH when inside a room
+	 */
 	public void north(JButton north) {
 		north.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("North Button pressed");
+				// TESTING
+				System.out.println(player.getName() + " is facing "
+						+ player.getDirection().toString());
 
-				// EVENT
-				// - Change player direction to NORTH when in one of these rooms
-				switch (player.getRoom().getName()) {
+				switch (currentRoom) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
 				case "Study":
-					player.movePlayer(Player.Direction.NORTH);
+					client.sendEvent(new ChangeDirectionEvent(player, "NORTH"));
 				}
 			}
 		});
 	}
 
+	/*
+	 * Function depends on player's current room: -> IN THE HALL - Moves a
+	 * player to the right of the hall -> IN A ROOM - Changes the player's
+	 * direction to face EAST
+	 */
 	public void east(JButton east) {
 		east.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				
-				// EVENT
-				// - Player should enter a room
-				switch (client.getPlayer().getRoom().getName()) {
+				switch (currentRoom) {
 				case "Main Hall":
-//					 player.enterRoom(game.getRooms().get("Hall - Bedroom"));
-					client.sendEvent(new EnterRoomEvent(client.getPlayer(),
+					client.sendEvent(new EnterRoomEvent(player,
 							"Hall - Bedroom"));
-
 					break;
 				case "Hall - Bedroom":
-					player.enterRoom(game.getRooms().get("Hall - Living Room"));
+					client.sendEvent(new EnterRoomEvent(player,
+							"Hall - Living Room"));
 					break;
 				case "Hall - Living Room":
-					System.out.println("No more rooms that way!");
+					JOptionPane.showMessageDialog(null,
+							"No more rooms that way!", "Ooops",
+							JOptionPane.WARNING_MESSAGE);
 					break;
 				case "Hall - Study":
-					player.enterRoom(game.getRooms().get("Main Hall"));
+					client.sendEvent(new EnterRoomEvent(player, "Main Hall"));
 					break;
 				case "Hall - Kitchen":
-					player.enterRoom(game.getRooms().get("Hall - Study"));
+					client.sendEvent(new EnterRoomEvent(player, "Hall - Study"));
 					break;
 				}
 
-				// EVENT
-				// - Change player direction to EAST when in these rooms
-				switch (client.getPlayer().getRoom().getName()) {
+				// TESTING
+				System.out.println(player.getName() + " is facing "
+						+ player.getDirection().toString());
+				switch (currentRoom) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
 				case "Study":
-					client.sendEvent(new ChangeDirectionEvent(client.getPlayer(),
-							"EAST"));
+					client.sendEvent(new ChangeDirectionEvent(player, "EAST"));
 				}
 			}
 		});
 	}
 
+	/*
+	 * Changes the player's direction to face SOUTH when inside a room
+	 */
 	public void south(JButton south) {
 		south.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// TESTING
+				System.out.println(player.getName() + " is facing "
+						+ player.getDirection().toString());
 
-				// EVENT
-				// - Change player direction to SOUTH when in these rooms
-				switch (client.getPlayer().getRoom().getName()) {
+				switch (currentRoom) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
 				case "Study":
-					client.sendEvent(new ChangeDirectionEvent(client.getPlayer(),
-							"SOUTH"));
+					client.sendEvent(new ChangeDirectionEvent(player, "SOUTH"));
 				}
 			}
 		});
 	}
 
+	/*
+	 * Function depends on player's current room: -> IN THE HALL - Moves a
+	 * player to the left of the hall -> IN A ROOM - Changes the player's
+	 * direction to face WEST
+	 */
 	public void west(JButton west) {
 		west.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				// EVENT
-				// - Player should enter a room
 				switch (player.getRoom().getName()) {
 				case "Main Hall":
-					player.enterRoom(game.getRooms().get("Hall - Study"));
+					client.sendEvent(new EnterRoomEvent(player, "Hall - Study"));
 					break;
 				case "Hall - Study":
-					player.enterRoom(game.getRooms().get("Hall - Kitchen"));
+					client.sendEvent(new EnterRoomEvent(player,
+							"Hall - Kitchen"));
 					break;
 				case "Hall - Kitchen":
-					System.out.println("No more rooms that way!");
+					JOptionPane.showMessageDialog(null,
+							"No more rooms that way!", "Ooops",
+							JOptionPane.WARNING_MESSAGE);
 					break;
 				case "Hall - Bedroom":
-					player.enterRoom(game.getRooms().get("Main Hall"));
+					client.sendEvent(new EnterRoomEvent(player, "Main Hall"));
 					break;
 				case "Hall - Living Room":
-					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
+					client.sendEvent(new EnterRoomEvent(player,
+							"Hall - Bedroom"));
 					break;
 				}
 
-				// EVENT
-				// - Change player direction to WEST when in these rooms
 				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
 				case "Study":
-					player.movePlayer(Player.Direction.WEST);
+					client.sendEvent(new ChangeDirectionEvent(player, "WEST"));
 				}
+
+				// TESTING
+				System.out.println(player.getName() + " is facing "
+						+ player.getDirection().toString());
 			}
 		});
 	}
@@ -516,7 +505,6 @@ public class GameFrame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	/*---------------MOUSE LISTENER---------------*/
@@ -598,12 +586,12 @@ public class GameFrame extends JFrame implements ActionListener {
 		public void mouseExited(MouseEvent e) {
 		}
 	}
-	
-	public void updateFrame(){
+
+	public void updateFrame() {
 		frame.remove(menuCanvas);
-//		while (client.isRunning()) {
-			menuCanvas = new GameCanvas(client);
-//		}
+		// while (client.isRunning()) {
+		menuCanvas = new GameCanvas(client);
+		// }
 		btnPanel.removeAll();
 		gameBtns();
 		frame.add(menuCanvas, BorderLayout.NORTH);
