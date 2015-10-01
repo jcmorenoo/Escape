@@ -191,6 +191,7 @@ public class GameFrame extends JFrame implements ActionListener {
 					server.start();
 
 					client = new Client("localhost", username);
+					client.setFrame(f);
 					client.start();
 
 					while (client.getPlayer() == null) {
@@ -204,13 +205,13 @@ public class GameFrame extends JFrame implements ActionListener {
 					}
 
 					// Testing
-					game = new GameWorld(gameID.toString());
-					game.addPlayer(player);
-					System.out.println("Game Created");
-					System.out.println("Number of players: " + numPlayers);
-					System.out.println(username + " is in the "
-							+ player.getRoom().getName());
-					System.out.println("Game ID: " + gameID);
+//					game = new GameWorld(gameID.toString());
+//					game.addPlayer(player);
+//					System.out.println("Game Created");
+//					System.out.println("Number of players: " + numPlayers);
+//					System.out.println(username + " is in the "
+//							+ player.getRoom().getName());
+//					System.out.println("Game ID: " + gameID);
 					// System.out.println(player.getDirection().toString());
 
 					// TESTING: rooms, containers, items
@@ -237,12 +238,12 @@ public class GameFrame extends JFrame implements ActionListener {
 					setSt(1);
 					System.out.println(state);
 
-					frame.remove(menuCanvas);
-					menuCanvas = new GameCanvas(player);
-					btnPanel.removeAll();
-					gameBtns();
-					frame.add(menuCanvas, BorderLayout.NORTH);
-					frame.pack();
+//					frame.remove(menuCanvas);
+//					menuCanvas = new GameCanvas(client.getPlayer());
+//					btnPanel.removeAll();
+//					gameBtns();
+//					frame.add(menuCanvas, BorderLayout.NORTH);
+//					frame.pack();
 				}
 
 				// Join a game
