@@ -177,6 +177,8 @@ public class Client extends Thread {
 			}
 			
 			frame.updateFrame();
+			System.out.println(player.getName() + " is in "
+					+ player.getRoom().getName());
 		}
 
 		else if(e instanceof GameOverEvent){
