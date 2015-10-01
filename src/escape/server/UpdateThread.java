@@ -71,7 +71,7 @@ public class UpdateThread extends Thread {
 				UserSetupEvent setup = (UserSetupEvent)event;
 				int id = setup.getId();
 				String username = setup.getName();
-				Room startingRoom = server.getGameWorld().getRooms().get("Main Hall");
+				Room startingRoom = game.getRooms().get("Main Hall");
 				//initialise a new player ..
 				Player p = new Player(id,username,startingRoom);
 				
@@ -86,10 +86,17 @@ public class UpdateThread extends Thread {
 
 			}
 
-			else if(event instanceof ChangeRoomEvent){
-				ChangeRoomEvent e = (ChangeRoomEvent) event;
+			else if(event instanceof EnterRoomEvent){
+				EnterRoomEvent e = (EnterRoomEvent) event;
 				Player player = e.getPlayer();
-				Room room = e.getRoom();
+				String roomName = e.getRoom();
+				Room room = game.getRooms().get(roomName);
+				
+				if (game.enterRoom(player, room)){
+					player.enterRoom(room);
+					GameWorldUpdateEvent enterRoom = new GameWorldUpdateEvent(player, player.getRoom());
+					sendClient((Event) enterRoom,server.getClients().get(player.getId()));
+				}
 				//try to make the player enter the room
 				//if exception.. send new event containing current room.
 			}

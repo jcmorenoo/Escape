@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import javax.swing.JFrame;
+
 import escape.event.ConnectionAcceptedEvent;
 import escape.event.Event;
 import escape.event.GameOverEvent;
@@ -19,6 +21,7 @@ import escape.gameworld.Item;
 import escape.gameworld.Player;
 import escape.gameworld.Room;
 import escape.server.Server;
+import escape.ui.GameFrame;
 
 /**
  * Class which is on the client side of the client-server. Responsible for networking between the user and the server by 
@@ -38,6 +41,8 @@ public class Client extends Thread {
 	private Socket socket;
 	private String ipAddress;
 
+	private GameFrame frame;
+	
 	private User user;
 	private Player player = null;
 
@@ -91,8 +96,16 @@ public class Client extends Thread {
 	public User getUser(){
 		return this.user;
 	}
+	
+	public boolean isRunning(){
+		return running;
+	}
 
-
+	public void setFrame(GameFrame f){
+		frame = f;
+	}
+	
+	
 	/**
 	 * Method which initialises connection to the Server. Called when constructing a new Client.
 	 */
@@ -162,6 +175,8 @@ public class Client extends Thread {
 				this.player = event.getPlayer();
 				this.room = event.getRoom();
 			}
+			
+			frame.updateFrame();
 		}
 
 		else if(e instanceof GameOverEvent){
@@ -196,6 +211,7 @@ public class Client extends Thread {
 	 * an Event, then push it into the queue of events.
 	 */
 	public void run(){
+		running = true;
 		while(running){
 			//this will jst keep getting input from server and add it into the queue
 

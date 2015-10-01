@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import escape.client.Client;
 import escape.gameworld.Container;
 import escape.gameworld.Item;
 import escape.gameworld.Player;
@@ -39,6 +40,7 @@ public class GameCanvas extends JPanel {
 	private static final Image mainMenu = loadImage("/images/mainMenu.png");
 	
 	private Player player;
+	private Client client;
 	private Room currentRoom;
 	private Player.Direction currentDirection;
 	private int state;
@@ -55,6 +57,13 @@ public class GameCanvas extends JPanel {
 	private int h = (int) (d.height * WINDOW_HEIGHT_SCALE);
 	private int w = (int) (d.width * WINDOW_WIDTH_SCALE);
 
+	public GameCanvas(Client c) {
+		client = c;
+		player = c.getPlayer();
+//		player = p;
+		getPreferredSize();
+	}
+	
 	public GameCanvas(Player p) {
 		player = p;
 		getPreferredSize();
