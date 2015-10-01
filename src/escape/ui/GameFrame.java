@@ -362,8 +362,8 @@ public class GameFrame extends JFrame implements ActionListener {
 				// - Player enters a room
 				// - Change player direction to NORTH if leaving one of these
 				// rooms
-				if (player.getDirection().equals(Player.Direction.SOUTH)) {
-					switch (player.getRoom().getName()) {
+				if (client.getPlayer().getDirection().equals(Player.Direction.SOUTH)) {
+					switch (client.getPlayer().getRoom().getName()) {
 					case "Kitchen":
 						break;
 					case "Living Room":
@@ -374,11 +374,14 @@ public class GameFrame extends JFrame implements ActionListener {
 						player.enterRoom(game.getRooms().get("Hall - Study"));
 						break;
 					case "Bedroom":
-						player.enterRoom(game.getRooms().get("Hall - Bedroom"));
+//						player.enterRoom(game.getRooms().get("Hall - Bedroom"));
+						client.sendEvent(new EnterRoomEvent(client.getPlayer(),
+								"Hall - Bedroom"));
 						break;
 					}
-					// Should this be setDirection or movePlayer?
-					player.setDirection(Player.Direction.NORTH);
+//					player.setDirection(Player.Direction.NORTH);
+					client.sendEvent(new ChangeDirectionEvent(client.getPlayer(),
+							"SOUTH"));
 					
 					System.out.println(client.getPlayer().getName() + " is in "
 							+ client.getPlayer().getRoom().getName());
@@ -459,12 +462,13 @@ public class GameFrame extends JFrame implements ActionListener {
 
 				// EVENT
 				// - Change player direction to SOUTH when in these rooms
-				switch (player.getRoom().getName()) {
+				switch (client.getPlayer().getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
 				case "Study":
-					player.movePlayer(Player.Direction.SOUTH);
+					client.sendEvent(new ChangeDirectionEvent(client.getPlayer(),
+							"SOUTH"));
 				}
 			}
 		});
