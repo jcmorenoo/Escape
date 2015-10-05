@@ -93,6 +93,7 @@ public class GameWorld {
 		
 		items.put("Study Door", new Item("Study Door", "Door leading back to the Hall", false));
 		items.put("Bedroom Door", new Item("Bedroom Door", "Door leading back to the Hall",false));
+		
 	}
 
 	/**
@@ -141,7 +142,8 @@ public class GameWorld {
 		containers.get("Cupboard").add(items.get("Matches"));
 		containers.put("Lamp", new Container("Lamp", "An old-fashioned lamp",
 			 true, true, "Matches"));
-
+		
+		
 		
 	}
 
@@ -159,6 +161,8 @@ public class GameWorld {
 		this.livingRoom = rooms.get("Living Room");
 		rooms.put("Bedroom", new Room("Bedroom", false, null));
 		this.bedroom = rooms.get("Bedroom");
+		//EXIT DOOR
+		rooms.put("Exit Door", new Room("Exit Door", true, "Key"));
 		// Hall Rooms
 		rooms.put("Main Hall", new Room("Main Hall", false, null));
 		this.mainHall = rooms.get("Main Hall");
@@ -172,20 +176,25 @@ public class GameWorld {
 		rooms.put("Hall - Kitchen", new Room("Hall - Kitchen", false, null));
 		this.hallLeftKitchen = rooms.get("Hall - Kitchen");
 
-
+		//DOOR ????
+		//cant go outside
 		kitchen.addItem(items.get("Kitchen Table"));
 		kitchen.addItem(items.get("Kitchen Picture"));
 		kitchen.addContainer(containers.get("Fridge"));
 		kitchen.addContainer(containers.get("Kitchen Bin"));
 		kitchen.addContainer(containers.get("Cupboard"));
+		//kitchen.addContainer(containers.get("Lamp"));
 
+		//DOOR
+		//STUDY SOUTH
 		study.addItem(items.get("Chair"));
 		study.addItem(items.get("Desk"));
 		study.addItem(items.get("Study Door"));
 		study.addContainer(containers.get("Study Room Bin"));
 		study.addContainer(containers.get("Bookshelf"));
 		study.addContainer(containers.get("Study Room Safe"));
-		study.addItem(containers.get("Lamp"));
+		study.addContainer(containers.get("Lamp"));
+		study.addItem(items.get("Study Door"));
 
 		livingRoom.addItem(items.get("Sofa"));
 		livingRoom.addItem(items.get("Long Table"));
@@ -194,6 +203,7 @@ public class GameWorld {
 		livingRoom.addItem(items.get("Frame"));
 		livingRoom.addContainer(containers.get("Living Room Bin"));
 		livingRoom.addContainer(containers.get("Living Room Safe"));
+		
 
 		bedroom.addItem(items.get("Bedroom Lamp"));
 		bedroom.addItem(items.get("Bed"));
@@ -202,6 +212,7 @@ public class GameWorld {
 		bedroom.addContainer(containers.get("Bedroom Bin"));
 		bedroom.addContainer(containers.get("Bedroom Safe"));
 		bedroom.addContainer(containers.get("Sidetable"));
+		bedroom.addItem(items.get("Bedroom Door"));
 		
 		assignItemsToRooms();
 
@@ -329,7 +340,7 @@ public class GameWorld {
 			{"", "Chair", "Desk", "", "", ""}
 		};
 	private String[][] STUDY_SOUTH = {
-			{"Lamp", "", "Door", "Door", "", ""},
+			{"Lamp", "", "Study Door", "Study Door", "", ""},
 			{"", "", "", "", "", "Bookshelf"},
 			{"", "", "", "", "", "Bookshelf"}
 		};
@@ -395,7 +406,7 @@ public class GameWorld {
 			{"", "", "", "", "", ""}
 		};
 	private String[][] BEDROOM_SOUTH = {
-			{"", "", "Door", "Door", "", "Bedroom Safe"},
+			{"", "", "Bedroom Door", "Bedroom Door", "", "Bedroom Safe"},
 			{"", "", "", "", "", ""},
 			{"", "", "", "", "", ""}
 		};
@@ -418,6 +429,11 @@ public class GameWorld {
 	public boolean enterRoom(Player p, Room r){
 		// if the room is a locked door, check if the player have the key
 		if (r.isLocked()){
+			//selectedInventory = items.get("Study Room Key");
+			if(selectedInventory == null){
+				System.out.println("Find the key!");
+				return false;
+			}
 			if (selectedInventory.getName().equals(r.getKey())){
 				p.enterRoom(r);
 				return true;

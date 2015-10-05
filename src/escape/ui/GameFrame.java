@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import escape.client.Client;
 import escape.event.ChangeDirectionEvent;
 import escape.event.EnterRoomEvent;
+import escape.event.PickUpItemEvent;
 import escape.gameworld.Container;
 import escape.gameworld.GameWorld;
 import escape.gameworld.Item;
@@ -28,6 +29,7 @@ import escape.gameworld.Player;
 import escape.gameworld.Player.Direction;
 import escape.gameworld.Room;
 import escape.server.Server;
+import escape.ui.GameFrame.MouseEvents;
 
 public class GameFrame extends JFrame implements ActionListener {
 	public GameFrame f;
@@ -190,7 +192,9 @@ public class GameFrame extends JFrame implements ActionListener {
 					final String gameID = JOptionPane.showInputDialog(null,
 							gameIdPrompt, "Game ID",
 							JOptionPane.INFORMATION_MESSAGE);
-
+					
+					game = new GameWorld(gameID);
+					
 					server = new Server(numPlayers, gameID.toString());
 					server.start();
 
@@ -207,7 +211,7 @@ public class GameFrame extends JFrame implements ActionListener {
 							break;
 						}
 					}
-
+					
 					// TESTING: rooms, containers, items
 					// ArrayList<Room> it = game.getRoomList();
 					// for (int i = 0; i < it.size(); i++) {
@@ -230,6 +234,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
 					// Testing purposes
 					setSt(1);
+//					client.sendEvent(new PickUpItemEvent(client.getPlayer(), new Item("Kitchen Picture", "Family Picture", true)));
 				}
 
 				// Join a game
@@ -520,20 +525,25 @@ public class GameFrame extends JFrame implements ActionListener {
 			// player.enterRoom(new Room("Living Room", false, "No key"));
 			// }
 			// }
+			
 
-			if (player.getRoom().getName().equals("Main Hall")) {
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (game == null)
+				return;
+			String currentRoom = player.getRoom().getName();
+			// System.out.print("You are in " + currentRoom);
+			if (currentRoom.equals("Main Hall") || currentRoom.equals("Hall - Bedroom")
+					|| currentRoom.equals("Hall - Kitchen") || currentRoom.equals("Hall - Study")
+					|| currentRoom.equals("Hall - Living Room")) {
 				return;
 			} else {
-				HashMap<String, String[][]> currentLoc = player.getRoom()
-						.getItemsByDirection();
+				System.out.println("Mouse x: " + e.getX() + "\nMouse Y: " + e.getY());
+				HashMap<String, String[][]> currentLoc = player.getRoom().getItemsByDirection();
 				Direction d = player.getDirection();
-				if (currentLoc == null) {
-					System.out.println("currentLoc null");
-				}
 				String[][] items = null;
-				items = currentLoc.get("North");
-
-				System.out.println(currentLoc.get("North"));
 				switch (d) {
 				case NORTH:
 					items = (String[][]) currentLoc.get("North");
@@ -548,17 +558,16 @@ public class GameFrame extends JFrame implements ActionListener {
 					items = (String[][]) currentLoc.get("West");
 					break;
 				}
-				if (items == null)
-					System.out.println("Items null");
 				for (int i = 5; i >= 0; i--) {
 					for (int j = 2; j >= 0; j--) {
 						if (!items[j][i].equals("")) {
 							Item it = player.getRoom().getItem(items[j][i]);
-							if (it.getBoundingBox()
-									.contains(e.getX(), e.getY())) {
+							if (it.getBoundingBox().contains(e.getX(), e.getY())) {
+								System.out.println("Bounding Box X: " + it.getBoundingBox().x + "\nBounding Box Y: "
+										+ it.getBoundingBox().y + "\nBounding Box Width: " + it.getBoundingBox().width
+										+ "\nBounding Box Height: " + it.getBoundingBox().height);
 								game.setSelectedItem(it);
-								System.out.println(game.getSelectedItem()
-										.getName());
+								System.out.println(game.getSelectedItem().getName());
 								return;
 							}
 						}
@@ -567,11 +576,6 @@ public class GameFrame extends JFrame implements ActionListener {
 				}
 
 			}
-
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
 		}
 
 		@Override
