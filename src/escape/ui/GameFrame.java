@@ -234,7 +234,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
 					// Testing purposes
 					setSt(1);
-//					client.sendEvent(new PickUpItemEvent(client.getPlayer(), new Item("Kitchen Picture", "Family Picture", true)));
+					client.sendEvent(new PickUpItemEvent(client.getPlayer(), new Item("Kitchen Picture", "Family Picture", true)));
 				}
 
 				// Join a game

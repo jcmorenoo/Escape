@@ -515,9 +515,10 @@ public class GameWorld {
 	 * @param p the player
 	 * @param i the item player want to drop
 	 * 
-	 * @return true if player can dropp item, false if the player cannot
+	 * @return true if player can drop item, false if the player cannot
 	 */
 	public boolean dropItem(Player p){
+		if(selectedInventory == null) return false;
 		if (p.getRoom() == null){
 			return false;//cannot drop item in the hallway
 		}
