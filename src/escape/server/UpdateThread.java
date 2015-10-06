@@ -3,7 +3,6 @@ package escape.server;
 import java.io.IOException;
 
 import escape.event.ChangeDirectionEvent;
-import escape.event.ChangeRoomEvent;
 import escape.event.DropItemEvent;
 import escape.event.EnterRoomEvent;
 import escape.event.Event;
@@ -13,9 +12,10 @@ import escape.event.PickUpItemEvent;
 import escape.event.TestEvent;
 import escape.event.UserSetupEvent;
 import escape.gameworld.GameWorld;
+import escape.gameworld.Item;
 import escape.gameworld.Player;
-import escape.gameworld.Room;
 import escape.gameworld.Player.Direction;
+import escape.gameworld.Room;
 
 /**
  * A Thread which will keep accepting events from client and updating the game
@@ -128,8 +128,28 @@ public class UpdateThread extends Thread {
 				sendClient((Event) changeDirection,
 						server.getClients().get(player.getId()));
 
-			} else if (event instanceof DropItemEvent) {
+			}else if (event instanceof PickUpItemEvent){
+				PickUpItemEvent e = (PickUpItemEvent) event;
+				Player player = e.getPlayer();
+				Item item = e.getItem();
+				
+				if(player.pickUpItem(item)){
+					GameWorldUpdateEvent pickUpEvent = new GameWorldUpdateEvent(player, player.getRoom());
+					sendClient((Event) pickUpEvent, server.getClients().get(player.getId()));
+				}
+				//else ??
+				
+			} 
+			
+			else if (event instanceof DropItemEvent) {
 				DropItemEvent e = (DropItemEvent) event;
+				Player player = e.getPlayer();
+				Item item = e.getItem();
+				
+				if(player.dropItem(item)){
+					GameWorldUpdateEvent dropItemEvent = new GameWorldUpdateEvent(player, player.getRoom());
+					sendClient((Event)dropItemEvent, server.getClients().get(player.getId()));
+				}
 			}
 			// else if(event instanceof EnterRoomEvent){
 			// EnterRoomEvent e = (EnterRoomEvent) event;
