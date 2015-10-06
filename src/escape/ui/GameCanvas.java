@@ -22,8 +22,8 @@ import escape.gameworld.Room;
 
 /**
  * The GameCanvas is responsible for drawing the wall backgrounds of the rooms
- * in the game. It resizes the game window, wall backgrounds, and items in the 
- * game according to the computer resolution of the user. 
+ * in the game. It resizes the game window, wall backgrounds, and items in the
+ * game according to the computer resolution of the user.
  * 
  * @author Trisha
  *
@@ -38,20 +38,21 @@ public class GameCanvas extends JPanel {
 	private static final Image hallLeftKitchen = loadImage("/images/hallLeftKitchen.png");
 	private static final Image hallRightLivingRoom = loadImage("/images/hallRightLivingRoom.png");
 	private static final Image mainMenu = loadImage("/images/mainMenu.png");
-	
+
 	private Player player;
 	private Client client;
 	private Room currentRoom;
 	private Player.Direction currentDirection;
 	private int state;
-	
-	//Values used to scale Game Window & wall backgrounds
+
+	// Values used to scale Game Window & wall backgrounds
 	private static final double WINDOW_HEIGHT_SCALE = 0.6;
 	private static final double WINDOW_WIDTH_SCALE = 0.375;
 	private static final double BACKGROUND_WIDTH_SCALE = 0.8;
 	private static final double BACKGROUND_HEIGHT_SCALE = 0.814;
-	
-	
+	private static final double INNER_BACKGROUND_WIDTH_SCALE = 0.65;
+	private static final double INNER_BACKGROUND_HEIGHT_SCALE = 0.65;
+
 	private Toolkit t = Toolkit.getDefaultToolkit();;
 	private Dimension d = t.getScreenSize();
 	private int h = (int) (d.height * WINDOW_HEIGHT_SCALE);
@@ -60,10 +61,10 @@ public class GameCanvas extends JPanel {
 	public GameCanvas(Client c) {
 		client = c;
 		player = c.getPlayer();
-//		player = p;
+		// player = p;
 		getPreferredSize();
 	}
-	
+
 	public GameCanvas(Player p) {
 		player = p;
 		getPreferredSize();
@@ -76,11 +77,11 @@ public class GameCanvas extends JPanel {
 
 		state = GameFrame.state();
 
-		//Draws wall backgrounds depending on player's current room
-		if (state == 0) { //Main Menu - Game has not been created
+		// Draws wall backgrounds depending on player's current room
+		if (state == 0) { // Main Menu - Game has not been created
 			g.drawImage(mainMenu, 0, 0, scaleImgWidth(mainMenu),
 					scaleImgHeight(mainMenu), null);
-		} else if (state == 1) { //Game has been created
+		} else if (state == 1) { // Game has been created
 			if (player.getRoom() != null) {
 				currentRoom = player.getRoom();
 				currentDirection = player.getDirection();
@@ -101,19 +102,26 @@ public class GameCanvas extends JPanel {
 							scaleImgHeight(hallRightBedroom), null);
 					break;
 				case "Hall - Kitchen":
+					g.drawImage(wall, scaleInsideImgPos(58),
+							scaleInsideImgPos(0), scaleInsideImgWidth(wall),
+							scaleInsideImgHeight(wall), null);
+					Item.draw(g, "Kitchen");
+					Container.draw(g, "Kitchen");
 					g.drawImage(hallLeftKitchen, 0, 0,
 							scaleImgWidth(hallLeftStudy),
 							scaleImgHeight(hallLeftStudy), null);
-					//TO DO: display Kitchen + items from a distance
+					// TO DO: display Kitchen + items from a distance
 					break;
 				case "Hall - Living Room":
 					g.drawImage(hallRightLivingRoom, 0, 0,
 							scaleImgWidth(hallRightLivingRoom),
 							scaleImgHeight(hallRightLivingRoom), null);
-					//TO DO: Need to display Living Room + items from a distance
+					// TO DO: Need to display Living Room + items from a
+					// distance
 					break;
 				case "Bedroom":
-					g.drawImage(darkWall, 0, 0, scaleImgWidth(darkWall), scaleImgHeight(darkWall), null);
+					g.drawImage(darkWall, 0, 0, scaleImgWidth(darkWall),
+							scaleImgHeight(darkWall), null);
 					break;
 				case "Living Room":
 				case "Kitchen":
@@ -130,11 +138,17 @@ public class GameCanvas extends JPanel {
 				for (Container c : currentRoom.getContainer()) {
 					c.draw(g, currentRoom, currentDirection);
 				}
-				
-				//TO DO: Draw items currently in player's inventory 
-//				for (Item i : player.getItems()){
-				//	i.drawInventoryItem(g);
-//				}
+
+				// TO DO: Draw items currently in player's inventory
+				if (player.getItems() != null) {
+					int itemCount = 0;
+					for (Item i : player.getItems()) {
+						i.drawInventoryItem(g, itemCount);
+					}
+				}
+				// else {
+				// System.out.println("Player has no inventory");
+				// }
 
 			}
 		}
@@ -151,6 +165,18 @@ public class GameCanvas extends JPanel {
 	}
 
 	/*---------------SCALE IMAGE---------------*/
+	private static int scaleInsideImgPos(int i) {
+		return (int) (i * BACKGROUND_WIDTH_SCALE);
+	}
+
+	private static int scaleInsideImgWidth(Image img) {
+		return (int) (img.getWidth(null) * INNER_BACKGROUND_WIDTH_SCALE);
+	}
+
+	private static int scaleInsideImgHeight(Image img) {
+		return (int) (img.getHeight(null) * INNER_BACKGROUND_HEIGHT_SCALE);
+	}
+
 	private static int scaleImgWidth(Image img) {
 		return (int) (img.getWidth(null) * BACKGROUND_WIDTH_SCALE);
 	}
