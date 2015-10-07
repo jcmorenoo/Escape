@@ -558,11 +558,14 @@ public class GameFrame extends JFrame implements ActionListener {
 					items = (String[][]) currentLoc.get("West");
 					break;
 				}
+				
+				
+				//checking if point is in an items bounding box
 				for (int i = 5; i >= 0; i--) {
 					for (int j = 2; j >= 0; j--) {
 						if (!items[j][i].equals("")) {
 							Item it = player.getRoom().getItem(items[j][i]);
-							if (it.getBoundingBox().contains(e.getX(), e.getY())) {
+							if (it.getBoundingBox().contains(e.getX(), e.getY()-40)) {
 								System.out.println("Bounding Box X: " + it.getBoundingBox().x + "\nBounding Box Y: "
 										+ it.getBoundingBox().y + "\nBounding Box Width: " + it.getBoundingBox().width
 										+ "\nBounding Box Height: " + it.getBoundingBox().height);

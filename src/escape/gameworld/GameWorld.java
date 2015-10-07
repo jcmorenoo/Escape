@@ -367,7 +367,7 @@ public class GameWorld {
 			{"", "", "", "", "", ""}
 		};
 	private String[][] LIVING_WEST = {
-			{"Safe", "", "", "", "", "Living Room Bin"},
+			{"Living Room Safe", "", "", "", "", "Living Room Bin"},
 			{"", "", "", "", "", ""},
 			{"", "", "", "", "", ""}
 		};
@@ -429,7 +429,7 @@ public class GameWorld {
 	public boolean enterRoom(Player p, Room r){
 		// if the room is a locked door, check if the player have the key
 		if (r.isLocked()){
-			//selectedInventory = items.get("Study Room Key");
+			selectedInventory = items.get("Study Room Key");
 			if(selectedInventory == null){
 				System.out.println("Find the key!");
 				return false;

@@ -1,5 +1,6 @@
 package escape.gameworld;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -81,7 +82,7 @@ public class Container extends Item {
 	 *            height of the item
 	 */
 	public void boundingBox(int x, int y, int w, int h) {
-		this.boundingBox = new Rectangle(x, y, w, h);
+		setBoundingBox(new Rectangle(x, y, w, h));
 	}
 
 	/*---------------DRAWING ITEM IMAGE---------------*/
@@ -114,6 +115,12 @@ public class Container extends Item {
 			case NORTH:
 				g.drawImage(bin, scaleImgPos(18), scaleImgPos(260),
 						scaleImgWidth(bin), scaleImgHeight(bin), null);
+				g.setColor(Color.RED);
+				//System.out.println("Bounding Box: " + scaleImgPos(18) + " " + scaleImgPos(260) + " " + scaleImgWidth(bin) + " " + scaleImgHeight(bin));
+				g.drawRect(scaleImgPos(18), scaleImgPos(260),
+						scaleImgWidth(bin), scaleImgHeight(bin));
+				
+				g.drawRect(12, 33, 12, 12);
 				boundingBox(scaleImgPos(18), scaleImgPos(260),
 						scaleImgWidth(bin), scaleImgHeight(bin));
 				break;
@@ -183,7 +190,8 @@ public class Container extends Item {
 			case NORTH:
 				g.drawImage(fridge, scaleImgPos(430), scaleImgPos(110),
 						scaleImgWidth(fridge), scaleImgHeight(fridge), null);
-				boundingBox(scaleImgPos(345), scaleImgPos(110),
+				g.drawRect(14, 204, 65, 92);
+				boundingBox(scaleImgPos(430), scaleImgPos(110),
 						scaleImgWidth(fridge), scaleImgHeight(fridge));
 				break;
 			case EAST:
@@ -223,6 +231,9 @@ public class Container extends Item {
 			case WEST:
 				g.drawImage(bin, scaleImgPos(490), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin), null);
+				g.setColor(Color.RED);
+				g.drawRect(490, 255,
+						scaleImgWidth(bin), scaleImgHeight(bin));
 				boundingBox(scaleImgPos(490), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin));
 				break;
@@ -281,6 +292,24 @@ public class Container extends Item {
 				break;
 			}
 			break;
+			
+
+		case "Lamp":
+			switch (d) {
+			case EAST:
+				g.drawImage(lamp, scaleImgPos(490), scaleImgPos(275),
+						scaleImgWidth(lamp), scaleImgHeight(lamp), null);
+				boundingBox(scaleImgPos(490), scaleImgPos(275),
+						scaleImgWidth(lamp), scaleImgHeight(lamp));
+				break;
+			case SOUTH:
+				g.drawImage(lamp, scaleImgPos(10), scaleImgPos(275),
+						scaleImgWidth(lamp), scaleImgHeight(lamp), null);
+				boundingBox(scaleImgPos(10), scaleImgPos(275),
+						scaleImgWidth(lamp), scaleImgHeight(lamp));
+				break;
+			}
+			break;
 
 		case "Study Room Safe":
 			switch (d) {
@@ -322,5 +351,6 @@ public class Container extends Item {
 			.loadImage("/images/sideTable.png");
 	private static final Image sideTableSide = GameCanvas
 			.loadImage("/images/sideTableSide.png");
+	private static final Image lamp = GameCanvas.loadImage("/images/lamp.png");
 
 }
