@@ -192,9 +192,9 @@ public class GameFrame extends JFrame implements ActionListener {
 					final String gameID = JOptionPane.showInputDialog(null,
 							gameIdPrompt, "Game ID",
 							JOptionPane.INFORMATION_MESSAGE);
-					
+
 					game = new GameWorld(gameID);
-					
+
 					server = new Server(numPlayers, gameID.toString());
 					server.start();
 
@@ -208,10 +208,11 @@ public class GameFrame extends JFrame implements ActionListener {
 							System.out.println("Client player name:"
 									+ client.getPlayer().getName());
 							player = client.getPlayer();
+							setSt(2);
 							break;
 						}
 					}
-					
+
 					// TESTING: rooms, containers, items
 					// ArrayList<Room> it = game.getRoomList();
 					// for (int i = 0; i < it.size(); i++) {
@@ -234,7 +235,10 @@ public class GameFrame extends JFrame implements ActionListener {
 
 					// Testing purposes
 					setSt(1);
-					client.sendEvent(new PickUpItemEvent(client.getPlayer(), new Item("Kitchen Picture", "Family Picture", true)));
+//					client.sendEvent(new PickUpItemEvent(client.getPlayer(),
+//							new Item("Paper", "A piece of paper.", true)));
+					client.sendEvent(new PickUpItemEvent(client.getPlayer(),
+							new Item("Kitchen Picture", "Family Picture", true)));
 				}
 
 				// Join a game
@@ -304,7 +308,7 @@ public class GameFrame extends JFrame implements ActionListener {
 	}
 
 	/*
-	 * Moves player forward to enter/leave a room 
+	 * Moves player forward to enter/leave a room
 	 */
 	public void forward(JButton goForward) {
 		goForward.addActionListener(new ActionListener() {
@@ -328,6 +332,7 @@ public class GameFrame extends JFrame implements ActionListener {
 					break;
 				case "Hall - Kitchen":
 					client.sendEvent(new EnterRoomEvent(player, "Kitchen"));
+//					client.sendEvent(new PickUpItemEvent(client.getPlayer(), new Item("Kitchen Picture", "Family Picture", true)));
 					break;
 				}
 
@@ -356,8 +361,9 @@ public class GameFrame extends JFrame implements ActionListener {
 								"Hall - Bedroom"));
 						break;
 					}
-					
-					// !----Direction not changing back to NORTH when entering room----!
+
+					// !----Direction not changing back to NORTH when entering
+					// room----!
 					client.sendEvent(new ChangeDirectionEvent(player, "NORTH"));
 				}
 
@@ -525,7 +531,6 @@ public class GameFrame extends JFrame implements ActionListener {
 			// player.enterRoom(new Room("Living Room", false, "No key"));
 			// }
 			// }
-			
 
 		}
 
@@ -535,13 +540,17 @@ public class GameFrame extends JFrame implements ActionListener {
 				return;
 			String currentRoom = player.getRoom().getName();
 			// System.out.print("You are in " + currentRoom);
-			if (currentRoom.equals("Main Hall") || currentRoom.equals("Hall - Bedroom")
-					|| currentRoom.equals("Hall - Kitchen") || currentRoom.equals("Hall - Study")
+			if (currentRoom.equals("Main Hall")
+					|| currentRoom.equals("Hall - Bedroom")
+					|| currentRoom.equals("Hall - Kitchen")
+					|| currentRoom.equals("Hall - Study")
 					|| currentRoom.equals("Hall - Living Room")) {
 				return;
 			} else {
-				System.out.println("Mouse x: " + e.getX() + "\nMouse Y: " + e.getY());
-				HashMap<String, String[][]> currentLoc = player.getRoom().getItemsByDirection();
+				System.out.println("Mouse x: " + e.getX() + "\nMouse Y: "
+						+ e.getY());
+				HashMap<String, String[][]> currentLoc = player.getRoom()
+						.getItemsByDirection();
 				Direction d = player.getDirection();
 				String[][] items = null;
 				switch (d) {
@@ -570,7 +579,8 @@ public class GameFrame extends JFrame implements ActionListener {
 										+ it.getBoundingBox().y + "\nBounding Box Width: " + it.getBoundingBox().width
 										+ "\nBounding Box Height: " + it.getBoundingBox().height);
 								game.setSelectedItem(it);
-								System.out.println(game.getSelectedItem().getName());
+								System.out.println(game.getSelectedItem()
+										.getName());
 								return;
 							}
 						}

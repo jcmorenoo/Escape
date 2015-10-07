@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.Serializable;
+
 import escape.gameworld.Player.Direction;
 import escape.ui.GameCanvas;
 
@@ -378,9 +379,35 @@ public class Item implements Serializable {
 		case "Kitchen Picture":
 			switch (itemOrder) {
 			case 0:
-				g.drawImage(kitchenPicture, scaleImgPos(100), scaleImgPos(400), scaleImgWidth(kitchenPicture),
+				// Testing/Selecting inventory bounding box
+//				g.setColor(Color.GRAY);
+//				g.fillRect(scaleImgPos(42), scaleImgPos(495),
+//						(int) (98 * IMG_WIDTH_RESCALE),
+//						(int) (98 * IMG_HEIGHT_RESCALE));
+				g.drawImage(kitchenPicture, scaleImgPos(48), scaleImgPos(518),
+						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
+				break;
+			case 1:
+				// Testing/Selecting inventory bounding box
+//				g.setColor(Color.GRAY);
+//				g.fillRect(scaleImgPos(147), scaleImgPos(495),
+//						(int) (98 * IMG_WIDTH_RESCALE),
+//						(int) (98 * IMG_HEIGHT_RESCALE));
+				g.drawImage(kitchenPicture, scaleImgPos(48), scaleImgPos(518),
+						scaleImgWidth(kitchenPicture),
+						scaleImgHeight(kitchenPicture), null);
+				break;
 			}
+			break;
+		case "Paper":
+			switch (itemOrder) {
+			case 0:
+				g.drawImage(paper, scaleImgPos(50), scaleImgPos(525),
+						scaleImgWidth(paper), scaleImgHeight(paper), null);
+				break;
+			}
+			 break;
 		}
 
 		// OTHER PICKABLE ITEMS
@@ -443,7 +470,7 @@ public class Item implements Serializable {
 	private static final Image livingRoomPicture = GameCanvas.loadImage("/images/livingRoomPicture.png");
 	private static final Image longTable = GameCanvas.loadImage("/images/longTable.png");
 	private static final Image longTableSide = GameCanvas.loadImage("/images/longTableSide.png");
-	private static final Image mainDoor = GameCanvas.loadImage("/images/mainDoor.png");
+	private static final Image paper = GameCanvas.loadImage("/images/paper.png");
 	private static final Image pictureFrame = GameCanvas.loadImage("/images/pictureFrame.png");
 	private static final Image portrait = GameCanvas.loadImage("/images/portrait.png");
 	private static final Image shortTable = GameCanvas.loadImage("/images/shortTable.png");

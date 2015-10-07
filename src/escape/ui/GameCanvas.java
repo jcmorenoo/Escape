@@ -142,19 +142,29 @@ public class GameCanvas extends JPanel {
 							scaleImgHeight(wall), null);
 					break;
 				}
+				
+
 				for (Item i : currentRoom.getItems()) {
 					i.draw(g, currentRoom, currentDirection);
 				}
 				for (Container c : currentRoom.getContainer()) {
 					c.draw(g, currentRoom, currentDirection);
 				}
+				
 
+				int itemOrder = 0;
 				// TO DO: Draw items currently in player's inventory
 				if (player.getItems() != null) {
-					int itemCount = 0;
-					for (Item i : player.getItems()) {
-						i.drawInventoryItem(g, itemCount);
+//					int itemOrder = 0;
+//					for (int count = 0; count <= player.getItems().size() - 1; count++){ 
+//						player.getItems().get(count).drawInventoryItem(g, count);
+					for (Item i : player.getItems()){
+						i.drawInventoryItem(g, itemOrder);
+						itemOrder++;
 					}
+				}
+				else if(state == 2){
+					//Draw loading screen
 				}
 			}
 		}
