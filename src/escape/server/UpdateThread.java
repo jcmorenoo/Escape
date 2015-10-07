@@ -6,6 +6,7 @@ import escape.event.ChangeDirectionEvent;
 import escape.event.DropItemEvent;
 import escape.event.EnterRoomEvent;
 import escape.event.Event;
+import escape.event.GameOverEvent;
 import escape.event.GameWorldUpdateEvent;
 import escape.event.InspectItemEvent;
 import escape.event.PickUpItemEvent;
@@ -96,12 +97,19 @@ public class UpdateThread extends Thread {
 				Room room = game.getRooms().get(roomName);
 
 				if (game.enterRoom(player, room)) {
+					if(room.getName().equals("Exit Door")){
+						GameOverEvent gameOver = new GameOverEvent(player);
+						sendToAllClients((Event)gameOver);
+						return;
+					}
 					player.enterRoom(room);
 					GameWorldUpdateEvent enterRoom = new GameWorldUpdateEvent(
 							player, player.getRoom());
 					sendClient((Event) enterRoom,
 							server.getClients().get(player.getId()));
 				}
+				
+				
 				// try to make the player enter the room
 				// if exception.. send new event containing current room.
 			} else if (event instanceof ChangeDirectionEvent) {
@@ -200,7 +208,7 @@ public class UpdateThread extends Thread {
 	 * @param event
 	 * 
 	 */
-	public void sentToAllClients(Event event) {
+	public void sendToAllClients(Event event) {
 		for (int i = 0; i < server.getClients().size(); i++) {
 			Connection p = server.getClients().get(i);
 			try {
