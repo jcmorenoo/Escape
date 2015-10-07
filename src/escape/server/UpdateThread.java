@@ -171,6 +171,7 @@ public class UpdateThread extends Thread {
 			// }
 			else if (event instanceof InspectItemEvent) {
 				InspectItemEvent e = (InspectItemEvent) event;
+				
 			} else if (event instanceof PickUpItemEvent) {
 				PickUpItemEvent e = (PickUpItemEvent) event;
 			}
