@@ -40,7 +40,7 @@ public class UpdateThread extends Thread {
 	public UpdateThread(Server server) {
 		this.server = server;
 		setDaemon(true);// daemon meaning low prio, and stops when no user
-						// thread running... idk what it means really
+		// thread running... idk what it means really
 		this.game = server.getGameWorld();
 
 	}
@@ -132,23 +132,27 @@ public class UpdateThread extends Thread {
 				PickUpItemEvent e = (PickUpItemEvent) event;
 				Player player = e.getPlayer();
 				Item item = e.getItem();
-				
-				if(player.pickUpItem(item)){
-					GameWorldUpdateEvent pickUpEvent = new GameWorldUpdateEvent(player, player.getRoom());
-					sendClient((Event) pickUpEvent, server.getClients().get(player.getId()));
+
+				if(item!=null){
+					if(player.pickUpItem(item)){
+						GameWorldUpdateEvent pickUpEvent = new GameWorldUpdateEvent(player, player.getRoom());
+						sendClient((Event) pickUpEvent, server.getClients().get(player.getId()));
+					}
 				}
 				//else ??
-				
+
 			} 
-			
+
 			else if (event instanceof DropItemEvent) {
 				DropItemEvent e = (DropItemEvent) event;
 				Player player = e.getPlayer();
 				Item item = e.getItem();
-				
-				if(player.dropItem(item)){
-					GameWorldUpdateEvent dropItemEvent = new GameWorldUpdateEvent(player, player.getRoom());
-					sendClient((Event)dropItemEvent, server.getClients().get(player.getId()));
+
+				if(item!=null){
+					if(player.dropItem(item)){
+						GameWorldUpdateEvent dropItemEvent = new GameWorldUpdateEvent(player, player.getRoom());
+						sendClient((Event)dropItemEvent, server.getClients().get(player.getId()));
+					}
 				}
 			}
 			// else if(event instanceof EnterRoomEvent){
