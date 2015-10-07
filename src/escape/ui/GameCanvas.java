@@ -8,11 +8,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import escape.client.Client;
 import escape.gameworld.Container;
 import escape.gameworld.Item;
@@ -23,15 +21,16 @@ import escape.gameworld.Room;
 /**
  * The GameCanvas is responsible for drawing the wall backgrounds of the rooms
  * in the game. It resizes the game window, wall backgrounds, and items in the
- * game according to the computer resolution of the user.
+ * game according to the computer resolution of the user. *
  * 
- * @author Trisha
- *
+ * @author Trisha*
  */
 
 public class GameCanvas extends JPanel {
 	private static final Image wall = loadImage("/images/wall.png");
+	private static final Image wallToHall = loadImage("/images/wallToHall.png");
 	private static final Image darkWall = loadImage("/images/darkWall.png");
+	private static final Image hall = loadImage("/images/hall.png");
 	private static final Image hallMain = loadImage("/images/hallMain.png");
 	private static final Image hallLeftStudy = loadImage("/images/hallLeftStudy.png");
 	private static final Image hallRightBedroom = loadImage("/images/hallRightBedroom.png");
@@ -55,6 +54,7 @@ public class GameCanvas extends JPanel {
 
 	private Toolkit t = Toolkit.getDefaultToolkit();;
 	private Dimension d = t.getScreenSize();
+
 	private int h = (int) (d.height * WINDOW_HEIGHT_SCALE);
 	private int w = (int) (d.width * WINDOW_WIDTH_SCALE);
 
@@ -71,10 +71,8 @@ public class GameCanvas extends JPanel {
 	}
 
 	public void paint(Graphics g) {
-
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-
 		state = GameFrame.state();
 
 		// Draws wall backgrounds depending on player's current room
@@ -85,7 +83,6 @@ public class GameCanvas extends JPanel {
 			if (player.getRoom() != null) {
 				currentRoom = player.getRoom();
 				currentDirection = player.getDirection();
-
 				switch (currentRoom.getName()) {
 				case "Main Hall":
 					g.drawImage(hallMain, 0, 0, scaleImgWidth(hallMain),
@@ -110,14 +107,16 @@ public class GameCanvas extends JPanel {
 					g.drawImage(hallLeftKitchen, 0, 0,
 							scaleImgWidth(hallLeftStudy),
 							scaleImgHeight(hallLeftStudy), null);
-					// TO DO: display Kitchen + items from a distance
 					break;
 				case "Hall - Living Room":
+					g.drawImage(wall, scaleInsideImgPos(58),
+							scaleInsideImgPos(0), scaleInsideImgWidth(wall),
+							scaleInsideImgHeight(wall), null);
+					Item.draw(g, "Living Room");
+					Container.draw(g, "Living Room");
 					g.drawImage(hallRightLivingRoom, 0, 0,
 							scaleImgWidth(hallRightLivingRoom),
 							scaleImgHeight(hallRightLivingRoom), null);
-					// TO DO: Need to display Living Room + items from a
-					// distance
 					break;
 				case "Bedroom":
 					g.drawImage(darkWall, 0, 0, scaleImgWidth(darkWall),
@@ -125,16 +124,27 @@ public class GameCanvas extends JPanel {
 					break;
 				case "Living Room":
 				case "Kitchen":
+					if (player.getDirection().equals(Direction.SOUTH)) {
+						g.drawImage(hall, scaleInsideImgPos(58),
+								scaleInsideImgPos(0),
+								scaleInsideImgWidth(hall),
+								scaleInsideImgHeight(hall), null);
+						g.drawImage(wallToHall, 0, 0,
+								scaleImgWidth(wallToHall),
+								scaleImgHeight(wallToHall), null);
+					} else {
+						g.drawImage(wall, 0, 0, scaleImgWidth(wall),
+								scaleImgHeight(wall), null);
+					}
+					break;
 				case "Study":
 					g.drawImage(wall, 0, 0, scaleImgWidth(wall),
 							scaleImgHeight(wall), null);
 					break;
 				}
-
 				for (Item i : currentRoom.getItems()) {
 					i.draw(g, currentRoom, currentDirection);
 				}
-
 				for (Container c : currentRoom.getContainer()) {
 					c.draw(g, currentRoom, currentDirection);
 				}
@@ -146,10 +156,6 @@ public class GameCanvas extends JPanel {
 						i.drawInventoryItem(g, itemCount);
 					}
 				}
-				// else {
-				// System.out.println("Player has no inventory");
-				// }
-
 			}
 		}
 		repaint();
@@ -165,6 +171,7 @@ public class GameCanvas extends JPanel {
 	}
 
 	/*---------------SCALE IMAGE---------------*/
+
 	private static int scaleInsideImgPos(int i) {
 		return (int) (i * BACKGROUND_WIDTH_SCALE);
 	}
@@ -186,6 +193,7 @@ public class GameCanvas extends JPanel {
 	}
 
 	/*---------------LOAD IMAGE---------------*/
+
 	public static Image loadImage(String source) {
 		try {
 			Image image = ImageIO.read(new FileInputStream("src/" + source));
@@ -194,5 +202,4 @@ public class GameCanvas extends JPanel {
 			throw new RuntimeException("Unable to load image");
 		}
 	}
-
 }

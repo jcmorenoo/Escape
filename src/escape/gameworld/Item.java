@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.Serializable;
-
 import escape.gameworld.Player.Direction;
 import escape.ui.GameCanvas;
 
@@ -21,8 +20,8 @@ public class Item implements Serializable {
 	// }
 
 	// private boolean movable;
-	private boolean pickable;
 
+	private boolean pickable;
 	private Rectangle boundingBox;
 
 	public Item(String n, String d, boolean pickable) {
@@ -76,6 +75,7 @@ public class Item implements Serializable {
 	// return movable;
 	// }
 	//
+
 	// public void setMovable(boolean movable) {
 	// this.movable = movable;
 	// }
@@ -93,15 +93,18 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Creates a bounding box for this item
 	 * 
+	 * Creates a bounding box for this item
 	 * 
 	 * @param x
 	 *            x position in the game canvas
+	 *
 	 * @param y
 	 *            y position in the game canvas
+	 * 
 	 * @param w
 	 *            width of the item
+	 * 
 	 * @param h
 	 *            height of the item
 	 */
@@ -110,13 +113,17 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Draws all the items in the room the player is currently in, and in the
-	 * direction that the player is facing
 	 * 
+	 * Draws all the items in the room the player is currently in, and in the
+	 * 
+	 * direction that the player is facing
+	 *
 	 * @param g
 	 *            Graphics
+	 * 
 	 * @param r
 	 *            Current room player is in
+	 * 
 	 * @param d
 	 *            Direction player is facing
 	 */
@@ -131,6 +138,7 @@ public class Item implements Serializable {
 	 * 
 	 * @param g
 	 *            - Graphics
+	 * 
 	 * @param string
 	 *            - Room name which items are drawn in
 	 */
@@ -144,24 +152,34 @@ public class Item implements Serializable {
 					scaleInsideImgPos(400),
 					scaleInsideImgWidth(kitchenPicture),
 					scaleInsideImgHeight(kitchenPicture), null);
+			break;
+		case "Living Room":
+			g.drawImage(sofa, scaleInsideImgPos(285), scaleInsideImgPos(215),
+					scaleInsideImgWidth(kitchenTable),
+					scaleInsideImgHeight(kitchenTable), null);
+			g.drawImage(longTable, scaleInsideImgPos(310),
+					scaleInsideImgPos(300), scaleInsideImgWidth(longTable),
+					scaleInsideImgHeight(longTable), null);
+			break;
 		}
 	}
 
 	/*---------------ITEM IMAGE DIRECTION HELPER METHOD---------------*/
-
 	/**
-	 * Draws an item depending on the player's direction
+	 * 
+	 * Draws an item depending on the player's direction *
 	 * 
 	 * @param g
 	 *            Graphics
+	 *
 	 * @param i
 	 *            Item to be drawn
+	 * 
 	 * @param d
 	 *            Player's current direction
 	 */
 	private void drawItem(Graphics g, Item i, Direction d) {
 		String itemName = i.getName();
-
 		switch (itemName) {
 		case "Bed":
 			switch (d) {
@@ -179,7 +197,6 @@ public class Item implements Serializable {
 				break;
 			}
 			break;
-
 		case "Bedroom Door":
 			switch (d) {
 			case SOUTH:
@@ -191,7 +208,6 @@ public class Item implements Serializable {
 				break;
 			}
 			break;
-
 		case "Bedroom Lamp":
 			switch (d) {
 			case NORTH:
@@ -200,7 +216,6 @@ public class Item implements Serializable {
 						scaleImgHeight(bedroomLamp), null);
 				boundingBox(scaleImgPos(490), scaleImgPos(120),
 						scaleImgWidth(bedroomLamp), scaleImgHeight(bedroomLamp));
-
 				break;
 			case EAST:
 				g.drawImage(bedroomLamp, scaleImgPos(18), scaleImgPos(120),
@@ -211,7 +226,6 @@ public class Item implements Serializable {
 				break;
 			}
 			break;
-
 		case "Chair":
 			switch (d) {
 			case NORTH:
@@ -226,11 +240,9 @@ public class Item implements Serializable {
 						null);
 				boundingBox(scaleImgPos(100), scaleImgPos(220),
 						scaleImgWidth(chairSide), scaleImgHeight(chairSide));
-
 				break;
 			}
 			break;
-
 		case "Frame":
 			switch (d) {
 			case EAST:
@@ -243,7 +255,6 @@ public class Item implements Serializable {
 				break;
 			}
 			break;
-
 		case "Desk":
 			switch (d) {
 			case NORTH:
@@ -260,7 +271,6 @@ public class Item implements Serializable {
 				break;
 			}
 			break;
-
 		case "Kitchen Picture":
 			switch (d) {
 			case EAST:
@@ -278,11 +288,9 @@ public class Item implements Serializable {
 				boundingBox(scaleImgPos(100), scaleImgPos(370),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture));
-
 				break;
 			}
 			break;
-
 		case "Kitchen Table":
 			switch (d) {
 			case NORTH:
@@ -300,11 +308,9 @@ public class Item implements Serializable {
 				boundingBox(scaleImgPos(160), scaleImgPos(250),
 						scaleImgWidth(kitchenTableLeft),
 						scaleImgHeight(kitchenTableLeft));
-
 				break;
 			}
 			break;
-
 		case "Lamp":
 			switch (d) {
 			case EAST:
@@ -321,7 +327,6 @@ public class Item implements Serializable {
 				break;
 			}
 			break;
-
 		case "Living Room Picture":
 			switch (d) {
 			case EAST:
@@ -334,7 +339,6 @@ public class Item implements Serializable {
 				break;
 			}
 			break;
-
 		case "Long Table":
 			switch (d) {
 			case NORTH:
@@ -354,7 +358,6 @@ public class Item implements Serializable {
 				break;
 			}
 			break;
-
 		case "Portrait":
 			switch (d) {
 			case EAST:
@@ -365,7 +368,6 @@ public class Item implements Serializable {
 				break;
 			}
 			break;
-
 		case "Short Table":
 			switch (d) {
 			case NORTH:
@@ -382,11 +384,9 @@ public class Item implements Serializable {
 				boundingBox(scaleImgPos(325), scaleImgPos(285),
 						scaleImgWidth(shortTableSide),
 						scaleImgHeight(shortTableSide));
-
 				break;
 			}
 			break;
-
 		case "Sofa":
 			switch (d) {
 			case NORTH:
@@ -403,7 +403,6 @@ public class Item implements Serializable {
 				break;
 			}
 			break;
-
 		case "Study Door":
 			switch (d) {
 			case SOUTH:
@@ -412,7 +411,6 @@ public class Item implements Serializable {
 						null);
 				boundingBox(scaleImgPos(239), scaleImgPos(95),
 						scaleImgWidth(studyDoor), scaleImgHeight(studyDoor));
-
 				break;
 			}
 			break;
@@ -421,7 +419,6 @@ public class Item implements Serializable {
 
 	public void drawInventoryItem(Graphics g, int itemOrder) {
 		String invItem = this.name;
-
 		switch (invItem) {
 		case "Kitchen Picture":
 			switch (itemOrder) {
@@ -440,14 +437,12 @@ public class Item implements Serializable {
 		// Key to bedroom safe - study room
 		// Key to main door - bedroom safe
 		//
-
 	}
 
 	/*---------------ITEM IMAGE SCALING---------------
 	 * These constants and methods help with scaling the item in accordance
 	 * to the player's screen resolution
 	 */
-
 	private static final double IMG_POS_RESCALE = 0.8;
 	private static final double IMG_WIDTH_RESCALE = 0.8;
 	private static final double IMG_HEIGHT_RESCALE = 0.814;
@@ -479,6 +474,7 @@ public class Item implements Serializable {
 	}
 
 	/*---------------LOAD ITEM IMAGES---------------*/
+
 	private static final Image bed = GameCanvas.loadImage("/images/bed.png");
 	private static final Image bedroomDoor = GameCanvas
 			.loadImage("/images/bedroomDoor.png");
@@ -521,5 +517,4 @@ public class Item implements Serializable {
 			.loadImage("/images/sofaLeftSide.png");
 	private static final Image studyDoor = GameCanvas
 			.loadImage("/images/studyDoor.png");
-
 }
