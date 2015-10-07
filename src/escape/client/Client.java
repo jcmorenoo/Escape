@@ -186,7 +186,11 @@ public class Client extends Thread {
 			//if the winner is this player then set player to winner. else false
 			if(event.getPlayer().getName().equals(this.player.getName())){
 				this.winner = true;
-				//call some function to say that the player won...
+				//call some method to say that the player won...
+			}
+			else{
+				this.winner = false;
+				//call some method which will end the game..
 			}
 
 		}

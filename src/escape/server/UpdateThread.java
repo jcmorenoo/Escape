@@ -3,19 +3,20 @@ package escape.server;
 import java.io.IOException;
 
 import escape.event.ChangeDirectionEvent;
-import escape.event.ChangeRoomEvent;
 import escape.event.DropItemEvent;
 import escape.event.EnterRoomEvent;
 import escape.event.Event;
+import escape.event.GameOverEvent;
 import escape.event.GameWorldUpdateEvent;
 import escape.event.InspectItemEvent;
 import escape.event.PickUpItemEvent;
 import escape.event.TestEvent;
 import escape.event.UserSetupEvent;
 import escape.gameworld.GameWorld;
+import escape.gameworld.Item;
 import escape.gameworld.Player;
-import escape.gameworld.Room;
 import escape.gameworld.Player.Direction;
+import escape.gameworld.Room;
 
 /**
  * A Thread which will keep accepting events from client and updating the game
@@ -40,7 +41,7 @@ public class UpdateThread extends Thread {
 	public UpdateThread(Server server) {
 		this.server = server;
 		setDaemon(true);// daemon meaning low prio, and stops when no user
-						// thread running... idk what it means really
+		// thread running... idk what it means really
 		this.game = server.getGameWorld();
 
 	}
@@ -96,12 +97,19 @@ public class UpdateThread extends Thread {
 				Room room = game.getRooms().get(roomName);
 
 				if (game.enterRoom(player, room)) {
+					if(room.getName().equals("Exit Door")){
+						GameOverEvent gameOver = new GameOverEvent(player);
+						sendToAllClients((Event)gameOver);
+						return;
+					}
 					player.enterRoom(room);
 					GameWorldUpdateEvent enterRoom = new GameWorldUpdateEvent(
 							player, player.getRoom());
 					sendClient((Event) enterRoom,
 							server.getClients().get(player.getId()));
 				}
+				
+				
 				// try to make the player enter the room
 				// if exception.. send new event containing current room.
 			} else if (event instanceof ChangeDirectionEvent) {
@@ -128,8 +136,32 @@ public class UpdateThread extends Thread {
 				sendClient((Event) changeDirection,
 						server.getClients().get(player.getId()));
 
-			} else if (event instanceof DropItemEvent) {
+			}else if (event instanceof PickUpItemEvent){
+				PickUpItemEvent e = (PickUpItemEvent) event;
+				Player player = e.getPlayer();
+				Item item = e.getItem();
+
+				if(item!=null){
+					if(player.pickUpItem(item)){
+						GameWorldUpdateEvent pickUpEvent = new GameWorldUpdateEvent(player, player.getRoom());
+						sendClient((Event) pickUpEvent, server.getClients().get(player.getId()));
+					}
+				}
+				//else ??
+
+			} 
+
+			else if (event instanceof DropItemEvent) {
 				DropItemEvent e = (DropItemEvent) event;
+				Player player = e.getPlayer();
+				Item item = e.getItem();
+
+				if(item!=null){
+					if(player.dropItem(item)){
+						GameWorldUpdateEvent dropItemEvent = new GameWorldUpdateEvent(player, player.getRoom());
+						sendClient((Event)dropItemEvent, server.getClients().get(player.getId()));
+					}
+				}
 			}
 			// else if(event instanceof EnterRoomEvent){
 			// EnterRoomEvent e = (EnterRoomEvent) event;
@@ -147,6 +179,7 @@ public class UpdateThread extends Thread {
 			// }
 			else if (event instanceof InspectItemEvent) {
 				InspectItemEvent e = (InspectItemEvent) event;
+				
 			} else if (event instanceof PickUpItemEvent) {
 				PickUpItemEvent e = (PickUpItemEvent) event;
 			}
@@ -175,7 +208,7 @@ public class UpdateThread extends Thread {
 	 * @param event
 	 * 
 	 */
-	public void sentToAllClients(Event event) {
+	public void sendToAllClients(Event event) {
 		for (int i = 0; i < server.getClients().size(); i++) {
 			Connection p = server.getClients().get(i);
 			try {

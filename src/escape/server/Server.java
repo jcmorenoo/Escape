@@ -25,11 +25,11 @@ import escape.gameworld.Player;
 public class Server extends Thread{
 
 	//should also have the game as a field
-	
-	
-	
+
+
+
 	public static final int PORT = 12608;
-	
+
 	private Map<Integer,Connection> clients = new HashMap<Integer,Connection>();
 	private ServerSocket serverSocket;
 	private BlockingQueue<Update> updates = new LinkedBlockingQueue<Update>();
@@ -47,10 +47,10 @@ public class Server extends Thread{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		//initialise gameworld
 		game = new GameWorld(null);
-		
+
 
 
 
@@ -78,24 +78,28 @@ public class Server extends Thread{
 				ServerThread serverThread = new ServerThread(clientSocket,this,id);
 				serverThread.start();
 				System.out.println("ServerThread started");
-				
-				ConnectionAcceptedEvent e = new ConnectionAcceptedEvent(id);
-				updateThread.sendClient((Event)e, getClients().get(id));
-				
-				
-				
+
+				//game will only start once we reach the limit of players. or everyone has joined.
+				if(clients.size() >= this.limit){
+					for(int i = 0; i<clients.size(); i++){
+						ConnectionAcceptedEvent e = new ConnectionAcceptedEvent(i);
+						updateThread.sendClient((Event)e, getClients().get(i));
+					}
+				}
+
+
 				//create a new player with an id.
 				//then we should add this player into the game.
-//				Player player = new Player(id);
-				
+				//				Player player = new Player(id);
+
 				//add new player
 				//send a player to client.
 				//with a default starting room.
-				
+
 				//setUp players..??
 				id++;
-				
-				
+
+
 			}
 
 		} catch (IOException e) {
@@ -137,7 +141,7 @@ public class Server extends Thread{
 			this.join(); 
 		} catch (InterruptedException e) { e.printStackTrace();}
 	}
-	
+
 	/**
 	 * Method which sets game id.
 	 * @param id
@@ -145,7 +149,7 @@ public class Server extends Thread{
 	public void setGameId(String id){
 		this.game.setGameID(id);
 	}
-	
+
 	/**
 	 * Method which returns the current game.
 	 * @return GameWorld

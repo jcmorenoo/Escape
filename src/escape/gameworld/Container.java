@@ -5,17 +5,14 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-
 import escape.gameworld.Player.Direction;
 import escape.ui.GameCanvas;
 
 public class Container extends Item {
-
 	// private String name;
 	// private String description;
 	//
 	private ArrayList<Item> items = new ArrayList<Item>();
-
 	private boolean locked;
 	private String key;
 
@@ -29,7 +26,6 @@ public class Container extends Item {
 		super(n, d, pickable);
 		this.locked = l;
 		this.key = key;
-
 	}
 
 	public void add(Item i) {
@@ -71,13 +67,15 @@ public class Container extends Item {
 	/**
 	 * Creates a bounding box for this item
 	 * 
-	 * 
 	 * @param x
 	 *            x position in the game canvas
+	 * 
 	 * @param y
 	 *            y position in the game canvas
+	 * 
 	 * @param w
 	 *            width of the item
+	 * 
 	 * @param h
 	 *            height of the item
 	 */
@@ -88,7 +86,6 @@ public class Container extends Item {
 	/*---------------DRAWING ITEM IMAGE---------------*/
 	public void draw(Graphics g, Room r, Direction d) {
 		// String roomName = r.getName();
-
 		for (Container c : r.getContainer()) {
 			drawContainer(g, c, d);
 		}
@@ -102,11 +99,15 @@ public class Container extends Item {
 					null);
 			g.drawImage(bin, scaleInsideImgPos(90), scaleInsideImgPos(265),
 					scaleInsideImgWidth(bin), scaleInsideImgHeight(bin), null);
+			break;
+		case "Living Room":
+			g.drawImage(bin, scaleInsideImgPos(90), scaleInsideImgPos(265),
+					scaleInsideImgWidth(bin), scaleInsideImgHeight(bin), null);
+			break;
 		}
 	}
 
 	/*---------------ITEM IMAGE DIRECTION HELPER METHOD---------------*/
-
 	private void drawContainer(Graphics g, Item i, Direction d) {
 		String containerName = i.getName();
 		switch (containerName) {
@@ -176,7 +177,7 @@ public class Container extends Item {
 						scaleImgWidth(cupboard), scaleImgHeight(cupboard));
 				break;
 			case SOUTH:
-				g.drawImage(cupboardSide, scaleImgPos(450), scaleImgPos(220),
+				g.drawImage(cupboardSide, scaleImgPos(515), scaleImgPos(220),
 						scaleImgWidth(cupboardSide),
 						scaleImgHeight(cupboardSide), null);
 				boundingBox(scaleImgPos(450), scaleImgPos(220),
@@ -219,7 +220,6 @@ public class Container extends Item {
 				break;
 			}
 			break;
-
 		case "Living Room Bin":
 			switch (d) {
 			case NORTH:
@@ -239,17 +239,16 @@ public class Container extends Item {
 				break;
 			}
 			break;
-
 		case "Living Room Safe":
 			switch (d) {
 			case SOUTH:
-				g.drawImage(safeSide, scaleImgPos(480), scaleImgPos(255),
+				g.drawImage(safeSide, scaleImgPos(517), scaleImgPos(290),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide), null);
 				boundingBox(scaleImgPos(480), scaleImgPos(255),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide));
 				break;
 			case WEST:
-				g.drawImage(safe, scaleImgPos(18), scaleImgPos(255),
+				g.drawImage(safe, scaleImgPos(25), scaleImgPos(290),
 						scaleImgWidth(safe), scaleImgHeight(safe), null);
 				boundingBox(scaleImgPos(18), scaleImgPos(255),
 						scaleImgWidth(safe), scaleImgHeight(safe));
@@ -275,7 +274,6 @@ public class Container extends Item {
 				break;
 			}
 			break;
-
 		case "Study Room Bin":
 			switch (d) {
 			case NORTH:
@@ -314,13 +312,13 @@ public class Container extends Item {
 		case "Study Room Safe":
 			switch (d) {
 			case NORTH:
-				g.drawImage(safe, scaleImgPos(480), scaleImgPos(255),
+				g.drawImage(safe, scaleImgPos(517), scaleImgPos(290),
 						scaleImgWidth(safe), scaleImgHeight(safe), null);
 				boundingBox(scaleImgPos(480), scaleImgPos(255),
 						scaleImgWidth(safe), scaleImgHeight(safe));
 				break;
 			case EAST:
-				g.drawImage(safeSide, scaleImgPos(15), scaleImgPos(255),
+				g.drawImage(safeSide, scaleImgPos(20), scaleImgPos(290),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide), null);
 				boundingBox(scaleImgPos(15), scaleImgPos(255),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide));
@@ -352,5 +350,4 @@ public class Container extends Item {
 	private static final Image sideTableSide = GameCanvas
 			.loadImage("/images/sideTableSide.png");
 	private static final Image lamp = GameCanvas.loadImage("/images/lamp.png");
-
 }
