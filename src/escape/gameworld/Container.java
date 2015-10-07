@@ -116,19 +116,13 @@ public class Container extends Item {
 			case NORTH:
 				g.drawImage(bin, scaleImgPos(18), scaleImgPos(260),
 						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				g.setColor(Color.RED);
-				//System.out.println("Bounding Box: " + scaleImgPos(18) + " " + scaleImgPos(260) + " " + scaleImgWidth(bin) + " " + scaleImgHeight(bin));
-				g.drawRect(scaleImgPos(18), scaleImgPos(260),
-						scaleImgWidth(bin), scaleImgHeight(bin));
-				
-				g.drawRect(12, 33, 12, 12);
-				boundingBox(scaleImgPos(18), scaleImgPos(260),
+				i.boundingBox(scaleImgPos(18), scaleImgPos(260),
 						scaleImgWidth(bin), scaleImgHeight(bin));
 				break;
 			case WEST:
 				g.drawImage(bin, scaleImgPos(490), scaleImgPos(260),
 						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				boundingBox(scaleImgPos(490), scaleImgPos(260),
+				i.boundingBox(scaleImgPos(490), scaleImgPos(260),
 						scaleImgWidth(bin), scaleImgHeight(bin));
 				break;
 			}
@@ -138,13 +132,13 @@ public class Container extends Item {
 			case SOUTH:
 				g.drawImage(safe, scaleImgPos(480), scaleImgPos(275),
 						scaleImgWidth(safe), scaleImgHeight(safe), null);
-				boundingBox(scaleImgPos(480), scaleImgPos(275),
+				i.boundingBox(scaleImgPos(480), scaleImgPos(275),
 						scaleImgWidth(safe), scaleImgHeight(safe));
 				break;
 			case WEST:
 				g.drawImage(safeSide, scaleImgPos(18), scaleImgPos(275),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide), null);
-				boundingBox(scaleImgPos(18), scaleImgPos(275),
+				i.boundingBox(scaleImgPos(18), scaleImgPos(275),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide));
 				break;
 			}
@@ -155,7 +149,7 @@ public class Container extends Item {
 				g.drawImage(bookshelfSide, scaleImgPos(490), scaleImgPos(55),
 						scaleImgWidth(bookshelfSide),
 						scaleImgHeight(bookshelfSide), null);
-				boundingBox(scaleImgPos(490), scaleImgPos(55),
+				i.boundingBox(scaleImgPos(490), scaleImgPos(55),
 						scaleImgWidth(bookshelfSide),
 						scaleImgHeight(bookshelfSide));
 				break;
@@ -163,7 +157,7 @@ public class Container extends Item {
 				g.drawImage(bookshelf, scaleImgPos(20), scaleImgPos(35),
 						scaleImgWidth(bookshelf), scaleImgHeight(bookshelf),
 						null);
-				boundingBox(scaleImgPos(20), scaleImgPos(35),
+				i.boundingBox(scaleImgPos(20), scaleImgPos(35),
 						scaleImgWidth(bookshelf), scaleImgHeight(bookshelf));
 				break;
 			}
@@ -173,14 +167,14 @@ public class Container extends Item {
 			case WEST:
 				g.drawImage(cupboard, scaleImgPos(30), scaleImgPos(220),
 						scaleImgWidth(cupboard), scaleImgHeight(cupboard), null);
-				boundingBox(scaleImgPos(30), scaleImgPos(220),
+				i.boundingBox(scaleImgPos(30), scaleImgPos(220),
 						scaleImgWidth(cupboard), scaleImgHeight(cupboard));
 				break;
 			case SOUTH:
 				g.drawImage(cupboardSide, scaleImgPos(515), scaleImgPos(220),
 						scaleImgWidth(cupboardSide),
 						scaleImgHeight(cupboardSide), null);
-				boundingBox(scaleImgPos(450), scaleImgPos(220),
+				i.boundingBox(scaleImgPos(450), scaleImgPos(220),
 						scaleImgWidth(cupboardSide),
 						scaleImgHeight(cupboardSide));
 				break;
@@ -191,15 +185,14 @@ public class Container extends Item {
 			case NORTH:
 				g.drawImage(fridge, scaleImgPos(430), scaleImgPos(110),
 						scaleImgWidth(fridge), scaleImgHeight(fridge), null);
-				g.drawRect(14, 204, 65, 92);
-				boundingBox(scaleImgPos(430), scaleImgPos(110),
+				i.boundingBox(scaleImgPos(430), scaleImgPos(110),
 						scaleImgWidth(fridge), scaleImgHeight(fridge));
 				break;
 			case EAST:
 				g.drawImage(fridgeSide, scaleImgPos(-70), scaleImgPos(110),
 						scaleImgWidth(fridgeSide), scaleImgHeight(fridgeSide),
 						null);
-				boundingBox(scaleImgPos(-70), scaleImgPos(110),
+				i.boundingBox(scaleImgPos(-70), scaleImgPos(110),
 						scaleImgWidth(fridgeSide), scaleImgHeight(fridgeSide));
 				break;
 			}
@@ -209,13 +202,13 @@ public class Container extends Item {
 			case NORTH:
 				g.drawImage(bin, scaleImgPos(18), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				boundingBox(scaleImgPos(18), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(18), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin));
 				break;
 			case WEST:
 				g.drawImage(bin, scaleImgPos(490), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				boundingBox(scaleImgPos(490), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(490), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin));
 				break;
 			}
@@ -225,16 +218,13 @@ public class Container extends Item {
 			case NORTH:
 				g.drawImage(bin, scaleImgPos(18), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				boundingBox(scaleImgPos(18), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(18), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin));
 				break;
 			case WEST:
 				g.drawImage(bin, scaleImgPos(490), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				g.setColor(Color.RED);
-				g.drawRect(490, 255,
-						scaleImgWidth(bin), scaleImgHeight(bin));
-				boundingBox(scaleImgPos(490), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(490), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin));
 				break;
 			}
@@ -244,13 +234,13 @@ public class Container extends Item {
 			case SOUTH:
 				g.drawImage(safeSide, scaleImgPos(517), scaleImgPos(290),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide), null);
-				boundingBox(scaleImgPos(480), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(480), scaleImgPos(255),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide));
 				break;
 			case WEST:
 				g.drawImage(safe, scaleImgPos(25), scaleImgPos(290),
 						scaleImgWidth(safe), scaleImgHeight(safe), null);
-				boundingBox(scaleImgPos(18), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(18), scaleImgPos(255),
 						scaleImgWidth(safe), scaleImgHeight(safe));
 				break;
 			}
@@ -261,7 +251,7 @@ public class Container extends Item {
 				g.drawImage(sideTableSide, scaleImgPos(485), scaleImgPos(300),
 						scaleImgWidth(sideTableSide),
 						scaleImgHeight(sideTableSide), null);
-				boundingBox(scaleImgPos(485), scaleImgPos(300),
+				i.boundingBox(scaleImgPos(485), scaleImgPos(300),
 						scaleImgWidth(sideTableSide),
 						scaleImgHeight(sideTableSide));
 				break;
@@ -269,7 +259,7 @@ public class Container extends Item {
 				g.drawImage(sideTable, scaleImgPos(225), scaleImgPos(240),
 						scaleImgWidth(sideTable),
 						scaleImgHeight(sideTableSide), null);
-				boundingBox(scaleImgPos(225), scaleImgPos(240),
+				i.boundingBox(scaleImgPos(225), scaleImgPos(240),
 						scaleImgWidth(sideTable), scaleImgHeight(sideTableSide));
 				break;
 			}
@@ -279,13 +269,13 @@ public class Container extends Item {
 			case NORTH:
 				g.drawImage(bin, scaleImgPos(18), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				boundingBox(scaleImgPos(18), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(18), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin));
 				break;
 			case WEST:
 				g.drawImage(bin, scaleImgPos(490), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				boundingBox(scaleImgPos(490), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(490), scaleImgPos(255),
 						scaleImgWidth(bin), scaleImgHeight(bin));
 				break;
 			}
@@ -297,13 +287,13 @@ public class Container extends Item {
 			case EAST:
 				g.drawImage(lamp, scaleImgPos(490), scaleImgPos(275),
 						scaleImgWidth(lamp), scaleImgHeight(lamp), null);
-				boundingBox(scaleImgPos(490), scaleImgPos(275),
+				i.boundingBox(scaleImgPos(490), scaleImgPos(275),
 						scaleImgWidth(lamp), scaleImgHeight(lamp));
 				break;
 			case SOUTH:
 				g.drawImage(lamp, scaleImgPos(10), scaleImgPos(275),
 						scaleImgWidth(lamp), scaleImgHeight(lamp), null);
-				boundingBox(scaleImgPos(10), scaleImgPos(275),
+				i.boundingBox(scaleImgPos(10), scaleImgPos(275),
 						scaleImgWidth(lamp), scaleImgHeight(lamp));
 				break;
 			}
@@ -314,13 +304,13 @@ public class Container extends Item {
 			case NORTH:
 				g.drawImage(safe, scaleImgPos(517), scaleImgPos(290),
 						scaleImgWidth(safe), scaleImgHeight(safe), null);
-				boundingBox(scaleImgPos(480), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(480), scaleImgPos(255),
 						scaleImgWidth(safe), scaleImgHeight(safe));
 				break;
 			case EAST:
 				g.drawImage(safeSide, scaleImgPos(20), scaleImgPos(290),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide), null);
-				boundingBox(scaleImgPos(15), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(15), scaleImgPos(255),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide));
 				break;
 			}
