@@ -80,9 +80,6 @@ public class GameCanvas extends JPanel {
 		if (state == 0) { // Main Menu - Game has not been created
 			g.drawImage(mainMenu, 0, 0, scaleImgWidth(mainMenu),
 					scaleImgHeight(mainMenu), null);
-		} else if (state == 2) {
-			g.drawImage(loadScreen, 0, 0, scaleImgWidth(loadScreen),
-					scaleImgHeight(loadScreen), null);
 		} else if (state == 1) { // Game has been created
 			if (player.getRoom() != null) {
 				currentRoom = player.getRoom();
@@ -175,6 +172,15 @@ public class GameCanvas extends JPanel {
 	public Dimension getPreferredSize() {
 		d.setSize(w, h);
 		return d;
+	}
+	
+	/**
+	 * Draws the load screen only for the host while they wait for other players to connect
+	 * @param g - Graphics
+	 */
+	protected void drawLoadScreen(Graphics g){
+		g.drawImage(loadScreen, 0, 0, scaleImgWidth(loadScreen),
+				scaleImgHeight(loadScreen), null);
 	}
 
 	public void setResizable(boolean b) {

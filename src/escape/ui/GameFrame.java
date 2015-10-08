@@ -202,12 +202,10 @@ public class GameFrame extends JFrame implements ActionListener {
 					client.setFrame(f);
 					client.start();
 
-					setSt(2);
-					System.out.println("State: " + state);
-					updateFrame();
-					System.out.println("State: " + state);
 					while (client.getPlayer() == null) {
-//						System.out.println("Client has no player");
+						// Displays load screen for host while waiting for other players
+						menuCanvas.drawLoadScreen(menuCanvas.getGraphics());
+						// System.out.println("Client has no player");
 						if (client.getPlayer() != null) {
 							System.out.println("Client player name:"
 									+ client.getPlayer().getName());
@@ -215,8 +213,6 @@ public class GameFrame extends JFrame implements ActionListener {
 							break;
 						}
 					}
-					
-					
 
 					// TESTING: rooms, containers, items
 					// ArrayList<Room> it = game.getRoomList();
@@ -332,12 +328,21 @@ public class GameFrame extends JFrame implements ActionListener {
 					client.sendEvent(new EnterRoomEvent(player, "Living Room"));
 					break;
 				case "Hall - Study":
-					client.sendEvent(new EnterRoomEvent(player, "Study"));
+					if (player.getItems().contains("Study Room Key")) {
+						client.sendEvent(new EnterRoomEvent(player, "Study"));
+					} else {
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"The Door is locked. You need to find the key!",
+										"Locked Room",
+										JOptionPane.WARNING_MESSAGE);
+					}
 					break;
 				case "Hall - Kitchen":
 					client.sendEvent(new EnterRoomEvent(player, "Kitchen"));
-//					 client.sendEvent(new PickUpItemEvent(client.getPlayer(),
-//					 new Item("Kitchen Picture", "Family Picture", true)));
+					// client.sendEvent(new PickUpItemEvent(client.getPlayer(),
+					// new Item("Kitchen Picture", "Family Picture", true)));
 					break;
 				}
 
@@ -615,25 +620,23 @@ public class GameFrame extends JFrame implements ActionListener {
 	}
 
 	public void updateFrame() {
-		if (state == 1){
-			frame.remove(menuCanvas);
-			menuCanvas = new GameCanvas(client);
-			btnPanel.removeAll();
-			gameBtns();
-			frame.add(menuCanvas, BorderLayout.NORTH);
-			mouse.addMouseListener(new MouseEvents());
-			frame.add(mouse);
-			frame.pack();
-		}
-		else if (state == 2){
-			frame.remove(menuCanvas);
-			menuCanvas = new GameCanvas(client);
-			btnPanel.removeAll();
-			frame.add(menuCanvas, BorderLayout.NORTH);
-			mouse.addMouseListener(new MouseEvents());
-			frame.add(mouse);
-			frame.pack();
-		}
+		frame.remove(menuCanvas);
+		menuCanvas = new GameCanvas(client);
+		btnPanel.removeAll();
+		gameBtns();
+		frame.add(menuCanvas, BorderLayout.NORTH);
+		mouse.addMouseListener(new MouseEvents());
+		frame.add(mouse);
+		frame.pack();
+
+		// frame.remove(menuCanvas);
+		// menuCanvas = new GameCanvas(client);
+		// btnPanel.removeAll();
+		// frame.add(menuCanvas, BorderLayout.NORTH);
+		// mouse.addMouseListener(new MouseEvents());
+		// frame.add(mouse);
+		// frame.pack();
+
 	}
 
 	public void setClient(Client c) {
