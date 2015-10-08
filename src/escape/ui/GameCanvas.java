@@ -36,6 +36,7 @@ public class GameCanvas extends JPanel {
 	private static final Image hallRightBedroom = loadImage("/images/hallRightBedroom.png");
 	private static final Image hallLeftKitchen = loadImage("/images/hallLeftKitchen.png");
 	private static final Image hallRightLivingRoom = loadImage("/images/hallRightLivingRoom.png");
+	private static final Image loadScreen = loadImage("/images/loadScreen.png");
 	private static final Image mainMenu = loadImage("/images/mainMenu.png");
 
 	private Player player;
@@ -79,6 +80,9 @@ public class GameCanvas extends JPanel {
 		if (state == 0) { // Main Menu - Game has not been created
 			g.drawImage(mainMenu, 0, 0, scaleImgWidth(mainMenu),
 					scaleImgHeight(mainMenu), null);
+		} else if (state == 2) {
+			g.drawImage(loadScreen, 0, 0, scaleImgWidth(loadScreen),
+					scaleImgHeight(loadScreen), null);
 		} else if (state == 1) { // Game has been created
 			if (player.getRoom() != null) {
 				currentRoom = player.getRoom();
@@ -142,7 +146,6 @@ public class GameCanvas extends JPanel {
 							scaleImgHeight(wall), null);
 					break;
 				}
-				
 
 				for (Item i : currentRoom.getItems()) {
 					i.draw(g, currentRoom, currentDirection);
@@ -150,21 +153,19 @@ public class GameCanvas extends JPanel {
 				for (Container c : currentRoom.getContainer()) {
 					c.draw(g, currentRoom, currentDirection);
 				}
-				
 
 				int itemOrder = 0;
 				// TO DO: Draw items currently in player's inventory
 				if (player.getItems() != null) {
-//					int itemOrder = 0;
-//					for (int count = 0; count <= player.getItems().size() - 1; count++){ 
-//						player.getItems().get(count).drawInventoryItem(g, count);
-					for (Item i : player.getItems()){
+					// int itemOrder = 0;
+					// for (int count = 0; count <= player.getItems().size() -
+					// 1; count++){
+					// player.getItems().get(count).drawInventoryItem(g, count);
+					for (Item i : player.getItems()) {
 						i.drawInventoryItem(g, itemOrder);
 						itemOrder++;
 					}
-				}
-				else if(state == 2){
-					//Draw loading screen
+
 				}
 			}
 		}

@@ -202,16 +202,21 @@ public class GameFrame extends JFrame implements ActionListener {
 					client.setFrame(f);
 					client.start();
 
+					setSt(2);
+					System.out.println("State: " + state);
+					updateFrame();
+					System.out.println("State: " + state);
 					while (client.getPlayer() == null) {
-						System.out.println("Client has no player");
+//						System.out.println("Client has no player");
 						if (client.getPlayer() != null) {
 							System.out.println("Client player name:"
 									+ client.getPlayer().getName());
 							player = client.getPlayer();
-							setSt(2);
 							break;
 						}
 					}
+					
+					
 
 					// TESTING: rooms, containers, items
 					// ArrayList<Room> it = game.getRoomList();
@@ -235,8 +240,8 @@ public class GameFrame extends JFrame implements ActionListener {
 
 					// Testing purposes
 					setSt(1);
-//					client.sendEvent(new PickUpItemEvent(client.getPlayer(),
-//							new Item("Paper", "A piece of paper.", true)));
+					// client.sendEvent(new PickUpItemEvent(client.getPlayer(),
+					// new Item("Paper", "A piece of paper.", true)));
 					client.sendEvent(new PickUpItemEvent(client.getPlayer(),
 							new Item("Kitchen Picture", "Family Picture", true)));
 				}
@@ -282,7 +287,6 @@ public class GameFrame extends JFrame implements ActionListener {
 							break;
 						}
 					}
-
 					// Testing purposes
 					setSt(1);
 				}
@@ -332,7 +336,8 @@ public class GameFrame extends JFrame implements ActionListener {
 					break;
 				case "Hall - Kitchen":
 					client.sendEvent(new EnterRoomEvent(player, "Kitchen"));
-//					client.sendEvent(new PickUpItemEvent(client.getPlayer(), new Item("Kitchen Picture", "Family Picture", true)));
+//					 client.sendEvent(new PickUpItemEvent(client.getPlayer(),
+//					 new Item("Kitchen Picture", "Family Picture", true)));
 					break;
 				}
 
@@ -567,17 +572,22 @@ public class GameFrame extends JFrame implements ActionListener {
 					items = (String[][]) currentLoc.get("West");
 					break;
 				}
-				
-				
-				//checking if point is in an items bounding box
+
+				// checking if point is in an items bounding box
 				for (int i = 5; i >= 0; i--) {
 					for (int j = 2; j >= 0; j--) {
 						if (!items[j][i].equals("")) {
 							Item it = player.getRoom().getItem(items[j][i]);
-							if (it.getBoundingBox().contains(e.getX(), e.getY()-40)) {
-								System.out.println("Bounding Box X: " + it.getBoundingBox().x + "\nBounding Box Y: "
-										+ it.getBoundingBox().y + "\nBounding Box Width: " + it.getBoundingBox().width
-										+ "\nBounding Box Height: " + it.getBoundingBox().height);
+							if (it.getBoundingBox().contains(e.getX(),
+									e.getY() - 40)) {
+								System.out.println("Bounding Box X: "
+										+ it.getBoundingBox().x
+										+ "\nBounding Box Y: "
+										+ it.getBoundingBox().y
+										+ "\nBounding Box Width: "
+										+ it.getBoundingBox().width
+										+ "\nBounding Box Height: "
+										+ it.getBoundingBox().height);
 								game.setSelectedItem(it);
 								System.out.println(game.getSelectedItem()
 										.getName());
@@ -605,16 +615,25 @@ public class GameFrame extends JFrame implements ActionListener {
 	}
 
 	public void updateFrame() {
-		frame.remove(menuCanvas);
-		// while (client.isRunning()) {
-		menuCanvas = new GameCanvas(client);
-		// }
-		btnPanel.removeAll();
-		gameBtns();
-		frame.add(menuCanvas, BorderLayout.NORTH);
-		mouse.addMouseListener(new MouseEvents());
-		frame.add(mouse);
-		frame.pack();
+		if (state == 1){
+			frame.remove(menuCanvas);
+			menuCanvas = new GameCanvas(client);
+			btnPanel.removeAll();
+			gameBtns();
+			frame.add(menuCanvas, BorderLayout.NORTH);
+			mouse.addMouseListener(new MouseEvents());
+			frame.add(mouse);
+			frame.pack();
+		}
+		else if (state == 2){
+			frame.remove(menuCanvas);
+			menuCanvas = new GameCanvas(client);
+			btnPanel.removeAll();
+			frame.add(menuCanvas, BorderLayout.NORTH);
+			mouse.addMouseListener(new MouseEvents());
+			frame.add(mouse);
+			frame.pack();
+		}
 	}
 
 	public void setClient(Client c) {
