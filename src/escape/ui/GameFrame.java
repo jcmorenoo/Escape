@@ -194,8 +194,8 @@ public class GameFrame extends JFrame implements ActionListener {
 					client.start();
 
 					while (client.getPlayer() == null) {
-						// Displays load screen for host while waiting for other
-						// players
+
+						// Displays load screen for host while waiting for other players
 						menuCanvas.drawLoadScreen(menuCanvas.getGraphics());
 						// System.out.println("Client has no player");
 						if (client.getPlayer() != null) {
@@ -212,6 +212,7 @@ public class GameFrame extends JFrame implements ActionListener {
 					// new Item("Paper", "A piece of paper.", true)));
 //					client.sendEvent(new PickUpItemEvent(client.getPlayer(),
 //							new Item("Kitchen Picture", "Family Picture", true)));
+
 				}
 
 				// Join a game
@@ -300,6 +301,7 @@ public class GameFrame extends JFrame implements ActionListener {
 					} else {
 						JOptionPane.showMessageDialog(null, "The Door is locked. You need to find the key!",
 								"Locked Room", JOptionPane.WARNING_MESSAGE);
+
 					}
 					break;
 				case "Hall - Kitchen":
@@ -513,6 +515,7 @@ public class GameFrame extends JFrame implements ActionListener {
 				}
 
 				// checking if point is in an item's bounding box
+
 				for (int i = 5; i >= 0; i--) {
 					for (int j = 2; j >= 0; j--) {
 						if (!items[j][i].equals("")) {
