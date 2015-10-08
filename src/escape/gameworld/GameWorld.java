@@ -65,15 +65,13 @@ public class GameWorld {
 				true));
 		items.put("Study Room Key", new Item("Study Room Key", "A room key",
 				true));
-		// items.put("Lamp", new Item("Lamp", "An old-fashioned lamp", true,
-		// true));
 		items.put("Kitchen Picture", new Item("Kitchen Picture",
-				"A family picture", true));
-		items.put("Living Room Picture", new Item("Living Room Picture",
 				"A family picture", true));
 		items.put("Matches", new Item("Matches",
 				"Matches! Might be useful in the future", true));
 		// Unmovables
+		items.put("Living Room Picture", new Item("Living Room Picture",
+				"A family picture", false));
 		items.put("Sofa", new Item("Sofa", "A red sofa fill of cat fur.",
 				 false));
 		items.put("Desk", new Item("Desk", "An office desk",  false));
@@ -176,8 +174,7 @@ public class GameWorld {
 		rooms.put("Hall - Kitchen", new Room("Hall - Kitchen", false, null));
 		this.hallLeftKitchen = rooms.get("Hall - Kitchen");
 
-		//DOOR ????
-		//cant go outside
+		
 		kitchen.addItem(items.get("Kitchen Table"));
 		kitchen.addItem(items.get("Kitchen Picture"));
 		kitchen.addContainer(containers.get("Fridge"));
@@ -323,6 +320,10 @@ public class GameWorld {
 		return this.selectedItem; 
 	}
 	
+	/**
+	 * Set selected item in the inventory
+	 * @param i
+	 */
 	public void setSelectedInventory(Item i){
 		selectedInventory = i; 
 	}
@@ -428,6 +429,7 @@ public class GameWorld {
 	 */
 	public boolean enterRoom(Player p, Room r){
 		// if the room is a locked door, check if the player have the key
+		
 		if (r.isLocked()){
 			selectedInventory = items.get("Study Room Key");
 			if(selectedInventory == null){
@@ -435,6 +437,7 @@ public class GameWorld {
 				return false;
 			}
 			if (selectedInventory.getName().equals(r.getKey())){
+				
 				p.enterRoom(r);
 				return true;
 			}
@@ -492,6 +495,7 @@ public class GameWorld {
 		}
 		return true;
 	}
+	
 	
 	/**
 	 * Allows player to pick up item

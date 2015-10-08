@@ -33,6 +33,8 @@ public class Room implements Serializable {
 //		container.add(getBin());
 	}
 	
+
+	
 	public Item getItem(String s){
 		for (Item i: items){
 			if (i.getName().equals(s)){
@@ -91,9 +93,17 @@ public class Room implements Serializable {
 	public void addItem(Item item) {
 		this.items.add(item);
 	}
+	
+	public void removeItem(Item item) {
+		this.items.remove(item);
+	}
 
 	public void addContainer(Container container) {
 		this.container.add(container);
+	}
+	
+	public void removeContainer(Container container) {
+		this.container.remove(container);
 	}
 
 	public ArrayList<Item> getItems() {

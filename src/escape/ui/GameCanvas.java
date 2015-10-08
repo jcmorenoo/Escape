@@ -36,6 +36,7 @@ public class GameCanvas extends JPanel {
 	private static final Image hallRightBedroom = loadImage("/images/hallRightBedroom.png");
 	private static final Image hallLeftKitchen = loadImage("/images/hallLeftKitchen.png");
 	private static final Image hallRightLivingRoom = loadImage("/images/hallRightLivingRoom.png");
+	private static final Image loadScreen = loadImage("/images/loadScreen.png");
 	private static final Image mainMenu = loadImage("/images/mainMenu.png");
 
 	private Player player;
@@ -142,7 +143,6 @@ public class GameCanvas extends JPanel {
 							scaleImgHeight(wall), null);
 					break;
 				}
-				
 
 				for (Item i : currentRoom.getItems()) {
 					i.draw(g, currentRoom, currentDirection);
@@ -150,21 +150,19 @@ public class GameCanvas extends JPanel {
 				for (Container c : currentRoom.getContainer()) {
 					c.draw(g, currentRoom, currentDirection);
 				}
-				
 
 				int itemOrder = 0;
 				// TO DO: Draw items currently in player's inventory
 				if (player.getItems() != null) {
-//					int itemOrder = 0;
-//					for (int count = 0; count <= player.getItems().size() - 1; count++){ 
-//						player.getItems().get(count).drawInventoryItem(g, count);
-					for (Item i : player.getItems()){
+					// int itemOrder = 0;
+					// for (int count = 0; count <= player.getItems().size() -
+					// 1; count++){
+					// player.getItems().get(count).drawInventoryItem(g, count);
+					for (Item i : player.getItems()) {
 						i.drawInventoryItem(g, itemOrder);
 						itemOrder++;
 					}
-				}
-				else if(state == 2){
-					//Draw loading screen
+
 				}
 			}
 		}
@@ -174,6 +172,15 @@ public class GameCanvas extends JPanel {
 	public Dimension getPreferredSize() {
 		d.setSize(w, h);
 		return d;
+	}
+	
+	/**
+	 * Draws the load screen only for the host while they wait for other players to connect
+	 * @param g - Graphics
+	 */
+	protected void drawLoadScreen(Graphics g){
+		g.drawImage(loadScreen, 0, 0, scaleImgWidth(loadScreen),
+				scaleImgHeight(loadScreen), null);
 	}
 
 	public void setResizable(boolean b) {

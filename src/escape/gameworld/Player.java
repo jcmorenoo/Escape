@@ -83,12 +83,21 @@ public class Player implements Serializable {
 	}
 
 	public boolean pickUpItem(Item i) {
+		if(items.size() >= 5) return false;
 		if (!i.isPickable())
 			return false;
 		
+		if(i instanceof Container){
+			items.add(i);
+			this.room.removeContainer((Container)i);
+			return true;
+		}
 		items.add(i);
+		this.room.removeItem(i);
 		return true;
 	}
+	
+
 
 	public boolean dropItem(Item i) {
 		if (room == null)

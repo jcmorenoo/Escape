@@ -27,7 +27,7 @@ public class Container extends Item {
 		this.locked = l;
 		this.key = key;
 	}
-
+	
 	public void add(Item i) {
 		items.add(i);
 	}
@@ -281,7 +281,6 @@ public class Container extends Item {
 			}
 			break;
 			
-
 		case "Lamp":
 			switch (d) {
 			case EAST:
