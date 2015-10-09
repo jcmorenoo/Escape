@@ -54,7 +54,7 @@ public class UpdateThread extends Thread {
 	public void run() {
 
 		while (true) {
-			
+
 			Update update = null;
 			Event event = null;
 			// handles all updates?? updates to game and then send game updates
@@ -102,16 +102,16 @@ public class UpdateThread extends Thread {
 					if(room.getName().equals("Exit Door")){
 						GameOverEvent gameOver = new GameOverEvent(player);
 						sendToAllClients((Event)gameOver);
-						return;
 					}
-					player.enterRoom(room);
-					GameWorldUpdateEvent enterRoom = new GameWorldUpdateEvent(
-							player, player.getRoom());
-					sendClient((Event) enterRoom,
-							server.getClients().get(player.getId()));
+					else{
+						player.enterRoom(room);
+						GameWorldUpdateEvent enterRoom = new GameWorldUpdateEvent(
+								player, player.getRoom());
+						sendToAllClients((Event) enterRoom);
+					}
 				}
-				
-				
+
+
 				// try to make the player enter the room
 				// if exception.. send new event containing current room.
 			} else if (event instanceof ChangeDirectionEvent) {
@@ -135,8 +135,7 @@ public class UpdateThread extends Thread {
 				}
 				GameWorldUpdateEvent changeDirection = new GameWorldUpdateEvent(
 						player, player.getRoom());
-				sendClient((Event) changeDirection,
-						server.getClients().get(player.getId()));
+				sendToAllClients((Event) changeDirection);
 
 			}else if (event instanceof PickUpItemEvent){
 				PickUpItemEvent e = (PickUpItemEvent) event;
@@ -181,7 +180,7 @@ public class UpdateThread extends Thread {
 			// }
 			else if (event instanceof InspectItemEvent) {
 				InspectItemEvent e = (InspectItemEvent) event;
-				
+
 			} else if (event instanceof PickUpItemEvent) {
 				PickUpItemEvent e = (PickUpItemEvent) event;
 			}

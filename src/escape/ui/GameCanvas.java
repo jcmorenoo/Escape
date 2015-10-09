@@ -38,6 +38,8 @@ public class GameCanvas extends JPanel {
 	private static final Image hallRightLivingRoom = loadImage("/images/hallRightLivingRoom.png");
 	private static final Image loadScreen = loadImage("/images/loadScreen.png");
 	private static final Image mainMenu = loadImage("/images/mainMenu.png");
+	private static final Image lost = loadImage("/images/lost.png");
+	private static final Image won = loadImage("/images/won.png");
 
 	private Player player;
 	private Client client;
@@ -85,6 +87,7 @@ public class GameCanvas extends JPanel {
 				currentRoom = player.getRoom();
 				currentDirection = player.getDirection();
 				switch (currentRoom.getName()) {
+					
 				case "Main Hall":
 					g.drawImage(hallMain, 0, 0, scaleImgWidth(hallMain),
 							scaleImgHeight(hallMain), null);
@@ -165,6 +168,18 @@ public class GameCanvas extends JPanel {
 
 				}
 			}
+			
+
+
+		}
+		else if (state == 3){
+			if(client.isWinner()){
+			g.drawImage(won, 0, 0, scaleImgWidth(won),
+					scaleImgHeight(won), null);
+			}
+			else{
+				g.drawImage(lost,0,0,scaleImgWidth(lost),scaleImgHeight(lost),null);
+			}
 		}
 		repaint();
 	}
@@ -173,7 +188,7 @@ public class GameCanvas extends JPanel {
 		d.setSize(w, h);
 		return d;
 	}
-	
+
 	/**
 	 * Draws the load screen only for the host while they wait for other players to connect
 	 * @param g - Graphics
@@ -182,6 +197,19 @@ public class GameCanvas extends JPanel {
 		g.drawImage(loadScreen, 0, 0, scaleImgWidth(loadScreen),
 				scaleImgHeight(loadScreen), null);
 	}
+
+//	protected void drawEndGameScreen(Graphics g){
+//		if(this.client.isWinner()){
+//			g.drawImage(won, 0, 0, scaleImgWidth(won),
+//					scaleImgHeight(won), null);
+//		}
+//		else{
+//			g.drawImage(lost, 0, 0, scaleImgWidth(lost),
+//					scaleImgHeight(lost), null);
+//		}
+//
+//	}
+
 
 	public void setResizable(boolean b) {
 		getPreferredSize();

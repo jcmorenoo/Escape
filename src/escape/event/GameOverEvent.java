@@ -8,7 +8,7 @@ import escape.gameworld.Player;
  * @author morenojuli
  *
  */
-public class GameOverEvent {
+public class GameOverEvent implements Event {
 	
 	private Player player;
 	

@@ -211,12 +211,17 @@ public class Client extends Thread {
 		else if(e instanceof GameOverEvent){
 			GameOverEvent event = ((GameOverEvent)e);
 			//if the winner is this player then set player to winner. else false
-			if(event.getPlayer().getName().equals(this.player.getName())){
+			System.out.println("received gameoverevent");
+			if(event.getPlayer().getId()==(this.id)){
+				System.out.println("winner");
 				this.winner = true;
+				this.frame.endGame();
 				//call some method to say that the player won...
 			}
 			else{
 				this.winner = false;
+				System.out.println("loser");
+				this.frame.endGame();
 				//call some method which will end the game..
 			}
 
@@ -300,6 +305,10 @@ public class Client extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean isWinner(){
+		return this.winner;
 	}
 
 

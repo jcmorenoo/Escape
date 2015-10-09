@@ -289,6 +289,10 @@ public class GameFrame extends JFrame implements ActionListener {
 				switch (currentRoom) {
 				case "Main Hall":
 					System.out.println("Going through Main Door");
+					client.sendEvent(new EnterRoomEvent(player,"Exit Door"));
+					if(game.enterRoom(player, game.getRooms().get("Exit Door"))){
+						player.enterRoom(game.getRooms().get("Exit Door"));
+					}
 					break;
 				case "Hall - Bedroom":
 					client.sendEvent(new EnterRoomEvent(player, "Bedroom"));
@@ -517,7 +521,7 @@ public class GameFrame extends JFrame implements ActionListener {
 			// System.out.print("You are in " + currentRoom);
 			if (currentRoom.equals("Main Hall") || currentRoom.equals("Hall - Bedroom")
 					|| currentRoom.equals("Hall - Kitchen") || currentRoom.equals("Hall - Study")
-					|| currentRoom.equals("Hall - Living Room")) {
+					|| currentRoom.equals("Hall - Living Room") || currentRoom.equals("Exit Door")) {
 				return;
 			} else {
 				System.out.println("Mouse x: " + e.getX() + "\nMouse Y: " + e.getY());
@@ -590,6 +594,17 @@ public class GameFrame extends JFrame implements ActionListener {
 		mouse.addMouseListener(new MouseEvents());
 		frame.add(mouse);
 		frame.pack();
+		
+		if(state==3){
+			frame.remove(menuCanvas);
+			menuCanvas = new GameCanvas(client);
+			btnPanel.removeAll();
+			frame.add(menuCanvas, BorderLayout.NORTH);
+			mouse.addMouseListener(new MouseEvents());
+			frame.add(mouse);
+			frame.pack();
+		}
+		
 
 		// frame.remove(menuCanvas);
 		// menuCanvas = new GameCanvas(client);
@@ -611,6 +626,12 @@ public class GameFrame extends JFrame implements ActionListener {
 
 	public Client getClient() {
 		return this.client;
+	}
+	
+	public void endGame(){
+		setSt(3);
+		updateFrame();
+//		menuCanvas.drawEndGameScreen(menuCanvas.getGraphics());
 	}
 
 }

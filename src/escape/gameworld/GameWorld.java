@@ -160,7 +160,7 @@ public class GameWorld {
 		rooms.put("Bedroom", new Room("Bedroom", false, null));
 		this.bedroom = rooms.get("Bedroom");
 		//EXIT DOOR
-		rooms.put("Exit Door", new Room("Exit Door", true, "Key"));
+		rooms.put("Exit Door", new Room("Exit Door", false, "Key"));
 		// Hall Rooms
 		rooms.put("Main Hall", new Room("Main Hall", false, null));
 		this.mainHall = rooms.get("Main Hall");
