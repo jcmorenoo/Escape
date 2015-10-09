@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import javax.swing.JFrame;
-
 import escape.event.ConnectionAcceptedEvent;
 import escape.event.Event;
 import escape.event.GameOverEvent;
 import escape.event.GameWorldUpdateEvent;
+import escape.event.PlayerSetupEvent;
 import escape.event.TestEvent;
 import escape.event.UserSetupEvent;
 import escape.gameworld.Item;
@@ -42,7 +41,7 @@ public class Client extends Thread {
 	private String ipAddress;
 
 	private GameFrame frame;
-	
+
 	private User user;
 	private Player player = null;
 
@@ -96,7 +95,7 @@ public class Client extends Thread {
 	public User getUser(){
 		return this.user;
 	}
-	
+
 	public boolean isRunning(){
 		return running;
 	}
@@ -104,8 +103,8 @@ public class Client extends Thread {
 	public void setFrame(GameFrame f){
 		frame = f;
 	}
-	
-	
+
+
 	/**
 	 * Method which initialises connection to the Server. Called when constructing a new Client.
 	 */
@@ -140,9 +139,9 @@ public class Client extends Thread {
 			testSend();
 			//test.. keep sending testevent
 		}
-		
-		
-		
+
+
+
 		else if(e instanceof ConnectionAcceptedEvent){
 			ConnectionAcceptedEvent event = ((ConnectionAcceptedEvent)e);
 			//we prob wont need this user.setid thing..
@@ -158,24 +157,51 @@ public class Client extends Thread {
 
 
 		}
+
+		else if(e instanceof PlayerSetupEvent){
+			PlayerSetupEvent event = ((PlayerSetupEvent)e);
+			System.out.println("PlayerSetupReceived");
+			if(this.player == null && event.getPlayer().getId() == this.id){
+				this.player=event.getPlayer();
+				this.room=event.getRoom();
+				frame.updateFrame();
+			}
+			else{
+				this.frame.getGame().addPlayer(event.getPlayer());
+			}
+//			frame.updateFrame();
+
+		}
 		else if(e instanceof GameWorldUpdateEvent){
 			//player changing direction.. changing the view of the user.
 			GameWorldUpdateEvent event = ((GameWorldUpdateEvent)e);
-			System.out.println("gameworldupdate");
-			//update the player and the room.
-			if(this.player != null){
-				if (event.getPlayer().getName().equals(this.player.getName())){
-					this.player = event.getPlayer();
-					this.room = event.getRoom();
-				}
-			}
-
-			//if no player has been set to the client.
-			else if(this.player == null && event.getPlayer().getId() == this.id){
-				this.player = event.getPlayer();
-				this.room = event.getRoom();
+			if(event.getPlayer().getId() != this.player.getId()){
+				Room previousRoom = this.frame.getGame().getPlayers().get(event.getPlayer().getId()).getRoom();
+				Player p = this.frame.getGame().getPlayers().get(event.getPlayer().getId());
+				Room r = this.frame.getGame().getRooms().get(event.getRoom().getName());
+				previousRoom.getPlayers().remove(p);
+				p.setRoom(r);
+				r.getPlayers().add(p);
+				
+				
 			}
 			
+			
+			//update the player and the room.
+			//			if(this.player != null){
+			//				if (event.getPlayer().getName().equals(this.player.getName())){
+			//					this.player = event.getPlayer();
+			//					this.room = event.getRoom();
+			//				}
+			//				
+			//			}
+			//
+			//			//if no player has been set to the client.
+			//			else if(this.player == null && event.getPlayer().getId() == this.id){
+			//				this.player = event.getPlayer();
+			//				this.room = event.getRoom();
+			//			}
+
 			frame.updateFrame();
 			System.out.println(player.getName() + " is in "
 					+ player.getRoom().getName());

@@ -10,6 +10,7 @@ import escape.event.GameOverEvent;
 import escape.event.GameWorldUpdateEvent;
 import escape.event.InspectItemEvent;
 import escape.event.PickUpItemEvent;
+import escape.event.PlayerSetupEvent;
 import escape.event.TestEvent;
 import escape.event.UserSetupEvent;
 import escape.gameworld.GameWorld;
@@ -82,11 +83,11 @@ public class UpdateThread extends Thread {
 
 				game.addPlayer(p);
 				// hmm maybe we should send this to everyone??
-				GameWorldUpdateEvent e = new GameWorldUpdateEvent(p,
+				PlayerSetupEvent e = new PlayerSetupEvent(p,
 						startingRoom);
 
 				// send to client
-				sendClient((Event) e, server.getClients().get(id));
+				sendToAllClients((Event) e);
 
 			}
 

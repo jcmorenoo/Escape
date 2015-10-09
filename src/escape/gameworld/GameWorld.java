@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public class GameWorld {
 	private String gameID;
-	private ArrayList<Player> players = new ArrayList<>();
+	private HashMap<Integer, Player> players = new HashMap<Integer, Player>();
 	private HashMap<String, Room> rooms = new HashMap<>();
 	private HashMap<String, Container> containers = new HashMap<>();
 	private HashMap<String, Item> items = new HashMap<>();
@@ -42,7 +42,7 @@ public class GameWorld {
 	 * @param p
 	 */
 	public void addPlayer(Player p) {
-		players.add(p);
+		players.put(p.getId(),p);
 
 	}
 	
@@ -281,14 +281,11 @@ public class GameWorld {
 	}
 
 	
-	public ArrayList<Player> getPlayers() {
+	public HashMap<Integer, Player> getPlayers() {
 		return players;
 	}
 
-	public void setPlayers(ArrayList<Player> players) {
-		this.players = players;
-	}
-
+	
 	public HashMap<String, Room> getRooms() {
 		return this.rooms;
 	}

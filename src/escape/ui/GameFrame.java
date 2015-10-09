@@ -38,7 +38,7 @@ public class GameFrame extends JFrame implements ActionListener {
 	public static JFrame frame;
 	private GameCanvas menuCanvas;
 	private final JPanel btnPanel;
-	private static Player player;
+	private static Player player = null;
 	private JPanel mouse = new JPanel();
 	private GameWorld game;
 	private String currentRoom;
@@ -201,6 +201,7 @@ public class GameFrame extends JFrame implements ActionListener {
 						if (client.getPlayer() != null) {
 							System.out.println("Client player name:" + client.getPlayer().getName());
 							player = client.getPlayer();
+							game.addPlayer(player);
 							break;
 						}
 					}
@@ -235,16 +236,19 @@ public class GameFrame extends JFrame implements ActionListener {
 					Object[] gameIdPrompt = { "Enter a Game ID: ", gameIdInput.getText() };
 					final String gameID = JOptionPane.showInputDialog(null, gameIdPrompt, "Game ID",
 							JOptionPane.INFORMATION_MESSAGE);
-
+					
+					game = new GameWorld(gameID);
 					client = new Client(serverAddr.toString(), username);
 					client.setFrame(f);
 					client.start();
 
 					while (client.getPlayer() == null) {
 						System.out.println("Client has no player");
+						menuCanvas.drawLoadScreen(menuCanvas.getGraphics());
 						if (client.getPlayer() != null) {
 							System.out.println("Client player name:" + client.getPlayer().getName());
 							player = client.getPlayer();
+							game.addPlayer(player);
 							break;
 						}
 					}
@@ -288,9 +292,11 @@ public class GameFrame extends JFrame implements ActionListener {
 					break;
 				case "Hall - Bedroom":
 					client.sendEvent(new EnterRoomEvent(player, "Bedroom"));
+					player.enterRoom(game.getRooms().get("Bedroom"));
 					break;
 				case "Hall - Living Room":
 					client.sendEvent(new EnterRoomEvent(player, "Living Room"));
+					player.enterRoom(game.getRooms().get("Living Room"));
 					break;
 				case "Hall - Study":
 					//for testing purposes: to enter the study
@@ -306,6 +312,7 @@ public class GameFrame extends JFrame implements ActionListener {
 					break;
 				case "Hall - Kitchen":
 					client.sendEvent(new EnterRoomEvent(player, "Kitchen"));
+					player.enterRoom(game.getRooms().get("Kitchen"));
 					// client.sendEvent(new PickUpItemEvent(client.getPlayer(),
 					// new Item("Kitchen Picture", "Family Picture", true)));
 					break;
@@ -320,21 +327,27 @@ public class GameFrame extends JFrame implements ActionListener {
 					switch (currentRoom) {
 					case "Kitchen":
 						client.sendEvent(new EnterRoomEvent(player, "Hall - Kitchen"));
+						player.enterRoom(game.getRooms().get("Hall - Kitchen"));
 						break;
 					case "Living Room":
 						client.sendEvent(new EnterRoomEvent(player, "Hall - Living Room"));
+						player.enterRoom(game.getRooms().get("Hall - Living Room"));
 						break;
 					case "Study":
 						client.sendEvent(new EnterRoomEvent(player, "Hall - Study"));
+						player.enterRoom(game.getRooms().get("Hall - Study"));
 						break;
 					case "Bedroom":
 						client.sendEvent(new EnterRoomEvent(player, "Hall - Bedroom"));
+						player.enterRoom(game.getRooms().get("Hall - Bedroom"));
 						break;
 					}
 
 					// !----Direction not changing back to NORTH when entering
 					// room----!
+
 					client.sendEvent(new ChangeDirectionEvent(player, "NORTH"));
+					player.setDirection(Direction.NORTH);
 				}
 
 				// TESTING
@@ -359,6 +372,7 @@ public class GameFrame extends JFrame implements ActionListener {
 				case "Kitchen":
 				case "Bedroom":
 				case "Study":
+					player.setDirection(Direction.NORTH);
 					client.sendEvent(new ChangeDirectionEvent(player, "NORTH"));
 				}
 			}
@@ -378,9 +392,11 @@ public class GameFrame extends JFrame implements ActionListener {
 				switch (currentRoom) {
 				case "Main Hall":
 					client.sendEvent(new EnterRoomEvent(player, "Hall - Bedroom"));
+					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
 					break;
 				case "Hall - Bedroom":
 					client.sendEvent(new EnterRoomEvent(player, "Hall - Living Room"));
+					player.enterRoom(game.getRooms().get("Hall - Living Room"));
 					break;
 				case "Hall - Living Room":
 					JOptionPane.showMessageDialog(null, "No more rooms that way!", "Ooops",
@@ -388,9 +404,11 @@ public class GameFrame extends JFrame implements ActionListener {
 					break;
 				case "Hall - Study":
 					client.sendEvent(new EnterRoomEvent(player, "Main Hall"));
+					player.enterRoom(game.getRooms().get("Main Hall"));
 					break;
 				case "Hall - Kitchen":
 					client.sendEvent(new EnterRoomEvent(player, "Hall - Study"));
+					player.enterRoom(game.getRooms().get("Hall - Study"));
 					break;
 				}
 
@@ -401,6 +419,7 @@ public class GameFrame extends JFrame implements ActionListener {
 				case "Kitchen":
 				case "Bedroom":
 				case "Study":
+					player.setDirection(Direction.EAST);
 					client.sendEvent(new ChangeDirectionEvent(player, "EAST"));
 				}
 			}
@@ -423,6 +442,7 @@ public class GameFrame extends JFrame implements ActionListener {
 				case "Kitchen":
 				case "Bedroom":
 				case "Study":
+					player.setDirection(Direction.SOUTH);
 					client.sendEvent(new ChangeDirectionEvent(player, "SOUTH"));
 				}
 			}
@@ -442,9 +462,11 @@ public class GameFrame extends JFrame implements ActionListener {
 				switch (player.getRoom().getName()) {
 				case "Main Hall":
 					client.sendEvent(new EnterRoomEvent(player, "Hall - Study"));
+					player.enterRoom(game.getRooms().get("Hall - Study"));
 					break;
 				case "Hall - Study":
 					client.sendEvent(new EnterRoomEvent(player, "Hall - Kitchen"));
+					player.enterRoom(game.getRooms().get("Hall - Kitchen"));
 					break;
 				case "Hall - Kitchen":
 					JOptionPane.showMessageDialog(null, "No more rooms that way!", "Ooops",
@@ -452,9 +474,11 @@ public class GameFrame extends JFrame implements ActionListener {
 					break;
 				case "Hall - Bedroom":
 					client.sendEvent(new EnterRoomEvent(player, "Main Hall"));
+					player.enterRoom(game.getRooms().get("Main Hall"));
 					break;
 				case "Hall - Living Room":
 					client.sendEvent(new EnterRoomEvent(player, "Hall - Bedroom"));
+					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
 					break;
 				}
 
@@ -463,6 +487,7 @@ public class GameFrame extends JFrame implements ActionListener {
 				case "Kitchen":
 				case "Bedroom":
 				case "Study":
+					player.setDirection(Direction.WEST);
 					client.sendEvent(new ChangeDirectionEvent(player, "WEST"));
 				}
 
@@ -486,7 +511,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (game == null)
+			if (game == null || player == null)
 				return;
 			String currentRoom = player.getRoom().getName();
 			// System.out.print("You are in " + currentRoom);
@@ -574,6 +599,10 @@ public class GameFrame extends JFrame implements ActionListener {
 		// frame.add(mouse);
 		// frame.pack();
 
+	}
+	
+	public GameWorld getGame(){
+		return this.game;
 	}
 
 	public void setClient(Client c) {
