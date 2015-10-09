@@ -192,10 +192,11 @@ public class GameFrame extends JFrame implements ActionListener {
 					client = new Client("localhost", username);
 					client.setFrame(f);
 					client.start();
-
+					
+					System.out.println("ADDRESS OF SERVER: " + server.getIp());
 					while (client.getPlayer() == null) {
 
-						// Displays load screen for host while waiting for other players
+						
 						menuCanvas.drawLoadScreen(menuCanvas.getGraphics());
 						// System.out.println("Client has no player");
 						if (client.getPlayer() != null) {
@@ -243,7 +244,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					client.start();
 
 					while (client.getPlayer() == null) {
-						System.out.println("Client has no player");
 						menuCanvas.drawLoadScreen(menuCanvas.getGraphics());
 						if (client.getPlayer() != null) {
 							System.out.println("Client player name:" + client.getPlayer().getName());

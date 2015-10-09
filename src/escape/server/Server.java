@@ -36,6 +36,7 @@ public class Server extends Thread{
 	private boolean stopped = true;
 	private int limit;
 	private GameWorld game;
+	private String ipAddress;
 
 	//should pass game
 	public Server(int players, String gameID ){
@@ -44,6 +45,7 @@ public class Server extends Thread{
 			this.serverSocket = new ServerSocket();
 			serverSocket.bind(new InetSocketAddress(PORT));
 			System.out.println("Server up and ready + with IP Address of: " + serverSocket.getInetAddress().getLocalHost().getHostAddress());
+			this.ipAddress = serverSocket.getInetAddress().getLocalHost().getHostAddress();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -158,5 +160,8 @@ public class Server extends Thread{
 		return this.game;
 	}
 
+	public String getIp(){
+		return this.ipAddress;
+	}
 
 }
