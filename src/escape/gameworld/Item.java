@@ -375,22 +375,32 @@ public class Item implements Serializable {
 			case 0:
 				g.drawImage(kitchenPicture, scaleImgPos(48), scaleImgPos(525), scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
+				this.boundingBox(scaleImgPos(48), scaleImgPos(525), scaleImgWidth(kitchenPicture),
+						scaleImgHeight(kitchenPicture));
 				break;
 			case 1:
 				g.drawImage(kitchenPicture, scaleImgPos(147), scaleImgPos(525), scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
+				this.boundingBox(scaleImgPos(147), scaleImgPos(525), scaleImgWidth(kitchenPicture),
+						scaleImgHeight(kitchenPicture));
 				break;
 			case 2:
 				g.drawImage(kitchenPicture, scaleImgPos(259), scaleImgPos(525), scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
+				this.boundingBox(scaleImgPos(259), scaleImgPos(525), scaleImgWidth(kitchenPicture),
+						scaleImgHeight(kitchenPicture));
 				break;
 			case 3:
 				g.drawImage(kitchenPicture, scaleImgPos(362), scaleImgPos(525), scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
+				this.boundingBox(scaleImgPos(362), scaleImgPos(525), scaleImgWidth(kitchenPicture),
+						scaleImgHeight(kitchenPicture));
 				break;
 			case 4:
 				g.drawImage(kitchenPicture, scaleImgPos(463), scaleImgPos(525), scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
+				this.boundingBox(scaleImgPos(463), scaleImgPos(525), scaleImgWidth(kitchenPicture),
+						scaleImgHeight(kitchenPicture));
 				break;
 			}
 			break;
@@ -399,22 +409,27 @@ public class Item implements Serializable {
 			case 0:
 				g.drawImage(paper, scaleImgPos(50), scaleImgPos(530), scaleImgWidth(paper), scaleImgHeight(paper),
 						null);
+				this.boundingBox(scaleImgPos(50), scaleImgPos(530), scaleImgWidth(paper), scaleImgHeight(paper));
 				break;
 			case 1:
 				g.drawImage(paper, scaleImgPos(147), scaleImgPos(530), scaleImgWidth(paper), scaleImgHeight(paper),
 						null);
+				this.boundingBox(scaleImgPos(147), scaleImgPos(530), scaleImgWidth(paper), scaleImgHeight(paper));
 				break;
 			case 2:
 				g.drawImage(paper, scaleImgPos(259), scaleImgPos(530), scaleImgWidth(paper), scaleImgHeight(paper),
 						null);
+				this.boundingBox(scaleImgPos(259), scaleImgPos(530), scaleImgWidth(paper), scaleImgHeight(paper));
 				break;
 			case 3:
 				g.drawImage(paper, scaleImgPos(362), scaleImgPos(530), scaleImgWidth(paper), scaleImgHeight(paper),
 						null);
+				this.boundingBox(scaleImgPos(362), scaleImgPos(530), scaleImgWidth(paper), scaleImgHeight(paper));
 				break;
 			case 4:
 				g.drawImage(paper, scaleImgPos(465), scaleImgPos(530), scaleImgWidth(paper), scaleImgHeight(paper),
 						null);
+				this.boundingBox(scaleImgPos(465), scaleImgPos(530), scaleImgWidth(paper), scaleImgHeight(paper));
 				break;
 			}
 			break;
@@ -422,18 +437,23 @@ public class Item implements Serializable {
 			switch (itemOrder) {
 			case 0:
 				g.drawImage(mainKey, scaleImgPos(50), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 70, 70);
 				break;
 			case 1:
 				g.drawImage(mainKey, scaleImgPos(147), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 70, 70);
 				break;
 			case 2:
 				g.drawImage(mainKey, scaleImgPos(259), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 70, 70);
 				break;
 			case 3:
 				g.drawImage(mainKey, scaleImgPos(362), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 70, 70);
 				break;
 			case 4:
 				g.drawImage(mainKey, scaleImgPos(465), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 70, 70);
 				break;
 			}
 			break;
@@ -441,18 +461,23 @@ public class Item implements Serializable {
 			switch (itemOrder) {
 			case 0:
 				g.drawImage(bedroomSafeKey, scaleImgPos(50), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 70, 70);
 				break;
 			case 1:
 				g.drawImage(bedroomSafeKey, scaleImgPos(147), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 70, 70);
 				break;
 			case 2:
 				g.drawImage(bedroomSafeKey, scaleImgPos(259), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 70, 70);
 				break;
 			case 3:
 				g.drawImage(bedroomSafeKey, scaleImgPos(362), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 70, 70);
 				break;
 			case 4:
 				g.drawImage(bedroomSafeKey, scaleImgPos(465), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 70, 70);
 				break;
 			}
 			break;
@@ -460,18 +485,23 @@ public class Item implements Serializable {
 			switch (itemOrder) {
 			case 0:
 				g.drawImage(cupboardKey, scaleImgPos(50), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 70, 70);
 				break;
 			case 1:
 				g.drawImage(cupboardKey, scaleImgPos(147), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 70, 70);
 				break;
 			case 2:
 				g.drawImage(cupboardKey, scaleImgPos(259), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 70, 70);
 				break;
 			case 3:
 				g.drawImage(cupboardKey, scaleImgPos(362), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 70, 70);
 				break;
 			case 4:
 				g.drawImage(cupboardKey, scaleImgPos(465), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 70, 70);
 				break;
 			}
 			break;
@@ -479,18 +509,23 @@ public class Item implements Serializable {
 			switch (itemOrder) {
 			case 0:
 				g.drawImage(studyRoomKey, scaleImgPos(50), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 70, 70);
 				break;
 			case 1:
 				g.drawImage(studyRoomKey, scaleImgPos(147), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 70, 70);
 				break;
 			case 2:
 				g.drawImage(studyRoomKey, scaleImgPos(259), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 70, 70);
 				break;
 			case 3:
 				g.drawImage(studyRoomKey, scaleImgPos(362), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 70, 70);
 				break;
 			case 4:
 				g.drawImage(studyRoomKey, scaleImgPos(465), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 70, 70);
 				break;
 			}
 			break;
@@ -498,18 +533,23 @@ public class Item implements Serializable {
 			switch (itemOrder) {
 			case 0:
 				g.drawImage(studyRoomSafeKey, scaleImgPos(50), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 70, 70);
 				break;
 			case 1:
 				g.drawImage(studyRoomSafeKey, scaleImgPos(147), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 70, 70);
 				break;
 			case 2:
 				g.drawImage(studyRoomSafeKey, scaleImgPos(259), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 70, 70);
 				break;
 			case 3:
 				g.drawImage(studyRoomSafeKey, scaleImgPos(362), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 70, 70);
 				break;
 			case 4:
 				g.drawImage(studyRoomSafeKey, scaleImgPos(465), scaleImgPos(502), 70, 70, null);
+				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 70, 70);
 				break;
 			}
 			break;
@@ -517,18 +557,23 @@ public class Item implements Serializable {
 			switch (itemOrder) {
 			case 0:
 				g.drawImage(matches, scaleImgPos(50), scaleImgPos(502), 60, 70, null);
+				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 60, 70);
 				break;
 			case 1:
 				g.drawImage(matches, scaleImgPos(147), scaleImgPos(502), 60, 70, null);
+				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 60, 70);
 				break;
 			case 2:
 				g.drawImage(matches, scaleImgPos(259), scaleImgPos(502), 60, 70, null);
+				this.boundingBox(scaleImgPos(257), scaleImgPos(502), 60, 70);
 				break;
 			case 3:
 				g.drawImage(matches, scaleImgPos(362), scaleImgPos(502), 60, 70, null);
+				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 60, 70);
 				break;
 			case 4:
 				g.drawImage(matches, scaleImgPos(465), scaleImgPos(502), 60, 70, null);
+				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 60, 70);
 				break;
 			}
 			break;
@@ -536,18 +581,23 @@ public class Item implements Serializable {
 			switch (itemOrder) {
 			case 0:
 				g.drawImage(lamp, scaleImgPos(65), scaleImgPos(508), 30, 60, null);
+				this.boundingBox(scaleImgPos(65), scaleImgPos(508), 30, 60);
 				break;
 			case 1:
 				g.drawImage(lamp, scaleImgPos(176), scaleImgPos(508), 30, 60, null);
+				this.boundingBox(scaleImgPos(176), scaleImgPos(508), 30, 60);
 				break;
 			case 2:
 				g.drawImage(lamp, scaleImgPos(284), scaleImgPos(508), 30, 60, null);
+				this.boundingBox(scaleImgPos(284), scaleImgPos(508), 30, 60);
 				break;
 			case 3:
 				g.drawImage(lamp, scaleImgPos(388), scaleImgPos(508), 30, 60, null);
+				this.boundingBox(scaleImgPos(388), scaleImgPos(508), 30, 60);
 				break;
 			case 4:
 				g.drawImage(lamp, scaleImgPos(490), scaleImgPos(508), 30, 60, null);
+				this.boundingBox(scaleImgPos(490), scaleImgPos(508), 30, 60);
 				break;
 			}
 

@@ -519,11 +519,28 @@ public class GameFrame extends JFrame implements ActionListener {
 				return;
 			String currentRoom = player.getRoom().getName();
 			// System.out.print("You are in " + currentRoom);
-			if (currentRoom.equals("Main Hall") || currentRoom.equals("Hall - Bedroom")
+			if ((currentRoom.equals("Main Hall") || currentRoom.equals("Hall - Bedroom")
 					|| currentRoom.equals("Hall - Kitchen") || currentRoom.equals("Hall - Study")
-					|| currentRoom.equals("Hall - Living Room") || currentRoom.equals("Exit Door")) {
+					|| currentRoom.equals("Hall - Living Room") || currentRoom.equals("Exit Door")) 
+					&& e.getY() <= 410) {
+				System.out.println("Nothing to click here.");
 				return;
-			} else {
+			} 
+			//for inventory box
+			else if(e.getY() >= 410){
+				if(player.getItems()==null) {
+					System.out.println("No player items.");
+					return;
+				}
+				for(Item i : player.getItems()){
+					if (i.getBoundingBox().contains(e.getX(), e.getY()-40)){
+						game.setSelectedInventory(i);
+						Item selected = game.getSelectedInventory();
+						System.out.println("Selected item in inventory: " + selected.getName());
+					}
+				}
+			}
+			else {
 				System.out.println("Mouse x: " + e.getX() + "\nMouse Y: " + e.getY());
 				HashMap<String, String[][]> currentLoc = player.getRoom().getItemsByDirection();
 				Direction d = player.getDirection();
@@ -544,15 +561,14 @@ public class GameFrame extends JFrame implements ActionListener {
 				}
 
 				// checking if point is in an item's bounding box
-
 				for (int i = 5; i >= 0; i--) {
 					for (int j = 2; j >= 0; j--) {
 						if (!items[j][i].equals("")) {
 							Item it = player.getRoom().getItem(items[j][i]);
 							if (it.getBoundingBox().contains(e.getX(), e.getY() - 40)) {
-								System.out.println("Bounding Box X: " + it.getBoundingBox().x + "\nBounding Box Y: "
-										+ it.getBoundingBox().y + "\nBounding Box Width: " + it.getBoundingBox().width
-										+ "\nBounding Box Height: " + it.getBoundingBox().height);
+//								System.out.println("Bounding Box X: " + it.getBoundingBox().x + "\nBounding Box Y: "
+//										+ it.getBoundingBox().y + "\nBounding Box Width: " + it.getBoundingBox().width
+//										+ "\nBounding Box Height: " + it.getBoundingBox().height);
 								game.setSelectedItem(it);
 								Item selected = game.getSelectedItem();
 								if (SwingUtilities.isRightMouseButton(e)) {
@@ -561,10 +577,11 @@ public class GameFrame extends JFrame implements ActionListener {
 									if (player.pickUpItem(selected)) {
 										System.out.println("You picked up " + selected.getName());
 									} else {
-										System.out.println("Ooops! You can't pick up any more items");
+										System.out.println("Ooops! You can't pick up this item.");
 									}
 									return;
 								}
+								if(selected!=null) return;
 							}
 						}
 					}

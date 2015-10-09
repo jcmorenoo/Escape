@@ -316,6 +316,9 @@ public class GameWorld {
 	public Item getSelectedItem(){
 		return this.selectedItem; 
 	}
+	public Item getSelectedInventory(){
+		return this.selectedInventory; 
+	}
 	
 	/**
 	 * Set selected item in the inventory

@@ -10,6 +10,7 @@ public class Player implements Serializable {
 	private Room room;
 	private ArrayList<Item> items = new ArrayList<Item>();
 	
+	
 	public enum Direction {
 		NORTH, EAST, WEST, SOUTH
 	}
