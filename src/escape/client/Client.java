@@ -10,6 +10,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import escape.event.ConnectionAcceptedEvent;
+import escape.event.ConnectionDeniedEvent;
 import escape.event.Event;
 import escape.event.GameOverEvent;
 import escape.event.GameWorldUpdateEvent;
@@ -220,6 +221,11 @@ public class Client extends Thread {
 			}
 
 		}
+		
+		else if(e instanceof ConnectionDeniedEvent){
+			System.out.println("ConnectionDenied");
+		}
+		
 
 
 	}
@@ -273,6 +279,12 @@ public class Client extends Thread {
 			//for testing only, will keep sending test event to server.
 			//			testSend();
 			update();
+		}
+		try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

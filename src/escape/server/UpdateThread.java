@@ -54,6 +54,7 @@ public class UpdateThread extends Thread {
 	public void run() {
 
 		while (true) {
+			
 			Update update = null;
 			Event event = null;
 			// handles all updates?? updates to game and then send game updates

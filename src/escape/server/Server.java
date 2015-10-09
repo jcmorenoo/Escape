@@ -43,7 +43,7 @@ public class Server extends Thread{
 		try {
 			this.serverSocket = new ServerSocket();
 			serverSocket.bind(new InetSocketAddress(PORT));
-			System.out.println("Server up and ready");
+			System.out.println("Server up and ready + with IP Address of: " + serverSocket.getInetAddress().getLocalHost().getHostAddress());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

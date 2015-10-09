@@ -1,9 +1,10 @@
 package escape.server;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 
-import escape.event.*;
+import escape.event.Event;
 
 /**
  * This is the support for the Multi-Threaded Socketing. Accepts input from the Client in form of Events and adds it to the queue of 
@@ -30,7 +31,7 @@ public class ServerThread extends Thread {
 		this.id = id;
 		this.socket = socket;
 	}
-	
+
 	/**
 	 * Method which will start the Thread. Will keep listening to the socket, if there is an update, 
 	 * the update will be pushed to the Queue of updates in the server.
@@ -42,34 +43,39 @@ public class ServerThread extends Thread {
 
 			//ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 			//ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-
-			this.input = new ObjectInputStream(socket.getInputStream());
 			
+			this.input = new ObjectInputStream(socket.getInputStream());
+		
 
 			//close socket.. close disconnect.
 
 		}
 		catch(IOException e){
 			e.printStackTrace();
+
 		}
 		while(true){
 			
-			try {
-				System.out.println("reading object");
-				object = input.readObject();
-				
+			
+			object = null;
+			
+			
+			try {	
+					object = input.readObject();
+
 			} catch (ClassNotFoundException | IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			if(!(object instanceof Event)){
 				continue;
 				//meaning object is not an event and shouldnt be processed
 			}
-			
+
 			else if(object instanceof Event){
 				server.getUpdates().add(new Update((Event)object)); //add the event to the queue of updates
 			}
+			
 
 		}
 
