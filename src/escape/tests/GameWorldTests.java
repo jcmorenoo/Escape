@@ -61,4 +61,19 @@ public class GameWorldTests {
 		assertTrue(i == item);
 		
 	}
+	
+	@Test
+	public void testUnpickableItem(){
+		GameWorld g = new GameWorld(null);
+		Room r = g.getRooms().get("Main Hall");
+		int id = 0;
+		Player p = new Player(id,"test",r);
+		g.addPlayer(p);
+		Item item = g.getItems().get("Paper");
+		assertTrue(p.pickUpItem(item));
+		Item i = g.getItems().get("Bed");
+		assertFalse(p.pickUpItem(i));
+	}
+	
+	
 }
