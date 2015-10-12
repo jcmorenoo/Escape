@@ -210,15 +210,8 @@ public class GameFrame extends JFrame implements ActionListener {
 							break;
 						}
 					}
-
-
-					// Testing purposes
+					
 					setSt(1);
-					// client.sendEvent(new PickUpItemEvent(client.getPlayer(),
-					// new Item("Paper", "A piece of paper.", true)));
-//					client.sendEvent(new PickUpItemEvent(client.getPlayer(),
-//							new Item("Kitchen Picture", "Family Picture", true)));
-
 				}
 
 				// Join a game
@@ -256,7 +249,6 @@ public class GameFrame extends JFrame implements ActionListener {
 							break;
 						}
 					}
-					// Testing purposes
 					setSt(1);
 				}
 			}
@@ -323,8 +315,6 @@ public class GameFrame extends JFrame implements ActionListener {
 				case "Hall - Kitchen":
 					client.sendEvent(new EnterRoomEvent(player, "Kitchen"));
 					player.enterRoom(game.getRooms().get("Kitchen"));
-					// client.sendEvent(new PickUpItemEvent(client.getPlayer(),
-					// new Item("Kitchen Picture", "Family Picture", true)));
 					break;
 				}
 
@@ -353,9 +343,7 @@ public class GameFrame extends JFrame implements ActionListener {
 						break;
 					}
 
-					// !----Direction not changing back to NORTH when entering
-					// room----!
-
+					//Changes player's direction back to NORTH
 					client.sendEvent(new ChangeDirectionEvent(player, "NORTH"));
 					player.setDirection(Direction.NORTH);
 				}
@@ -645,16 +633,6 @@ public class GameFrame extends JFrame implements ActionListener {
 			frame.add(mouse);
 			frame.pack();
 		}
-		
-
-		// frame.remove(menuCanvas);
-		// menuCanvas = new GameCanvas(client);
-		// btnPanel.removeAll();
-		// frame.add(menuCanvas, BorderLayout.NORTH);
-		// mouse.addMouseListener(new MouseEvents());
-		// frame.add(mouse);
-		// frame.pack();
-
 	}
 	
 	public GameWorld getGame(){
