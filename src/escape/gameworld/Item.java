@@ -617,9 +617,9 @@ public class Item implements Serializable {
 	 * These constants and methods help with scaling the item in accordance
 	 * to the player's screen resolution
 	 */
-	private static final double IMG_POS_RESCALE = 0.8;
-	private static final double IMG_WIDTH_RESCALE = 0.8;
-	private static final double IMG_HEIGHT_RESCALE = 0.814;
+	protected static final double IMG_POS_RESCALE = 0.8;
+	protected static final double IMG_WIDTH_RESCALE = 0.8;
+	protected static final double IMG_HEIGHT_RESCALE = 0.814;
 	private static final double INNER_BACKGROUND_WIDTH_SCALE = 0.58;
 	private static final double INNER_BACKGROUND_HEIGHT_SCALE = 0.58;
 

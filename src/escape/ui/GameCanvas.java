@@ -153,14 +153,14 @@ public class GameCanvas extends JPanel {
 				for (Container c : currentRoom.getContainer()) {
 					c.draw(g, currentRoom, currentDirection);
 				}
+				for (Player p : currentRoom.getPlayers()){
+					if (p.getId() != player.getId()){
+						p.draw(g, p.getId(), p.getDirection(), player.getDirection());	
+					}
+				}
 
 				int itemOrder = 0;
-				// TO DO: Draw items currently in player's inventory
 				if (player.getItems() != null) {
-					// int itemOrder = 0;
-					// for (int count = 0; count <= player.getItems().size() -
-					// 1; count++){
-					// player.getItems().get(count).drawInventoryItem(g, count);
 					for (Item i : player.getItems()) {
 						i.drawInventoryItem(g, itemOrder);
 						itemOrder++;
