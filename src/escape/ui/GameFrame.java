@@ -306,6 +306,7 @@ public class GameFrame extends JFrame implements ActionListener {
 					//game.setSelectedInventory(game.getItems().get("Study Room Key"));
 					if (game.enterRoom(player, game.getRooms().get("Study"))) {
 						client.sendEvent(new EnterRoomEvent(player, "Study"));
+						game.setSelectedInventory(null);
 						System.out.println("player entering study");
 					} else {
 						JOptionPane.showMessageDialog(null, "The Door is locked. You need to find the key!",
@@ -566,6 +567,9 @@ public class GameFrame extends JFrame implements ActionListener {
 					for (int j = 2; j >= 0; j--) {
 						if (!items[j][i].equals("")) {
 							Item it = player.getRoom().getItem(items[j][i]);
+							if(it == null){
+								continue;
+							}
 							if (it.getBoundingBox().contains(e.getX(), e.getY()-40)) {
 								game.setSelectedItem(it);
 								Item selectedItem = game.getSelectedItem();
@@ -579,6 +583,7 @@ public class GameFrame extends JFrame implements ActionListener {
 									//if it's not locked, get whatever is inside
 									if(selectedItem instanceof Container && !((Container) selectedItem).isLocked()){
 										game.openContainer(player, (Container)selectedItem);
+										return;
 									}
 								} else {
 									if (game.getSelectedInventory() != null && selectedItem instanceof Container){
@@ -586,15 +591,19 @@ public class GameFrame extends JFrame implements ActionListener {
 											if(game.useItem(player, (Container) selectedItem, game.getSelectedInventory().getName())){
 												System.out.println("You opened " + selectedItem.getName() + " using " + selectedInventory.getName());
 												game.setSelectedInventory(null);
+												return;
 											}
 										}
 										//unlocked container
 										else{
 											game.useItem(player, (Container) selectedItem, "");
+											//added return statement, cos it is causing duplicate items.
+											return;
 										}
 									}
 									if (player.pickUpItem(selectedItem)) {
 										System.out.println("You picked up " + selectedItem.getName());
+										return;
 									} else {
 										System.out.println("Ooops! You can't pick up this item.");
 									}

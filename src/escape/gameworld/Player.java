@@ -91,15 +91,17 @@ public class Player implements Serializable {
 			return false;
 		if (!i.isPickable())
 			return false;
-		
+
 		if(i instanceof Container){
 			this.items.add(i);
 			this.room.removeContainer((Container)i);
 			return true;
 		}
-		this.items.add(i);
-		this.room.removeItem(i);
-		return true;
+		else{
+			this.items.add(i);
+			this.room.removeItem(i);
+			return true;
+		}
 	}
 
 	public boolean removeItem(String s) {
@@ -189,7 +191,7 @@ public class Player implements Serializable {
 					g.drawImage(avatar2, scaleImgPos(250), scaleImgPos(115),
 							scaleImgWidth(avatar2), scaleImgHeight(avatar2),
 							null);
-				
+
 				}
 				break;
 			case EAST:
@@ -218,7 +220,7 @@ public class Player implements Serializable {
 		}
 	}
 
-	
+
 	/*---------------ITEM IMAGE SCALING---------------
 	 * These methods help with scaling the item in accordance to the player's screen resolution
 	 */

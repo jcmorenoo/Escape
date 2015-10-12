@@ -96,6 +96,39 @@ public class Room implements Serializable {
 	
 	public void removeItem(Item item) {
 		this.items.remove(item);
+		String[][] roomNorth = this.itemsByDirection.get("North");
+		String[][] roomEast = this.itemsByDirection.get("East");
+		String[][] roomWest = this.itemsByDirection.get("West");
+		String[][] roomSouth = this.itemsByDirection.get("South");
+		
+		for(int i = 0; i != roomNorth.length; i++){
+			for(int j = 0; j!= roomNorth[i].length; j++){
+				if(roomNorth[i][j].equals(item.getName())){
+					roomNorth[i][j] = "";
+				}
+			}
+		}
+		for(int i = 0; i != roomEast.length; i++){
+			for(int j = 0; j!= roomEast[i].length; j++){
+				if(roomEast[i][j].equals(item.getName())){
+					roomEast[i][j] = "";
+				}
+			}
+		}
+		for(int i = 0; i != roomWest.length; i++){
+			for(int j = 0; j!= roomWest[i].length; j++){
+				if(roomWest[i][j].equals(item.getName())){
+					roomWest[i][j] = "";
+				}
+			}
+		}
+		for(int i = 0; i != roomSouth.length; i++){
+			for(int j = 0; j!= roomSouth[i].length; j++){
+				if(roomSouth[i][j].equals(item.getName())){
+					roomSouth[i][j] = "";
+				}
+			}
+		}
 	}
 
 	public void addContainer(Container container) {

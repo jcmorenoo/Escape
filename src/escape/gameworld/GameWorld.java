@@ -518,6 +518,7 @@ public class GameWorld {
 	public boolean useItem(Player p, Container con, String key) {
 		//Placing an item in an unlocked container
 		if(!con.isLocked()){
+			System.out.println("hi");
 			con.add(this.selectedInventory);
 			p.removeItem(this.selectedInventory.getName());
 			return true;
