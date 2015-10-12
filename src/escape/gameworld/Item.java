@@ -565,7 +565,7 @@ public class Item implements Serializable {
 				break;
 			case 2:
 				g.drawImage(matches, scaleImgPos(259), scaleImgPos(502), 60, 70, null);
-				this.boundingBox(scaleImgPos(257), scaleImgPos(502), 60, 70);
+				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 60, 70);
 				break;
 			case 3:
 				g.drawImage(matches, scaleImgPos(362), scaleImgPos(502), 60, 70, null);

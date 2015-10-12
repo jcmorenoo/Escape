@@ -27,6 +27,7 @@ public class Container extends Item {
 		this.locked = l;
 		this.key = key;
 	}
+
 	
 	public void add(Item i) {
 		items.add(i);
@@ -174,7 +175,7 @@ public class Container extends Item {
 				g.drawImage(cupboardSide, scaleImgPos(515), scaleImgPos(220),
 						scaleImgWidth(cupboardSide),
 						scaleImgHeight(cupboardSide), null);
-				i.boundingBox(scaleImgPos(450), scaleImgPos(220),
+				i.boundingBox(scaleImgPos(515), scaleImgPos(220),
 						scaleImgWidth(cupboardSide),
 						scaleImgHeight(cupboardSide));
 				break;
@@ -234,13 +235,13 @@ public class Container extends Item {
 			case SOUTH:
 				g.drawImage(safeSide, scaleImgPos(517), scaleImgPos(290),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide), null);
-				i.boundingBox(scaleImgPos(480), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(517), scaleImgPos(290),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide));
 				break;
 			case WEST:
 				g.drawImage(safe, scaleImgPos(25), scaleImgPos(290),
 						scaleImgWidth(safe), scaleImgHeight(safe), null);
-				i.boundingBox(scaleImgPos(18), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(25), scaleImgPos(290),
 						scaleImgWidth(safe), scaleImgHeight(safe));
 				break;
 			}
@@ -303,13 +304,13 @@ public class Container extends Item {
 			case NORTH:
 				g.drawImage(safe, scaleImgPos(517), scaleImgPos(290),
 						scaleImgWidth(safe), scaleImgHeight(safe), null);
-				i.boundingBox(scaleImgPos(480), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(517), scaleImgPos(290),
 						scaleImgWidth(safe), scaleImgHeight(safe));
 				break;
 			case EAST:
 				g.drawImage(safeSide, scaleImgPos(20), scaleImgPos(290),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide), null);
-				i.boundingBox(scaleImgPos(15), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(20), scaleImgPos(290),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide));
 				break;
 			}

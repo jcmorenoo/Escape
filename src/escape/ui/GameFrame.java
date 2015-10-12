@@ -534,22 +534,22 @@ public class GameFrame extends JFrame implements ActionListener {
 			} 
 			//for inventory box
 			else if(e.getY() >= 410){
-				if(player.getItems()==null) {
-					System.out.println("No player items.");
-					return;
-				}
 				for(Item i : player.getItems()){
 					if (i.getBoundingBox().contains(e.getX(), e.getY()-40)){
 						game.setSelectedInventory(i);
-						selectedInventory = game.getSelectedInventory();
+						Item selectedInventory = game.getSelectedInventory();
 						System.out.println("Selected item in inventory: " + selectedInventory.getName());
 						if(SwingUtilities.isRightMouseButton(e)){
 							System.out.println("You right wanna use: " + selectedInventory.getName());
 						}
 						else{
 							System.out.println("You left clicked on the inventory!");
-							
+							System.out.println(selectedInventory.getName() + ": \n" + selectedInventory.getDescription());
 						}
+					}
+					else if(player.getItems()==null) {
+						System.out.println("No player items.");
+						return;
 					}
 				}
 			}
@@ -578,24 +578,25 @@ public class GameFrame extends JFrame implements ActionListener {
 					for (int j = 2; j >= 0; j--) {
 						if (!items[j][i].equals("")) {
 							Item it = player.getRoom().getItem(items[j][i]);
-							if (it.getBoundingBox().contains(e.getX(), e.getY() - 40)) {
-//								System.out.println("Bounding Box X: " + it.getBoundingBox().x + "\nBounding Box Y: "
-//										+ it.getBoundingBox().y + "\nBounding Box Width: " + it.getBoundingBox().width
-//										+ "\nBounding Box Height: " + it.getBoundingBox().height);
+							if (it.getBoundingBox().contains(e.getX(), e.getY()-40)) {
 								game.setSelectedItem(it);
-								selectedItem = game.getSelectedItem();
+								Item selectedItem = game.getSelectedItem();
+								//inspecting an item
+								if(selectedItem==null){
+									System.out.println("Select an item!");
+									return;
+								}
 								if (SwingUtilities.isRightMouseButton(e)) {
 									System.out.println(selectedItem.getName() + ": \n" + selectedItem.getDescription());
+									//if it's not locked, get whatever is inside
 									if(selectedItem instanceof Container && !((Container) selectedItem).isLocked()){
-										for(Item conItems : ((Container) selectedItem).getItems()){
-											player.pickUpItem(conItems);
-										}
+										game.openContainer(player, (Container)selectedItem);
 									}
 								} else {
-									if (selectedInventory != null && selectedItem instanceof Container){
-										if(game.useItem(player, (Container) selectedItem, selectedInventory.getName())){
+									if (game.getSelectedInventory() != null && selectedItem instanceof Container){
+										if(game.useItem(player, (Container) selectedItem, game.getSelectedInventory().getName())){
 											System.out.println("You opened " + selectedItem.getName() + " using " + selectedInventory.getName());
-											selectedInventory = null;
+											game.setSelectedInventory(null);
 										}
 									}
 									if (player.pickUpItem(selectedItem)) {

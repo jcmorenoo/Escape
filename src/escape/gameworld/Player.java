@@ -89,11 +89,11 @@ public class Player implements Serializable {
 			return false;
 		
 		if(i instanceof Container){
-			items.add(i);
+			this.items.add(i);
 			this.room.removeContainer((Container)i);
 			return true;
 		}
-		items.add(i);
+		this.items.add(i);
 		this.room.removeItem(i);
 		return true;
 	}
