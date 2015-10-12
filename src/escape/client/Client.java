@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import javax.swing.JOptionPane;
+
 import escape.event.ConnectionAcceptedEvent;
 import escape.event.ConnectionDeniedEvent;
 import escape.event.Event;
@@ -229,6 +231,9 @@ public class Client extends Thread {
 
 		else if(e instanceof ConnectionDeniedEvent){
 			System.out.println("ConnectionDenied");
+			JOptionPane.showMessageDialog(null, "Connection Request has been Denied.",
+					"Connection Denied", JOptionPane.ERROR_MESSAGE);
+			frame.newG();
 		}
 
 
@@ -290,6 +295,12 @@ public class Client extends Thread {
 		try {
 			socket.close();
 			System.out.println("Host disconnected. Cannot continue game");
+			JOptionPane.showMessageDialog(null, "Host disconnected from the Game. Game will not continue.",
+					"Host Disconnected", JOptionPane.ERROR_MESSAGE);
+			frame.newG();
+			running = false;
+			this.stop();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

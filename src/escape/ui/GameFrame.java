@@ -6,8 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.awt.event.WindowEvent;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -22,15 +21,12 @@ import javax.swing.SwingUtilities;
 import escape.client.Client;
 import escape.event.ChangeDirectionEvent;
 import escape.event.EnterRoomEvent;
-import escape.event.PickUpItemEvent;
 import escape.gameworld.Container;
 import escape.gameworld.GameWorld;
 import escape.gameworld.Item;
 import escape.gameworld.Player;
 import escape.gameworld.Player.Direction;
-import escape.gameworld.Room;
 import escape.server.Server;
-import escape.ui.GameFrame.MouseEvents;
 
 public class GameFrame extends JFrame implements ActionListener {
 	public GameFrame f;
@@ -672,6 +668,19 @@ public class GameFrame extends JFrame implements ActionListener {
 		setSt(3);
 		updateFrame();
 //		menuCanvas.drawEndGameScreen(menuCanvas.getGraphics());
+	}
+	
+	public void newG(){
+//		updateFrame();
+		setSt(0);
+		
+//		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		frame.setVisible(false);
+		frame.dispose();
+		f = new GameFrame();
+		
+		
+		
 	}
 
 }
