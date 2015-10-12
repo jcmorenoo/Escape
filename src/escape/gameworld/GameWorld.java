@@ -123,7 +123,7 @@ public class GameWorld {
 		containers.get("Living Room Safe").add(items.get("Cupboard Key"));
 		containers.put("Bedroom Safe", new Container("Bedroom Safe",
 				"This safe can be opened by a key", false, true,
-				("Study Rooms Safe Key")));
+				("Bedroom Safe Key")));
 		containers.get("Bedroom Safe").add(items.get("Key"));
 		// Clue containers
 		containers.put("Bookshelf", new Container("Bookshelf",
@@ -136,7 +136,7 @@ public class GameWorld {
 		containers
 				.put("Cupboard", new Container("Cupboard",
 						"A cupboard covered with spiderweb", false,
-						false, null));
+						true, "Cupboard Key"));
 		containers.get("Cupboard").add(items.get("Matches"));
 		containers.put("Lamp", new Container("Lamp", "An old-fashioned lamp",
 			 true, true, "Matches"));
@@ -160,7 +160,7 @@ public class GameWorld {
 		rooms.put("Bedroom", new Room("Bedroom", false, null));
 		this.bedroom = rooms.get("Bedroom");
 		//EXIT DOOR
-		rooms.put("Exit Door", new Room("Exit Door", false, "Key"));
+		rooms.put("Exit Door", new Room("Exit Door", true, "Key"));
 		// Hall Rooms
 		rooms.put("Main Hall", new Room("Main Hall", false, null));
 		this.mainHall = rooms.get("Main Hall");
@@ -258,8 +258,13 @@ public class GameWorld {
 	 *            key to open container
 	 * @return if opened
 	 */
-	public boolean useItem(Container con, String key) {
+	public boolean useItem(Player p, Container con, String key) {
 		if (containers.get(con.getName()).getKey().equals(key)) {
+			con.setLocked(false);
+			p.removeItem(key);
+			for(Item i : con.getItems()){
+				p.pickUpItem(i);
+			}
 			return true;
 		}
 		return false;
@@ -431,14 +436,15 @@ public class GameWorld {
 		// if the room is a locked door, check if the player have the key
 		
 		if (r.isLocked()){
-			selectedInventory = items.get("Study Room Key");
+			//selectedInventory = items.get("Study Room Key");
 			if(selectedInventory == null){
 				System.out.println("Find the key!");
 				return false;
 			}
 			if (selectedInventory.getName().equals(r.getKey())){
-				
 				p.enterRoom(r);
+				p.removeItem(r.getKey());
+				r.setLocked(false);
 				return true;
 			}
 			return false;
@@ -475,7 +481,7 @@ public class GameWorld {
 	public boolean openContainer(Player p, Container con){
 		// check if the container is locked
 		if (con.isLocked()){
-			if (useItem(con, selectedInventory.getName())){
+			if (useItem(p, con, selectedInventory.getName())){
 				if (con.getItems().isEmpty()){
 					return true;//if there is no item in the container, do nothing
 				}

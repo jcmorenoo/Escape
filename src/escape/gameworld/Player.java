@@ -98,6 +98,15 @@ public class Player implements Serializable {
 		return true;
 	}
 	
+	public boolean removeItem(String s){
+		for(Item i : getItems()){
+			if(i.getName().equals(s)){
+				getItems().remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
 
 
 	public boolean dropItem(Item i) {

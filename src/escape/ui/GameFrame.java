@@ -45,6 +45,9 @@ public class GameFrame extends JFrame implements ActionListener {
 
 	private Server server;
 	private Client client;
+	
+	private Item selectedItem;
+	private Item selectedInventory;
 
 	// Testing purposes for now
 	private static int state;
@@ -311,7 +314,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					} else {
 						JOptionPane.showMessageDialog(null, "The Door is locked. You need to find the key!",
 								"Locked Room", JOptionPane.WARNING_MESSAGE);
-
 					}
 					break;
 				case "Hall - Kitchen":
@@ -522,7 +524,7 @@ public class GameFrame extends JFrame implements ActionListener {
 			if ((currentRoom.equals("Main Hall") || currentRoom.equals("Hall - Bedroom")
 					|| currentRoom.equals("Hall - Kitchen") || currentRoom.equals("Hall - Study")
 					|| currentRoom.equals("Hall - Living Room") || currentRoom.equals("Exit Door")) 
-					&& e.getY() <= 410) {
+					&& e.getY() < 410) {
 				System.out.println("Nothing to click here.");
 				return;
 			} 
@@ -535,8 +537,15 @@ public class GameFrame extends JFrame implements ActionListener {
 				for(Item i : player.getItems()){
 					if (i.getBoundingBox().contains(e.getX(), e.getY()-40)){
 						game.setSelectedInventory(i);
-						Item selected = game.getSelectedInventory();
-						System.out.println("Selected item in inventory: " + selected.getName());
+						selectedInventory = game.getSelectedInventory();
+						System.out.println("Selected item in inventory: " + selectedInventory.getName());
+						if(SwingUtilities.isRightMouseButton(e)){
+							System.out.println("You right wanna use: " + selectedInventory.getName());
+						}
+						else{
+							System.out.println("You left clicked on the inventory!");
+							
+						}
 					}
 				}
 			}
@@ -570,18 +579,29 @@ public class GameFrame extends JFrame implements ActionListener {
 //										+ it.getBoundingBox().y + "\nBounding Box Width: " + it.getBoundingBox().width
 //										+ "\nBounding Box Height: " + it.getBoundingBox().height);
 								game.setSelectedItem(it);
-								Item selected = game.getSelectedItem();
+								selectedItem = game.getSelectedItem();
 								if (SwingUtilities.isRightMouseButton(e)) {
-									System.out.println(selected.getName() + ": \n" + selected.getDescription());
+									System.out.println(selectedItem.getName() + ": \n" + selectedItem.getDescription());
+									if(selectedItem instanceof Container && !((Container) selectedItem).isLocked()){
+										for(Item conItems : ((Container) selectedItem).getItems()){
+											player.pickUpItem(conItems);
+										}
+									}
 								} else {
-									if (player.pickUpItem(selected)) {
-										System.out.println("You picked up " + selected.getName());
+									if (selectedInventory != null && selectedItem instanceof Container){
+										if(game.useItem(player, (Container) selectedItem, selectedInventory.getName())){
+											System.out.println("You opened " + selectedItem.getName() + " using " + selectedInventory.getName());
+											selectedInventory = null;
+										}
+									}
+									if (player.pickUpItem(selectedItem)) {
+										System.out.println("You picked up " + selectedItem.getName());
 									} else {
 										System.out.println("Ooops! You can't pick up this item.");
 									}
 									return;
 								}
-								if(selected!=null) return;
+								if(selectedItem!=null) return;
 							}
 						}
 					}
