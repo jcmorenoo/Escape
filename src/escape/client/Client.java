@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -17,6 +19,7 @@ import escape.event.Event;
 import escape.event.GameOverEvent;
 import escape.event.GameWorldUpdateEvent;
 import escape.event.PlayerSetupEvent;
+import escape.event.RemovePlayerEvent;
 import escape.event.TestEvent;
 import escape.event.UserSetupEvent;
 import escape.gameworld.Item;
@@ -228,6 +231,33 @@ public class Client extends Thread {
 				//call some method which will end the game..
 			}
 
+		}
+		else if(e instanceof RemovePlayerEvent){
+			RemovePlayerEvent event = ((RemovePlayerEvent)e);
+			Player p = event.getPlayer();
+			Room r = p.getRoom();
+			
+			Player player = null;
+			Room room = null;
+			Iterator it = this.frame.getGame().getPlayers().entrySet().iterator();
+			
+			while(it.hasNext()){
+				HashMap.Entry pair = (HashMap.Entry)it.next();
+				player = ((Player)pair.getValue());
+				if(player.getId() == p.getId()){
+					room = player.getRoom();
+					this.frame.getGame().getPlayers().remove(player);
+					for(Player playa : room.getPlayers()){
+						if(playa.getId() == player.getId()){
+							room.getPlayers().remove(playa);
+							return;
+						}
+					}
+				}
+			}
+			
+			
+			
 		}
 
 		else if(e instanceof ConnectionDeniedEvent){

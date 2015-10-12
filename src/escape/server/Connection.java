@@ -12,6 +12,7 @@ public class Connection {
 	
 	private Socket socket;
 	private ObjectOutputStream output;
+	private boolean running = true;
 	
 	/**
 	 * Constructor for Connection
@@ -37,6 +38,14 @@ public class Connection {
 	 */
 	public ObjectOutputStream getOutput(){
 		return this.output;
+	}
+
+	public void stop() {
+		this.running = false;
+	}
+	
+	public boolean isRunning(){
+		return this.running;
 	}
 
 }

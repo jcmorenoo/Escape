@@ -212,7 +212,7 @@ public class UpdateThread extends Thread {
 	public void sendToAllClients(Event event) {
 		for (int i = 0; i < server.getClients().size(); i++) {
 			Connection p = server.getClients().get(i);
-			if(!p.getSocket().isClosed()){
+			if(!p.getSocket().isClosed() && p.isRunning()){
 				try {
 					p.getOutput().reset();
 					p.getOutput().writeObject(event);

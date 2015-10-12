@@ -12,6 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import escape.event.ConnectionAcceptedEvent;
 import escape.event.ConnectionDeniedEvent;
 import escape.event.Event;
+import escape.event.RemovePlayerEvent;
 import escape.gameworld.GameWorld;
 import escape.gameworld.Player;
 
@@ -37,6 +38,7 @@ public class Server extends Thread{
 	private int limit;
 	private GameWorld game;
 	private String ipAddress;
+	private UpdateThread updateThread;
 
 	//should pass game
 	public Server(int players, String gameID ){
@@ -63,7 +65,7 @@ public class Server extends Thread{
 
 		try {
 			int id = 0;
-			UpdateThread updateThread = new UpdateThread(this);
+			updateThread = new UpdateThread(this);
 			updateThread.start();
 			System.out.println("Waiting for connections");
 			stopped = false;
@@ -165,6 +167,13 @@ public class Server extends Thread{
 	}
 
 	public void removePlayer(int id) {
+		Player p = game.getPlayers().get(id);
+		p.getRoom().getPlayers().remove(p);
+		clients.get(id).stop();
+		RemovePlayerEvent event = new RemovePlayerEvent(p);
+		updateThread.sendToAllClients((Event)event);
+		game.getPlayers().remove(id);
+		
 		// TODO remove player method
 		//remove player in game method.
 		
