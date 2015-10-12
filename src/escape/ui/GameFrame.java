@@ -196,7 +196,7 @@ public class GameFrame extends JFrame implements ActionListener {
 					
 					System.out.println("ADDRESS OF SERVER: " + server.getIp());
 					String url = server.getIp();
-					JOptionPane.showMessageDialog(null, url,
+					JOptionPane.showMessageDialog(null, "URL: " + url,
 							"Server URL", JOptionPane.NO_OPTION);
 					while (client.getPlayer() == null) {
 
