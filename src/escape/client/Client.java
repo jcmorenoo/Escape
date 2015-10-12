@@ -170,7 +170,7 @@ public class Client extends Thread {
 			else{
 				this.frame.getGame().addPlayer(event.getPlayer());
 			}
-//			frame.updateFrame();
+			//			frame.updateFrame();
 
 		}
 		else if(e instanceof GameWorldUpdateEvent){
@@ -183,11 +183,11 @@ public class Client extends Thread {
 				previousRoom.getPlayers().remove(p);
 				p.setRoom(r);
 				r.getPlayers().add(p);
-				
-				
+
+
 			}
-			
-			
+
+
 			//update the player and the room.
 			//			if(this.player != null){
 			//				if (event.getPlayer().getName().equals(this.player.getName())){
@@ -226,11 +226,11 @@ public class Client extends Thread {
 			}
 
 		}
-		
+
 		else if(e instanceof ConnectionDeniedEvent){
 			System.out.println("ConnectionDenied");
 		}
-		
+
 
 
 	}
@@ -241,11 +241,13 @@ public class Client extends Thread {
 	 * @param event
 	 */
 	public void sendEvent(Event event){
-		try {
-			output.writeObject(event);
-			output.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(!socket.isClosed()){
+			try {
+				output.writeObject(event);
+				output.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -265,7 +267,7 @@ public class Client extends Thread {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
+				running = false;
 			}
 
 			//if in is null, do nothing
@@ -287,9 +289,11 @@ public class Client extends Thread {
 		}
 		try {
 			socket.close();
+			System.out.println("Host disconnected. Cannot continue game");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
 		}
 	}
 
@@ -306,7 +310,7 @@ public class Client extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean isWinner(){
 		return this.winner;
 	}

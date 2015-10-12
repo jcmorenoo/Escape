@@ -17,6 +17,7 @@ public class ServerThread extends Thread {
 	private Server server;
 	private Socket socket;
 	private int id;
+	private boolean running;
 	private ObjectInputStream input;
 
 
@@ -54,7 +55,8 @@ public class ServerThread extends Thread {
 			e.printStackTrace();
 
 		}
-		while(true){
+		this.running = true;
+		while(running){
 			
 			
 			object = null;
@@ -64,7 +66,17 @@ public class ServerThread extends Thread {
 					object = input.readObject();
 
 			} catch (ClassNotFoundException | IOException e) {
-				e.printStackTrace();
+				try{
+					socket.close();
+					server.removePlayer(this.id);
+					this.running = false;
+					break;
+				}
+				catch(IOException e1){
+					e1.printStackTrace();
+				}
+				
+				
 			}
 
 			if(!(object instanceof Event)){

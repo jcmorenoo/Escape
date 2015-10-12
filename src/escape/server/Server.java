@@ -164,4 +164,10 @@ public class Server extends Thread{
 		return this.ipAddress;
 	}
 
+	public void removePlayer(int id) {
+		// TODO remove player method
+		//remove player in game method.
+		
+	}
+
 }
