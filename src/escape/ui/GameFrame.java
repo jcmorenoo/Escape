@@ -289,12 +289,14 @@ public class GameFrame extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Walking Forward");
 
-				switch (currentRoom) {
+				switch (player.getRoom().getName()) {
 				case "Main Hall":
 					System.out.println("Going through Main Door");
-					client.sendEvent(new EnterRoomEvent(player,"Exit Door"));
+					
 					if(game.enterRoom(player, game.getRooms().get("Exit Door"))){
+						client.sendEvent(new EnterRoomEvent(player,"Exit Door"));
 						player.enterRoom(game.getRooms().get("Exit Door"));
+						
 					}
 					break;
 				case "Hall - Bedroom":
@@ -311,6 +313,7 @@ public class GameFrame extends JFrame implements ActionListener {
 					//game.setSelectedInventory(game.getItems().get("Study Room Key"));
 					if (game.enterRoom(player, game.getRooms().get("Study"))) {
 						client.sendEvent(new EnterRoomEvent(player, "Study"));
+						System.out.println("player entering study");
 					} else {
 						JOptionPane.showMessageDialog(null, "The Door is locked. You need to find the key!",
 								"Locked Room", JOptionPane.WARNING_MESSAGE);
@@ -373,7 +376,7 @@ public class GameFrame extends JFrame implements ActionListener {
 				// TESTING
 				System.out.println(player.getName() + " is facing " + player.getDirection().toString());
 
-				switch (currentRoom) {
+				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
@@ -395,7 +398,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				switch (currentRoom) {
+				switch (player.getRoom().getName()) {
 				case "Main Hall":
 					client.sendEvent(new EnterRoomEvent(player, "Hall - Bedroom"));
 					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
@@ -420,7 +423,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
 				// TESTING
 				System.out.println(player.getName() + " is facing " + player.getDirection().toString());
-				switch (currentRoom) {
+				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
@@ -443,7 +446,7 @@ public class GameFrame extends JFrame implements ActionListener {
 				// TESTING
 				System.out.println(player.getName() + " is facing " + player.getDirection().toString());
 
-				switch (currentRoom) {
+				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
 				case "Bedroom":
