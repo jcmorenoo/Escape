@@ -184,6 +184,7 @@ public class Client extends Thread {
 				Room r = this.frame.getGame().getRooms().get(event.getRoom().getName());
 				previousRoom.getPlayers().remove(p);
 				p.setRoom(r);
+				p.setDirection(event.getPlayer().getDirection());
 				r.getPlayers().add(p);
 
 
