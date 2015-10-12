@@ -528,11 +528,11 @@ public class GameFrame extends JFrame implements ActionListener {
 						Item selectedInventory = game.getSelectedInventory();
 						System.out.println("Selected item in inventory: " + selectedInventory.getName());
 						if(SwingUtilities.isRightMouseButton(e)){
-							System.out.println("You right wanna use: " + selectedInventory.getName());
+							System.out.println(selectedInventory.getName() + ": \n" + selectedInventory.getDescription());
 						}
 						else{
-							System.out.println("You left clicked on the inventory!");
-							System.out.println(selectedInventory.getName() + ": \n" + selectedInventory.getDescription());
+							System.out.println("Click on item you want to use " + selectedInventory.getName() + "to.");
+							System.out.println("Selected item in inventory: " + selectedInventory.getName());
 						}
 					}
 					else if(player.getItems()==null) {
@@ -582,9 +582,15 @@ public class GameFrame extends JFrame implements ActionListener {
 									}
 								} else {
 									if (game.getSelectedInventory() != null && selectedItem instanceof Container){
-										if(game.useItem(player, (Container) selectedItem, game.getSelectedInventory().getName())){
-											System.out.println("You opened " + selectedItem.getName() + " using " + selectedInventory.getName());
-											game.setSelectedInventory(null);
+										if(((Container) selectedItem).isLocked()){
+											if(game.useItem(player, (Container) selectedItem, game.getSelectedInventory().getName())){
+												System.out.println("You opened " + selectedItem.getName() + " using " + selectedInventory.getName());
+												game.setSelectedInventory(null);
+											}
+										}
+										//unlocked container
+										else{
+											game.useItem(player, (Container) selectedItem, "");
 										}
 									}
 									if (player.pickUpItem(selectedItem)) {
@@ -595,6 +601,19 @@ public class GameFrame extends JFrame implements ActionListener {
 									return;
 								}
 								if(selectedItem!=null) return;
+							}
+							else if(game.getSelectedInventory()!=null){
+								int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to drop " 
+										+ game.getSelectedInventory().getName() + "?", "Drop item?", JOptionPane.YES_NO_OPTION);
+								  if (n == JOptionPane.YES_OPTION) {
+									  System.out.println(game.getSelectedInventory().getName() + " is now in the rubbish bin.");
+							          game.dropItem(player);
+							          game.setSelectedInventory(null);
+							          return;
+								  } 
+								  else {
+									  return;
+								  }
 							}
 						}
 					}

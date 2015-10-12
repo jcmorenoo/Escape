@@ -181,6 +181,11 @@ public class GameWorld {
 		bedroom.addContainer(containers.get("Sidetable"));
 		bedroom.addItem(items.get("Bedroom Door"));
 		
+		//bins
+		bedroom.setBin(containers.get("Bedroom Bin"));
+		study.setBin(containers.get("Study Room Bin"));
+		livingRoom.setBin(containers.get("Living Room Bin"));
+		kitchen.setBin(containers.get("Kitchen Bin"));
 
 		assignItemsToRooms();
 
@@ -511,6 +516,12 @@ public class GameWorld {
 	 * @return if opened
 	 */
 	public boolean useItem(Player p, Container con, String key) {
+		//Placing an item in an unlocked container
+		if(!con.isLocked()){
+			con.add(this.selectedInventory);
+			p.removeItem(this.selectedInventory.getName());
+			return true;
+		}
 		if (containers.get(con.getName()).getKey().equals(key)) {
 			con.setLocked(false);
 			p.removeItem(key);
