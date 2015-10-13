@@ -14,14 +14,6 @@ public class Item implements Serializable {
 	private double y;
 	private String name;
 	private String description;
-	// private int positionX;
-	// private int positionY;
-
-	// private enum direction {
-	// NORTH, EAST, WEST, SOUTH
-	// }
-
-	// private boolean movable;
 
 	private boolean pickable;
 	private Rectangle boundingBox;
@@ -29,7 +21,6 @@ public class Item implements Serializable {
 	public Item(String n, String d, boolean pickable) {
 		this.name = n;
 		this.description = d;
-		// this.movable = movable;
 		this.pickable = pickable;
 	}
 
@@ -73,15 +64,6 @@ public class Item implements Serializable {
 		this.description = description;
 	}
 
-	// public boolean isMovable() {
-	// return movable;
-	// }
-	//
-
-	// public void setMovable(boolean movable) {
-	// this.movable = movable;
-	// }
-
 	public boolean isPickable() {
 		return pickable;
 	}
@@ -90,6 +72,11 @@ public class Item implements Serializable {
 		this.pickable = pickable;
 	}
 
+	/**
+	 * Allows player to pick up this item
+	 * 
+	 * @param p
+	 */
 	public void pickUp(Player p) {
 		p.pickUpItem(this);
 	}
@@ -366,6 +353,12 @@ public class Item implements Serializable {
 		}
 	}
 
+	/**
+	 * Draws the items in the inventory
+	 * 
+	 * @param g
+	 * @param itemOrder
+	 */
 	public void drawInventoryItem(Graphics g, int itemOrder) {
 
 		String invItem = this.name;
@@ -602,15 +595,6 @@ public class Item implements Serializable {
 			}
 
 		}
-
-		// OTHER PICKABLE ITEMS
-		// Key to kitchen cupboard - living room
-		// Matches? - kitchen
-		// Key to study room - bedroom sidetable
-		// Paper? - study room
-		// Key to bedroom safe - study room
-		// Key to main door - bedroom safe
-		//
 	}
 
 	/*---------------ITEM IMAGE SCALING---------------

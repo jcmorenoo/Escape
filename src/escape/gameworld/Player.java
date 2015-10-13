@@ -85,6 +85,15 @@ public class Player implements Serializable {
 			break;
 		}
 	}
+	
+	/**
+	 * Allows the player to pick up an item. 
+	 * If it is picked up, it will be removed to that room's list of items
+	 * 
+	 * @param i
+	 * @return true if picked up successfully, added to the player's list of items
+	 * 		   false if item not pickable or player already has 5 items
+	 */
 
 	public boolean pickUpItem(Item i) {
 		if (items.size() >= 5)
@@ -104,6 +113,12 @@ public class Player implements Serializable {
 		}
 	}
 
+	/**
+	 * Remove item in the list
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public boolean removeItem(String s) {
 		for (Item i : getItems()) {
 			if (i.getName().equals(s)) {
@@ -114,6 +129,12 @@ public class Player implements Serializable {
 		return false;
 	}
 
+	/**
+	 * Drops the item in the bin of the player's current room
+	 * 
+	 * @param i
+	 * @return
+	 */
 	public boolean dropItem(Item i) {
 		if (room == null)
 			return false;
@@ -123,10 +144,16 @@ public class Player implements Serializable {
 		return true;
 	}
 
+	/**
+	 * Returns the item's description
+	 * 
+	 * @param i
+	 * @return
+	 */
 	public String examineItem(Item i) {
 		return i.getDescription();
 	}
-
+	
 	public void enterRoom(Room r) {
 		this.room = r;
 	}
@@ -143,7 +170,7 @@ public class Player implements Serializable {
 		this.id = id;
 	}
 
-	/** !-----STILL BUGGY-----!
+	/**
 	 * Draws players in a room according to room's current list of players, and the direction they are facing
 	 * @param g	- Graphics
 	 * @param pId - Other player's ID

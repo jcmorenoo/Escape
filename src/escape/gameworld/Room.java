@@ -30,7 +30,6 @@ public class Room implements Serializable {
 		this.name = name;
 		this.locked = locked;
 		this.key = key;
-//		container.add(getBin());
 	}
 	
 
@@ -94,6 +93,11 @@ public class Room implements Serializable {
 		this.items.add(item);
 	}
 	
+	/**
+	 * Remove item in this room and in the 2D array
+	 * 
+	 * @param item
+	 */
 	public void removeItem(Item item) {
 		this.items.remove(item);
 		String[][] roomNorth = this.itemsByDirection.get("North");
