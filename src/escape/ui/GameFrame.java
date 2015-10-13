@@ -529,18 +529,17 @@ public class GameFrame extends JFrame implements ActionListener {
 					if (i.getBoundingBox().contains(e.getX(), e.getY()-40)){
 						game.setSelectedInventory(i);
 						Item selectedInventory = game.getSelectedInventory();
-						System.out.println("Selected item in inventory: " + selectedInventory.getName());
+						JOptionPane.showMessageDialog(null, "You have selected " + selectedInventory.getName() + " from your inventory.", "Selected Inventory Item",
+								JOptionPane.NO_OPTION);
 						if(SwingUtilities.isRightMouseButton(e)){
-							System.out.println(selectedInventory.getName() + ": \n" + selectedInventory.getDescription());
+							JOptionPane.showMessageDialog(null, selectedInventory.getDescription(), selectedInventory.getName(),
+									JOptionPane.NO_OPTION);
 						}
-						else{
-							System.out.println("Click on item you want to use the " + selectedInventory.getName() + " to.");
-							System.out.println("Selected item in inventory: " + selectedInventory.getName());
+						else{ 
 							return;
 						}
 					}
 					else if(player.getItems()==null) {
-						System.out.println("No player items.");
 						return;
 					}
 				}
@@ -578,12 +577,12 @@ public class GameFrame extends JFrame implements ActionListener {
 								Item selectedItem = game.getSelectedItem();
 								//inspecting an item
 								if(selectedItem==null){
-									System.out.println("Select an item!");
 									return;
 								}
 								if (SwingUtilities.isRightMouseButton(e)) {
 									//Examining item
-									System.out.println(selectedItem.getName() + ": \n" + selectedItem.getDescription());
+									JOptionPane.showMessageDialog(null, selectedItem.getDescription(), selectedItem.getName(),
+											JOptionPane.NO_OPTION);
 									//if it's not locked, get whatever is inside
 									if(selectedItem instanceof Container && !((Container) selectedItem).isLocked()){
 										game.openContainer(player, (Container)selectedItem);
@@ -591,7 +590,8 @@ public class GameFrame extends JFrame implements ActionListener {
 									}
 								} else {
 									if (player.pickUpItem(selectedItem)) {
-										System.out.println("You picked up " + selectedItem.getName());
+										JOptionPane.showMessageDialog(null, "You picked up " + selectedItem.getName(), "Picked up an item!",
+												JOptionPane.NO_OPTION);
 										return;
 									} 
 									else if (game.getSelectedInventory() != null && selectedItem instanceof Container){
@@ -614,7 +614,8 @@ public class GameFrame extends JFrame implements ActionListener {
 										}
 									}
 									else {
-										System.out.println("Ooops! You can't pick up this item.");
+										JOptionPane.showMessageDialog(null, "Can't pick up that item!", "Oooops",
+												JOptionPane.NO_OPTION);
 										return;
 									}
 									

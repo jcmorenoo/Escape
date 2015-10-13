@@ -64,7 +64,7 @@ public class GameWorld {
 		items.put("Kitchen Picture", new Item("Kitchen Picture", "A family picture", true));
 		items.put("Matches", new Item("Matches", "Matches! Might be useful in the future", true));
 		// Unmovables
-		items.put("Living Room Picture", new Item("Living Room Picture", "A family picture", false));
+		items.put("Living Room Picture", new Item("Living Room Picture", "A framed painting", false));
 		items.put("Sofa", new Item("Sofa", "A green sofa covered of cat fur.", false));
 		items.put("Desk", new Item("Desk", "An office desk", false));
 		items.put("Chair", new Item("Chair", "An comfortable working chair", false));
