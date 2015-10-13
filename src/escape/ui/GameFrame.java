@@ -287,9 +287,11 @@ public class GameFrame extends JFrame implements ActionListener {
 					System.out.println("Going through Main Door");
 					
 					if(game.enterRoom(player, game.getRooms().get("Exit Door"))){
+						
 						client.sendEvent(new EnterRoomEvent(player,"Exit Door"));
 						player.enterRoom(game.getRooms().get("Exit Door"));
-						
+						client.setWinner();
+						endGame();
 					}
 					break;
 				case "Hall - Bedroom":
@@ -532,8 +534,9 @@ public class GameFrame extends JFrame implements ActionListener {
 							System.out.println(selectedInventory.getName() + ": \n" + selectedInventory.getDescription());
 						}
 						else{
-							System.out.println("Click on item you want to use " + selectedInventory.getName() + "to.");
+							System.out.println("Click on item you want to use the " + selectedInventory.getName() + " to.");
 							System.out.println("Selected item in inventory: " + selectedInventory.getName());
+							return;
 						}
 					}
 					else if(player.getItems()==null) {
@@ -579,6 +582,7 @@ public class GameFrame extends JFrame implements ActionListener {
 									return;
 								}
 								if (SwingUtilities.isRightMouseButton(e)) {
+									//Examining item
 									System.out.println(selectedItem.getName() + ": \n" + selectedItem.getDescription());
 									//if it's not locked, get whatever is inside
 									if(selectedItem instanceof Container && !((Container) selectedItem).isLocked()){
@@ -586,10 +590,14 @@ public class GameFrame extends JFrame implements ActionListener {
 										return;
 									}
 								} else {
-									if (game.getSelectedInventory() != null && selectedItem instanceof Container){
+									if (player.pickUpItem(selectedItem)) {
+										System.out.println("You picked up " + selectedItem.getName());
+										return;
+									} 
+									else if (game.getSelectedInventory() != null && selectedItem instanceof Container){
 										if(((Container) selectedItem).isLocked()){
 											if(game.useItem(player, (Container) selectedItem, game.getSelectedInventory().getName())){
-												System.out.println("You opened " + selectedItem.getName() + " using " + selectedInventory.getName());
+												System.out.println("You opened " + selectedItem.getName() + " using " + game.getSelectedInventory().getName());
 												game.setSelectedInventory(null);
 												return;
 											}
@@ -597,21 +605,23 @@ public class GameFrame extends JFrame implements ActionListener {
 										//unlocked container
 										else{
 											game.useItem(player, (Container) selectedItem, "");
+											for(Item k : ((Container) selectedItem).getItems()){
+												System.out.println(k.getName());
+											}
+											game.setSelectedInventory(null);
 											//added return statement, cos it is causing duplicate items.
 											return;
 										}
 									}
-									if (player.pickUpItem(selectedItem)) {
-										System.out.println("You picked up " + selectedItem.getName());
-										return;
-									} else {
+									else {
 										System.out.println("Ooops! You can't pick up this item.");
+										return;
 									}
-									return;
+									
 								}
 								if(selectedItem!=null) return;
 							}
-							else if(game.getSelectedInventory()!=null){
+							else if(game.getSelectedInventory()!=null && !(game.getSelectedItem() instanceof Container)){
 								int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to drop " 
 										+ game.getSelectedInventory().getName() + "?", "Drop item?", JOptionPane.YES_NO_OPTION);
 								  if (n == JOptionPane.YES_OPTION) {

@@ -93,6 +93,10 @@ public class Client extends Thread {
 		initialiseConnection();
 
 	}
+	
+	public void setWinner(){
+		this.winner = true;
+	}
 
 	/**
 	 * Method returning the user. Probably not needed
