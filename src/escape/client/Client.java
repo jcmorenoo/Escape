@@ -268,7 +268,7 @@ public class Client extends Thread {
 			System.out.println("ConnectionDenied");
 			JOptionPane.showMessageDialog(null, "Connection Request has been Denied.",
 					"Connection Denied", JOptionPane.ERROR_MESSAGE);
-			frame.newG();
+			frame.newGame();
 		}
 
 
@@ -332,7 +332,7 @@ public class Client extends Thread {
 			System.out.println("Host disconnected. Cannot continue game");
 			JOptionPane.showMessageDialog(null, "Host disconnected from the Game. Game will not continue.",
 					"Host Disconnected", JOptionPane.ERROR_MESSAGE);
-			frame.newG();
+			frame.newGame();
 			running = false;
 			this.stop();
 			
