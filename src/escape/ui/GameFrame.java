@@ -39,7 +39,6 @@ public class GameFrame extends JFrame implements ActionListener {
 	private JPanel mouse = new JPanel();
 	private GameWorld game;
 	private String currentRoom;
-
 	private Server server;
 	private Client client;
 

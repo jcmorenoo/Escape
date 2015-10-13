@@ -1,6 +1,5 @@
 package escape.ui;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -8,9 +7,10 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import escape.client.Client;
 import escape.gameworld.Container;
 import escape.gameworld.Item;
@@ -61,20 +61,19 @@ public class GameCanvas extends JPanel {
 	private int h = (int) (d.height * WINDOW_HEIGHT_SCALE);
 	private int w = (int) (d.width * WINDOW_WIDTH_SCALE);
 
-	//Creates a new Canvas using a client
+	// Creates a new Canvas using a client
 	public GameCanvas(Client c) {
 		client = c;
 		player = c.getPlayer();
 		getPreferredSize();
 	}
 
-	//Creates a new Canvas using a player
+	// Creates a new Canvas using a player
 	public GameCanvas(Player p) {
 		player = p;
 		getPreferredSize();
 	}
 
-	
 	public void paint(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
@@ -89,7 +88,7 @@ public class GameCanvas extends JPanel {
 				currentRoom = player.getRoom();
 				currentDirection = player.getDirection();
 				switch (currentRoom.getName()) {
-					
+
 				case "Main Hall":
 					g.drawImage(hallMain, 0, 0, scaleImgWidth(hallMain),
 							scaleImgHeight(hallMain), null);
@@ -108,7 +107,18 @@ public class GameCanvas extends JPanel {
 					g.drawImage(wall, scaleInsideImgPos(58),
 							scaleInsideImgPos(0), scaleInsideImgWidth(wall),
 							scaleInsideImgHeight(wall), null);
-					Item.draw(g, "Kitchen");
+					boolean displayPicture = false;
+					if (player.getItems() != null) {
+						for (Item i : player.getItems())
+							if (i.getName().equals("Kitchen Picture")) {
+								displayPicture = true;
+							} 
+							else {
+								displayPicture = true;
+							}
+					}
+					Item.draw(g, "Kitchen", displayPicture);
+					System.out.println("Display: " + displayPicture);
 					Container.draw(g, "Kitchen");
 					g.drawImage(hallLeftKitchen, 0, 0,
 							scaleImgWidth(hallLeftStudy),
@@ -118,7 +128,7 @@ public class GameCanvas extends JPanel {
 					g.drawImage(wall, scaleInsideImgPos(58),
 							scaleInsideImgPos(0), scaleInsideImgWidth(wall),
 							scaleInsideImgHeight(wall), null);
-					Item.draw(g, "Living Room");
+					Item.draw(g, "Living Room", true);
 					Container.draw(g, "Living Room");
 					g.drawImage(hallRightLivingRoom, 0, 0,
 							scaleImgWidth(hallRightLivingRoom),
@@ -130,7 +140,8 @@ public class GameCanvas extends JPanel {
 					break;
 				case "Living Room":
 				case "Kitchen":
-					//Draws the hall inside the entrance way when facing SOUTH in the Kitchen or Living Room
+					// Draws the hall inside the entrance way when facing SOUTH
+					// in the Kitchen or Living Room
 					if (player.getDirection().equals(Direction.SOUTH)) {
 						g.drawImage(hall, scaleInsideImgPos(58),
 								scaleInsideImgPos(0),
@@ -139,7 +150,7 @@ public class GameCanvas extends JPanel {
 						g.drawImage(wallToHall, 0, 0,
 								scaleImgWidth(wallToHall),
 								scaleImgHeight(wallToHall), null);
-					} else { 
+					} else {
 						g.drawImage(wall, 0, 0, scaleImgWidth(wall),
 								scaleImgHeight(wall), null);
 					}
@@ -156,9 +167,10 @@ public class GameCanvas extends JPanel {
 				for (Container c : currentRoom.getContainer()) {
 					c.draw(g, currentRoom, currentDirection);
 				}
-				for (Player p : currentRoom.getPlayers()){
-					if (p.getId() != player.getId()){
-						p.draw(g, p.getId(), p.getDirection(), player.getDirection());	
+				for (Player p : currentRoom.getPlayers()) {
+					if (p.getId() != player.getId()) {
+						p.draw(g, p.getId(), p.getDirection(),
+								player.getDirection());
 					}
 				}
 
@@ -172,14 +184,15 @@ public class GameCanvas extends JPanel {
 				}
 			}
 		}
-		//Game is finished, canvas will display appropriate end-game message to player
-		else if (state == 3){ 
-			if(client.isWinner()){
-			g.drawImage(won, 0, 0, scaleImgWidth(won),
-					scaleImgHeight(won), null);
-			}
-			else{
-				g.drawImage(lost,0,0,scaleImgWidth(lost),scaleImgHeight(lost),null);
+		// Game is finished, canvas will display appropriate end-game message to
+		// player
+		else if (state == 3) {
+			if (client.isWinner()) {
+				g.drawImage(won, 0, 0, scaleImgWidth(won), scaleImgHeight(won),
+						null);
+			} else {
+				g.drawImage(lost, 0, 0, scaleImgWidth(lost),
+						scaleImgHeight(lost), null);
 			}
 		}
 		repaint();
@@ -191,14 +204,16 @@ public class GameCanvas extends JPanel {
 	}
 
 	/**
-	 * Draws the load screen only for the host while they wait for other players to connect
-	 * @param g - Graphics
+	 * Draws the load screen only for the host while they wait for other players
+	 * to connect
+	 * 
+	 * @param g
+	 *            - Graphics
 	 */
-	protected void drawLoadScreen(Graphics g){
+	protected void drawLoadScreen(Graphics g) {
 		g.drawImage(loadScreen, 0, 0, scaleImgWidth(loadScreen),
 				scaleImgHeight(loadScreen), null);
 	}
-
 
 	public void setResizable(boolean b) {
 		getPreferredSize();
