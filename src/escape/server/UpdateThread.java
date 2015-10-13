@@ -13,6 +13,7 @@ import escape.event.PickUpItemEvent;
 import escape.event.PlayerSetupEvent;
 import escape.event.TestEvent;
 import escape.event.UserSetupEvent;
+import escape.event.WinnerEvent;
 import escape.gameworld.GameWorld;
 import escape.gameworld.Item;
 import escape.gameworld.Player;
@@ -164,7 +165,7 @@ public class UpdateThread extends Thread {
 					}
 				}
 			}
-			// else if(event instanceof EnterRoomEvent){
+			// else if(event instanceof RoomEvent){
 			// EnterRoomEvent e = (EnterRoomEvent) event;
 			// String roomName = e.getRoom();
 			// Room room = game.getRooms().get(roomName);
@@ -183,6 +184,12 @@ public class UpdateThread extends Thread {
 
 			} else if (event instanceof PickUpItemEvent) {
 				PickUpItemEvent e = (PickUpItemEvent) event;
+			}
+			
+			else if(event instanceof WinnerEvent){
+				WinnerEvent e = (WinnerEvent) event;
+				GameOverEvent ev = new GameOverEvent(e.getPlayer());
+				sendToAllClients((Event)ev);
 			}
 
 		}

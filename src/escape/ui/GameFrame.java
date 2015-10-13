@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -21,6 +20,7 @@ import javax.swing.SwingUtilities;
 import escape.client.Client;
 import escape.event.ChangeDirectionEvent;
 import escape.event.EnterRoomEvent;
+import escape.event.WinnerEvent;
 import escape.gameworld.Container;
 import escape.gameworld.GameWorld;
 import escape.gameworld.Item;
@@ -288,7 +288,7 @@ public class GameFrame extends JFrame implements ActionListener {
 					
 					if(game.enterRoom(player, game.getRooms().get("Exit Door"))){
 						
-						client.sendEvent(new EnterRoomEvent(player,"Exit Door"));
+						client.sendEvent(new WinnerEvent(player));
 						player.enterRoom(game.getRooms().get("Exit Door"));
 						client.setWinner();
 						endGame();
