@@ -16,9 +16,9 @@ public class Container extends Item {
 	private boolean locked;
 	private String key;
 
-	private enum direction {
-		NORTH, EAST, WEST, SOUTH
-	}
+//	private enum direction {
+//		NORTH, EAST, WEST, SOUTH
+//	}
 
 	private Rectangle boundingBox;
 
