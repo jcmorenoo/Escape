@@ -217,6 +217,138 @@ public class Player implements Serializable {
 				break;
 			}
 			break;
+		case 2:
+			switch (currentPlayerDirection) {
+			case NORTH:
+				if (currentDirection.equals(Direction.SOUTH)) {
+					g.drawImage(avatar3, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar3), scaleImgHeight(avatar3),
+							null);
+
+				}
+				break;
+			case EAST:
+				if (currentDirection.equals(Direction.WEST)) {
+					g.drawImage(avatar3, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar3), scaleImgHeight(avatar3),
+							null);
+				}
+				break;
+			case SOUTH:
+				if (currentDirection.equals(Direction.NORTH)) {
+					g.drawImage(avatar3, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar3), scaleImgHeight(avatar3),
+							null);
+				}
+				break;
+			case WEST:
+				if (currentDirection.equals(Direction.EAST)) {
+					g.drawImage(avatar3, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar3), scaleImgHeight(avatar3),
+							null);
+				}
+				break;
+			}
+			break;
+		case 3:
+			switch (currentPlayerDirection) {
+			case NORTH:
+				if (currentDirection.equals(Direction.SOUTH)) {
+					g.drawImage(avatar4, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar4), scaleImgHeight(avatar4),
+							null);
+
+				}
+				break;
+			case EAST:
+				if (currentDirection.equals(Direction.WEST)) {
+					g.drawImage(avatar4, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar4), scaleImgHeight(avatar4),
+							null);
+				}
+				break;
+			case SOUTH:
+				if (currentDirection.equals(Direction.NORTH)) {
+					g.drawImage(avatar4, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar4), scaleImgHeight(avatar4),
+							null);
+				}
+				break;
+			case WEST:
+				if (currentDirection.equals(Direction.EAST)) {
+					g.drawImage(avatar4, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar4), scaleImgHeight(avatar4),
+							null);
+				}
+				break;
+			}
+			break;
+		case 4:
+			switch (currentPlayerDirection) {
+			case NORTH:
+				if (currentDirection.equals(Direction.SOUTH)) {
+					g.drawImage(avatar5, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar5), scaleImgHeight(avatar5),
+							null);
+
+				}
+				break;
+			case EAST:
+				if (currentDirection.equals(Direction.WEST)) {
+					g.drawImage(avatar5, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar5), scaleImgHeight(avatar5),
+							null);
+				}
+				break;
+			case SOUTH:
+				if (currentDirection.equals(Direction.NORTH)) {
+					g.drawImage(avatar5, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar5), scaleImgHeight(avatar5),
+							null);
+				}
+				break;
+			case WEST:
+				if (currentDirection.equals(Direction.EAST)) {
+					g.drawImage(avatar5, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar5), scaleImgHeight(avatar5),
+							null);
+				}
+				break;
+			}
+			break;
+		case 5:
+			switch (currentPlayerDirection) {
+			case NORTH:
+				if (currentDirection.equals(Direction.SOUTH)) {
+					g.drawImage(avatar6, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar6), scaleImgHeight(avatar6),
+							null);
+
+				}
+				break;
+			case EAST:
+				if (currentDirection.equals(Direction.WEST)) {
+					g.drawImage(avatar6, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar6), scaleImgHeight(avatar6),
+							null);
+				}
+				break;
+			case SOUTH:
+				if (currentDirection.equals(Direction.NORTH)) {
+					g.drawImage(avatar6, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar6), scaleImgHeight(avatar6),
+							null);
+				}
+				break;
+			case WEST:
+				if (currentDirection.equals(Direction.EAST)) {
+					g.drawImage(avatar6, scaleImgPos(250), scaleImgPos(115),
+							scaleImgWidth(avatar6), scaleImgHeight(avatar6),
+							null);
+				}
+				break;
+			}
+			break;
 		}
 	}
 
@@ -241,12 +373,12 @@ public class Player implements Serializable {
 			.loadImage("/images/avatar1.png");
 	private static final Image avatar2 = GameCanvas
 			.loadImage("/images/avatar2.png");
-	// private static final Image avatar3 =
-	// GameCanvas.loadImage("/images/avatar3.png");
-	// private static final Image avatar4 =
-	// GameCanvas.loadImage("/images/avatar4.png");
-	// private static final Image avatar5 =
-	// GameCanvas.loadImage("/images/avatar5.png");
-	// private static final Image avatar6 =
-	// GameCanvas.loadImage("/images/avatar6.png");
+	 private static final Image avatar3 =
+	 GameCanvas.loadImage("/images/avatar3.png");
+	 private static final Image avatar4 =
+	 GameCanvas.loadImage("/images/avatar4.png");
+	 private static final Image avatar5 =
+	 GameCanvas.loadImage("/images/avatar5.png");
+	 private static final Image avatar6 =
+	 GameCanvas.loadImage("/images/avatar6.png");
 }
