@@ -7,7 +7,11 @@ import java.util.ArrayList;
 
 import escape.gameworld.Player.Direction;
 import escape.ui.GameCanvas;
-
+/**
+ * Class extends Item and represents an Item which can hold one or more items.
+ * @author semillkasz
+ *
+ */
 public class Container extends Item {
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private boolean locked;
@@ -21,7 +25,10 @@ public class Container extends Item {
 		this.key = key;
 	}
 
-
+/**
+ * Add an item into the container
+ * @param Item item
+ */
 	public void add(Item i) {
 		items.add(i);
 	}
@@ -29,31 +36,54 @@ public class Container extends Item {
 	public ArrayList<Item> getItems() {
 		return items;
 	}
-
+	
+	
 	public void setItems(ArrayList<Item> items) {
 		this.items = items;
 	}
-
+	
+	/**
+	 * Method which returns if the container is locked. If locked, you need to have the right key to open.
+	 * @return boolean 
+	 */
 	public boolean isLocked() {
 		return locked;
 	}
 
+	/**
+	 * Method to make the container locked.
+	 * @param locked
+	 */
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
 
+	/**
+	 * Method which returns a String key for the container.
+	 * @return String key
+	 */
 	public String getKey() {
 		return key;
 	}
 
+	/**
+	 * Method to set the Key for this container
+	 * @param key
+	 */
 	public void setKey(String key) {
 		this.key = key;
 	}
 
+	
+
+	/**
+	 * Method which returns the bounding box for this item.
+	 * @return Rectangle boundingbox
+	 */
 	public Rectangle getBoundingBox() {
 		return boundingBox;
 	}
-
+	
 	public void setBoundingBox(Rectangle boundingBox) {
 		this.boundingBox = boundingBox;
 	}

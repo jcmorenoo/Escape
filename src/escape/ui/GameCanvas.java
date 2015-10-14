@@ -85,7 +85,8 @@ public class GameCanvas extends JPanel {
 		if (state == 0) { // Main Menu - Game has not been created
 			mainMenu = convertImage(mainMenu);
 			g.drawImage(mainMenu, 0, 0, null);
-		} else if (state == 1) { // Game has been created and started
+		} else if (state == 1) { 
+			// Game has been created and started
 			if (player.getRoom() != null) {
 				currentRoom = player.getRoom();
 				currentDirection = player.getDirection();
@@ -198,6 +199,9 @@ public class GameCanvas extends JPanel {
 		repaint();
 	}
 
+	/**
+	 * Method returning a Dimension based on the screen's size.
+	 */
 	public Dimension getPreferredSize() {
 		d.setSize(w, h);
 		return d;
@@ -245,6 +249,14 @@ public class GameCanvas extends JPanel {
 		}
 	}
 
+	/**
+	 * Method returning a scaled bufferedImage given a bufferedimage, width, and height.
+	 * @param image
+	 * @param width
+	 * @param height
+	 * @return
+	 * @throws IOException
+	 */
 	public static BufferedImage getScaledImage(BufferedImage image, int width,
 			int height) throws IOException {
 		int imageWidth = image.getWidth();
@@ -261,6 +273,11 @@ public class GameCanvas extends JPanel {
 				image.getType()));
 	}
 
+	/**
+	 * Method returning a Buffered image, given an image.
+	 * @param img
+	 * @return BufferedImage img
+	 */
 	private BufferedImage convertImage(Image img) {
 		BufferedImage image = null;
 		try {

@@ -8,34 +8,55 @@ import java.util.ArrayList;
 
 import escape.ui.GameCanvas;
 
+/**
+ * Class which represents a Player in the Game. Player can have items, a room it is in, and Direction.
+ * Also has name and player id
+ * @author semillkasz
+ *
+ */
 public class Player implements Serializable {
 
 	private int id;
 	private String name;
 	private Room room;
 	private ArrayList<Item> items = new ArrayList<Item>();
-
+	
 	public enum Direction {
 		NORTH, EAST, WEST, SOUTH
 	}
 
 	private Direction direction;
-
+	
+	/**
+	 * Player constructor
+	 * @param id
+	 * @param name
+	 * @param room
+	 */
 	public Player(int id, String name, Room room) {
 		this.setId(id);
 		this.room = room;
 		this.name = name;
 		setDirection(Direction.NORTH);
 	}
-
+	
+	
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Method to set the name of the player
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Method returning the Room that the Player is in.
+	 * @return	Room room
+	 */
 	public Room getRoom() {
 		return room;
 	}
@@ -52,11 +73,19 @@ public class Player implements Serializable {
 		this.items = items;
 
 	}
-
+	
+	/**
+	 * Method returning the current direction of the player
+	 * @return
+	 */
 	public Direction getDirection() {
 		return direction;
 	}
-
+	
+	/**
+	 * Method which sets the direction of the player
+	 * @param direction
+	 */
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}

@@ -8,6 +8,12 @@ import java.io.Serializable;
 import escape.gameworld.Player.Direction;
 import escape.ui.GameCanvas;
 
+/**
+ * Class which represents an item in the GameWorld. Implements serializable so it can be
+ * passed along the network
+ * @author semillkasz
+ *
+ */
 public class Item implements Serializable {
 	private double x;
 	private double y;
@@ -16,17 +22,31 @@ public class Item implements Serializable {
 
 	private boolean pickable;
 	private Rectangle boundingBox;
-
+	
+	/**
+	 * Item constructor
+	 * @param String n - name
+	 * @param String d - description
+	 * @param Boolean pickable - pickable
+	 */
 	public Item(String n, String d, boolean pickable) {
 		this.name = n;
 		this.description = d;
 		this.pickable = pickable;
 	}
-
+	
+	/**
+	 * Method returning the Rectangle boundingbox
+	 * @return
+	 */
 	public Rectangle getBoundingBox() {
 		return boundingBox;
 	}
-
+	
+	/**
+	 * Method which sets the bounding box for this item
+	 * @param boundingBox
+	 */
 	public void setBoundingBox(Rectangle boundingBox) {
 		this.boundingBox = boundingBox;
 	}

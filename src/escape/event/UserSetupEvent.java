@@ -4,7 +4,7 @@ package escape.event;
  * Class which is sent by the Client to the Server to setup the Player name.
  * When received by the Server, server will create a new Player with the name 
  * provided by the Client
- * @author julian
+ * @author morenojuli
  *
  */
 public class UserSetupEvent implements Event {
