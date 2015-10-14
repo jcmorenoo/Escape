@@ -19,7 +19,6 @@ public class Player implements Serializable {
 	}
 
 	private Direction direction;
-	private int points;
 
 	public Player(int id, String name, Room room) {
 		this.setId(id);
@@ -61,13 +60,6 @@ public class Player implements Serializable {
 		this.direction = direction;
 	}
 
-	public int getPoints() {
-		return points;
-	}
-
-	public void setPoints(int points) {
-		this.points = points;
-	}
 
 	public void movePlayer(Direction d) {
 		switch (d) {

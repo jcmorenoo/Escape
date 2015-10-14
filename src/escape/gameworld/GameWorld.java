@@ -46,6 +46,12 @@ public class GameWorld {
 
 	}
 
+	/**
+	 * Get item of the same name as the string parameter
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public Item getItem(String s) {
 		return items.get(s);
 	}

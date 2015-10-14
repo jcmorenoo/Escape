@@ -16,10 +16,6 @@ public class Container extends Item {
 	private boolean locked;
 	private String key;
 
-//	private enum direction {
-//		NORTH, EAST, WEST, SOUTH
-//	}
-
 	private Rectangle boundingBox;
 
 	public Container(String n, String d, boolean pickable, boolean l, String key) {
