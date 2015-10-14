@@ -1,10 +1,10 @@
 package escape.gameworld;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
 import escape.gameworld.Player.Direction;
 import escape.ui.GameCanvas;
 
@@ -319,25 +319,25 @@ public class Container extends Item {
 	}
 
 	/*---------------LOAD CONTAINER IMAGES---------------*/
-	private static final Image bookshelf = GameCanvas
+	private static final BufferedImage bookshelf = GameCanvas
 			.loadImage("/images/bookshelf.png");
-	private static final Image bookshelfSide = GameCanvas
+	private static final BufferedImage bookshelfSide = GameCanvas
 			.loadImage("/images/bookshelfSide.png");
-	private static final Image bin = GameCanvas.loadImage("/images/bin.png");
-	private static final Image cupboard = GameCanvas
+	private static final BufferedImage bin = GameCanvas.loadImage("/images/bin.png");
+	private static final BufferedImage cupboard = GameCanvas
 			.loadImage("/images/moderncupboard.png");
-	private static final Image cupboardSide = GameCanvas
+	private static final BufferedImage cupboardSide = GameCanvas
 			.loadImage("/images/moderncupboardSide.png");
-	private static final Image fridge = GameCanvas
+	private static final BufferedImage fridge = GameCanvas
 			.loadImage("/images/fridge.png");
-	private static final Image fridgeSide = GameCanvas
+	private static final BufferedImage fridgeSide = GameCanvas
 			.loadImage("/images/fridgeleft.png");
-	private static final Image safe = GameCanvas.loadImage("/images/safe.png");
-	private static final Image safeSide = GameCanvas
+	private static final BufferedImage safe = GameCanvas.loadImage("/images/safe.png");
+	private static final BufferedImage safeSide = GameCanvas
 			.loadImage("/images/safeSide.png");
-	private static final Image sideTable = GameCanvas
+	private static final BufferedImage sideTable = GameCanvas
 			.loadImage("/images/sideTable.png");
-	private static final Image sideTableSide = GameCanvas
+	private static final BufferedImage sideTableSide = GameCanvas
 			.loadImage("/images/sideTableSide.png");
-	private static final Image lamp = GameCanvas.loadImage("/images/lamp.png");
+	private static final BufferedImage lamp = GameCanvas.loadImage("/images/lamp.png");
 }

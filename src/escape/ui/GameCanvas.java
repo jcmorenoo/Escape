@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -22,24 +25,24 @@ import escape.gameworld.Room;
  * The GameCanvas is responsible for drawing the wall backgrounds of the rooms
  * in the game. It resizes the game window, wall backgrounds, and items in the
  * game according to the computer resolution of the user. *
- * 
+ *
  * @author Trisha*
  */
 
 public class GameCanvas extends JPanel {
-	private static final Image wall = loadImage("/images/wall.png");
-	private static final Image wallToHall = loadImage("/images/wallToHall.png");
-	private static final Image darkWall = loadImage("/images/darkWall.png");
-	private static final Image hall = loadImage("/images/hall.png");
-	private static final Image hallMain = loadImage("/images/hallMain.png");
-	private static final Image hallLeftStudy = loadImage("/images/hallLeftStudy.png");
-	private static final Image hallRightBedroom = loadImage("/images/hallRightBedroom.png");
-	private static final Image hallLeftKitchen = loadImage("/images/hallLeftKitchen.png");
-	private static final Image hallRightLivingRoom = loadImage("/images/hallRightLivingRoom.png");
-	private static final Image loadScreen = loadImage("/images/loadScreen.png");
-	private static final Image mainMenu = loadImage("/images/mainMenu.png");
-	private static final Image lost = loadImage("/images/lost.png");
-	private static final Image won = loadImage("/images/won.png");
+	private static Image wall = loadImage("/images/wall.png");
+	private static Image wallToHall = loadImage("/images/wallToHall.png");
+	private static Image darkWall = loadImage("/images/darkWall.png");
+	private static Image hall = loadImage("/images/hall.png");
+	private static Image hallMain = loadImage("/images/hallMain.png");
+	private static Image hallLeftStudy = loadImage("/images/hallLeftStudy.png");
+	private static Image hallRightBedroom = loadImage("/images/hallRightBedroom.png");
+	private static Image hallLeftKitchen = loadImage("/images/hallLeftKitchen.png");
+	private static Image hallRightLivingRoom = loadImage("/images/hallRightLivingRoom.png");
+	private static Image loadScreen = loadImage("/images/loadScreen.png");
+	private static Image mainMenu = loadImage("/images/mainMenu.png");
+	private static Image lost = loadImage("/images/lost.png");
+	private static Image won = loadImage("/images/won.png");
 
 	private Player player;
 	private Client client;
@@ -52,8 +55,8 @@ public class GameCanvas extends JPanel {
 	private static final double WINDOW_WIDTH_SCALE = 0.375;
 	private static final double BACKGROUND_WIDTH_SCALE = 0.8;
 	private static final double BACKGROUND_HEIGHT_SCALE = 0.814;
-	private static final double INNER_BACKGROUND_WIDTH_SCALE = 0.65;
-	private static final double INNER_BACKGROUND_HEIGHT_SCALE = 0.65;
+	private static final double INNER_BACKGROUND_WIDTH_SCALE = 0.71;
+	private static final double INNER_BACKGROUND_HEIGHT_SCALE = 0.71;
 
 	private Toolkit t = Toolkit.getDefaultToolkit();;
 	private Dimension d = t.getScreenSize();
@@ -81,8 +84,10 @@ public class GameCanvas extends JPanel {
 
 		// Draws wall backgrounds depending on player's current room
 		if (state == 0) { // Main Menu - Game has not been created
-			g.drawImage(mainMenu, 0, 0, scaleImgWidth(mainMenu),
-					scaleImgHeight(mainMenu), null);
+			// g.drawImage(mainMenu, 0, 0, scaleImgWidth(mainMenu),
+			// scaleImgHeight(mainMenu), null);
+			mainMenu = convertImage(mainMenu);
+			g.drawImage(mainMenu, 0, 0, null);
 		} else if (state == 1) { // Game has been created and started
 			if (player.getRoom() != null) {
 				currentRoom = player.getRoom();
@@ -90,74 +95,99 @@ public class GameCanvas extends JPanel {
 				switch (currentRoom.getName()) {
 
 				case "Main Hall":
-					g.drawImage(hallMain, 0, 0, scaleImgWidth(hallMain),
-							scaleImgHeight(hallMain), null);
+					// g.drawImage(hallMain, 0, 0, scaleImgWidth(hallMain),
+					// scaleImgHeight(hallMain), null);
+					hallMain = convertImage(hallMain);
+					g.drawImage(hallMain, 0, 0, null);
 					break;
 				case "Hall - Study":
-					g.drawImage(hallLeftStudy, 0, 0,
-							scaleImgWidth(hallLeftStudy),
-							scaleImgHeight(hallLeftStudy), null);
+					// g.drawImage(hallLeftStudy, 0, 0,
+					// scaleImgWidth(hallLeftStudy),
+					// scaleImgHeight(hallLeftStudy), null);
+					hallLeftStudy = convertImage(hallLeftStudy);
+					g.drawImage(hallLeftStudy, 0, 0, null);
 					break;
 				case "Hall - Bedroom":
-					g.drawImage(hallRightBedroom, 0, 0,
-							scaleImgWidth(hallRightBedroom),
-							scaleImgHeight(hallRightBedroom), null);
+					// g.drawImage(hallRightBedroom, 0, 0,
+					// scaleImgWidth(hallRightBedroom),
+					// scaleImgHeight(hallRightBedroom), null);
+					hallRightBedroom = convertImage(hallRightBedroom);
+					g.drawImage(hallRightBedroom, 0, 0, null);
 					break;
 				case "Hall - Kitchen":
-					g.drawImage(wall, scaleInsideImgPos(58),
-							scaleInsideImgPos(0), scaleInsideImgWidth(wall),
+					// g.drawImage(wall, scaleInsideImgPos(58),
+					// scaleInsideImgPos(0), scaleInsideImgWidth(wall),
+					// scaleInsideImgHeight(wall), null);
+					wall = convertImage(wall);
+					g.drawImage(wall, scaleInsideImgPos((int) (w * 0.19)),
+							scaleInsideImgPos((int) (h * 0.08)),
+							scaleInsideImgWidth(wall),
 							scaleInsideImgHeight(wall), null);
 					boolean displayPicture = false;
 					if (player.getItems() != null) {
 						for (Item i : player.getItems())
 							if (i.getName().equals("Kitchen Picture")) {
 								displayPicture = true;
-							} 
-							else {
+							} else {
 								displayPicture = true;
 							}
 					}
 					Item.draw(g, "Kitchen", displayPicture);
-					System.out.println("Display: " + displayPicture);
 					Container.draw(g, "Kitchen");
-					g.drawImage(hallLeftKitchen, 0, 0,
-							scaleImgWidth(hallLeftStudy),
-							scaleImgHeight(hallLeftStudy), null);
+					// g.drawImage(hallLeftKitchen, 0, 0,
+					// scaleImgWidth(hallLeftStudy),
+					// scaleImgHeight(hallLeftStudy), null);
+					hallLeftKitchen = convertImage(hallLeftKitchen);
+					g.drawImage(hallLeftKitchen, 0, 0, null);
 					break;
 				case "Hall - Living Room":
-					g.drawImage(wall, scaleInsideImgPos(58),
-							scaleInsideImgPos(0), scaleInsideImgWidth(wall),
+					// g.drawImage(wall, scaleInsideImgPos(58),
+					// scaleInsideImgPos(0), scaleInsideImgWidth(wall),
+					// scaleInsideImgHeight(wall), null);
+					g.drawImage(wall, scaleInsideImgPos((int) (w * 0.19)),
+							scaleInsideImgPos((int) (h * 0.08)),
+							scaleInsideImgWidth(wall),
 							scaleInsideImgHeight(wall), null);
 					Item.draw(g, "Living Room", true);
 					Container.draw(g, "Living Room");
-					g.drawImage(hallRightLivingRoom, 0, 0,
-							scaleImgWidth(hallRightLivingRoom),
-							scaleImgHeight(hallRightLivingRoom), null);
+					// g.drawImage(hallRightLivingRoom, 0, 0,
+					// scaleImgWidth(hallRightLivingRoom),
+					// scaleImgHeight(hallRightLivingRoom), null);
+					hallRightLivingRoom = convertImage(hallRightLivingRoom);
+					g.drawImage(hallRightLivingRoom, 0, 0, null);
 					break;
 				case "Bedroom":
-					g.drawImage(darkWall, 0, 0, scaleImgWidth(darkWall),
-							scaleImgHeight(darkWall), null);
+					// g.drawImage(darkWall, 0, 0, scaleImgWidth(darkWall),
+					// scaleImgHeight(darkWall), null);
+					darkWall = convertImage(darkWall);
+					g.drawImage(darkWall, 0, 0, null);
 					break;
 				case "Living Room":
 				case "Kitchen":
 					// Draws the hall inside the entrance way when facing SOUTH
 					// in the Kitchen or Living Room
 					if (player.getDirection().equals(Direction.SOUTH)) {
-						g.drawImage(hall, scaleInsideImgPos(58),
-								scaleInsideImgPos(0),
-								scaleInsideImgWidth(hall),
-								scaleInsideImgHeight(hall), null);
-						g.drawImage(wallToHall, 0, 0,
-								scaleImgWidth(wallToHall),
-								scaleImgHeight(wallToHall), null);
+						// g.drawImage(hall, scaleInsideImgPos(58),
+						// scaleInsideImgPos(0),
+						// scaleInsideImgWidth(hall),
+						// scaleInsideImgHeight(hall), null);
+						hall = convertImage(hall);
+						g.drawImage(hall, scaleInsideImgPos((int) (w * 0.185)),
+								scaleInsideImgPos((int) (h * 0.08)),
+								scaleInsideImgWidth(wall),
+								scaleInsideImgHeight(wall), null);
+						// g.drawImage(wallToHall, 0, 0,
+						// scaleImgWidth(wallToHall),
+						// scaleImgHeight(wallToHall), null);
+						wallToHall = convertImage(wallToHall);
+						g.drawImage(wallToHall, 0, 0, null);
 					} else {
-						g.drawImage(wall, 0, 0, scaleImgWidth(wall),
-								scaleImgHeight(wall), null);
+						wall = convertImage(wall);
+						g.drawImage(wall, 0, 0, null);
 					}
 					break;
 				case "Study":
-					g.drawImage(wall, 0, 0, scaleImgWidth(wall),
-							scaleImgHeight(wall), null);
+					g.drawImage(wall, 0, 0, null);
 					break;
 				}
 
@@ -206,7 +236,7 @@ public class GameCanvas extends JPanel {
 	/**
 	 * Draws the load screen only for the host while they wait for other players
 	 * to connect
-	 * 
+	 *
 	 * @param g
 	 *            - Graphics
 	 */
@@ -243,12 +273,40 @@ public class GameCanvas extends JPanel {
 
 	/*---------------LOAD IMAGE---------------*/
 
-	public static Image loadImage(String source) {
+	public static BufferedImage loadImage(String source) {
 		try {
-			Image image = ImageIO.read(new FileInputStream("src/" + source));
+			BufferedImage image = ImageIO.read(new FileInputStream("src/"
+					+ source));
 			return image;
 		} catch (IOException e) {
 			throw new RuntimeException("Unable to load image");
 		}
 	}
+
+	public static BufferedImage getScaledImage(BufferedImage image, int width,
+			int height) throws IOException {
+		int imageWidth = image.getWidth();
+		int imageHeight = image.getHeight();
+
+		double scaleX = (double) width / imageWidth;
+		double scaleY = (double) height / imageHeight;
+		AffineTransform scaleTransform = AffineTransform.getScaleInstance(
+				scaleX, scaleY);
+		AffineTransformOp bilinearScaleOp = new AffineTransformOp(
+				scaleTransform, AffineTransformOp.TYPE_BILINEAR);
+
+		return bilinearScaleOp.filter(image, new BufferedImage(width, height,
+				image.getType()));
+	}
+
+	private BufferedImage convertImage(Image img) {
+		BufferedImage image = null;
+		try {
+			image = getScaledImage((BufferedImage) img, w, h);
+		} catch (IOException e) {
+
+		}
+		return image;
+	}
+
 }
