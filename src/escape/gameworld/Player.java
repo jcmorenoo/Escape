@@ -78,11 +78,11 @@ public class Player implements Serializable {
 			break;
 		}
 	}
-	
+
 	/**
-	 * Allows the player to pick up an item. 
+	 * Allows the player to pick up an item.
 	 * If it is picked up, it will be removed to that room's list of items
-	 * 
+	 *
 	 * @param i
 	 * @return true if picked up successfully, added to the player's list of items
 	 * 		   false if item not pickable or player already has 5 items
@@ -108,7 +108,7 @@ public class Player implements Serializable {
 
 	/**
 	 * Remove item in the list
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -124,7 +124,7 @@ public class Player implements Serializable {
 
 	/**
 	 * Drops the item in the bin of the player's current room
-	 * 
+	 *
 	 * @param i
 	 * @return
 	 */
@@ -139,14 +139,14 @@ public class Player implements Serializable {
 
 	/**
 	 * Returns the item's description
-	 * 
+	 *
 	 * @param i
 	 * @return
 	 */
 	public String examineItem(Item i) {
 		return i.getDescription();
 	}
-	
+
 	public void enterRoom(Room r) {
 		this.room = r;
 	}
@@ -168,36 +168,36 @@ public class Player implements Serializable {
 	 * @param g	- Graphics
 	 * @param pId - Other player's ID
 	 * @param currentDirection - Other player's current direction
-	 * @param currentPlayerDirection - Current player's current direction 
+	 * @param currentPlayerDirection - Current player's current direction
 	 */
-	public void draw(Graphics g, int pId, Direction currentDirection, Direction currentPlayerDirection) {
+	public void draw(Graphics g, int pId, Direction currentDirection, Direction currentPlayerDirection, int cWidth, int cHeight) {
 		switch (pId) {
 		case 0:
 			switch (currentPlayerDirection) {
 			case NORTH:
 				if (currentDirection.equals(Direction.SOUTH)) {
-					g.drawImage(avatar1, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar1, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar1), scaleImgHeight(avatar1),
 							null);
 				}
 				break;
 			case EAST:
 				if (currentDirection.equals(Direction.WEST)) {
-					g.drawImage(avatar1, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar1, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar1), scaleImgHeight(avatar1),
 							null);
 				}
 				break;
 			case SOUTH:
 				if (currentDirection.equals(Direction.NORTH)) {
-					g.drawImage(avatar1, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar1, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar1), scaleImgHeight(avatar1),
 							null);
 				}
 				break;
 			case WEST:
 				if (currentDirection.equals(Direction.EAST)) {
-					g.drawImage(avatar1, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar1, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar1), scaleImgHeight(avatar1),
 							null);
 				}
@@ -208,7 +208,7 @@ public class Player implements Serializable {
 			switch (currentPlayerDirection) {
 			case NORTH:
 				if (currentDirection.equals(Direction.SOUTH)) {
-					g.drawImage(avatar2, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar2, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar2), scaleImgHeight(avatar2),
 							null);
 
@@ -216,21 +216,21 @@ public class Player implements Serializable {
 				break;
 			case EAST:
 				if (currentDirection.equals(Direction.WEST)) {
-					g.drawImage(avatar2, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar2, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar2), scaleImgHeight(avatar2),
 							null);
 				}
 				break;
 			case SOUTH:
 				if (currentDirection.equals(Direction.NORTH)) {
-					g.drawImage(avatar2, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar2, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar2), scaleImgHeight(avatar2),
 							null);
 				}
 				break;
 			case WEST:
 				if (currentDirection.equals(Direction.EAST)) {
-					g.drawImage(avatar2, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar2, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar2), scaleImgHeight(avatar2),
 							null);
 				}
@@ -241,7 +241,7 @@ public class Player implements Serializable {
 			switch (currentPlayerDirection) {
 			case NORTH:
 				if (currentDirection.equals(Direction.SOUTH)) {
-					g.drawImage(avatar3, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar3, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar3), scaleImgHeight(avatar3),
 							null);
 
@@ -249,21 +249,21 @@ public class Player implements Serializable {
 				break;
 			case EAST:
 				if (currentDirection.equals(Direction.WEST)) {
-					g.drawImage(avatar3, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar3, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar3), scaleImgHeight(avatar3),
 							null);
 				}
 				break;
 			case SOUTH:
 				if (currentDirection.equals(Direction.NORTH)) {
-					g.drawImage(avatar3, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar3, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar3), scaleImgHeight(avatar3),
 							null);
 				}
 				break;
 			case WEST:
 				if (currentDirection.equals(Direction.EAST)) {
-					g.drawImage(avatar3, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar3, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar3), scaleImgHeight(avatar3),
 							null);
 				}
@@ -274,7 +274,7 @@ public class Player implements Serializable {
 			switch (currentPlayerDirection) {
 			case NORTH:
 				if (currentDirection.equals(Direction.SOUTH)) {
-					g.drawImage(avatar4, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar4, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar4), scaleImgHeight(avatar4),
 							null);
 
@@ -282,21 +282,21 @@ public class Player implements Serializable {
 				break;
 			case EAST:
 				if (currentDirection.equals(Direction.WEST)) {
-					g.drawImage(avatar4, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar4, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar4), scaleImgHeight(avatar4),
 							null);
 				}
 				break;
 			case SOUTH:
 				if (currentDirection.equals(Direction.NORTH)) {
-					g.drawImage(avatar4, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar4, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar4), scaleImgHeight(avatar4),
 							null);
 				}
 				break;
 			case WEST:
 				if (currentDirection.equals(Direction.EAST)) {
-					g.drawImage(avatar4, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar4, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar4), scaleImgHeight(avatar4),
 							null);
 				}
@@ -307,7 +307,7 @@ public class Player implements Serializable {
 			switch (currentPlayerDirection) {
 			case NORTH:
 				if (currentDirection.equals(Direction.SOUTH)) {
-					g.drawImage(avatar5, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar5, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar5), scaleImgHeight(avatar5),
 							null);
 
@@ -315,21 +315,21 @@ public class Player implements Serializable {
 				break;
 			case EAST:
 				if (currentDirection.equals(Direction.WEST)) {
-					g.drawImage(avatar5, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar5, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar5), scaleImgHeight(avatar5),
 							null);
 				}
 				break;
 			case SOUTH:
 				if (currentDirection.equals(Direction.NORTH)) {
-					g.drawImage(avatar5, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar5, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar5), scaleImgHeight(avatar5),
 							null);
 				}
 				break;
 			case WEST:
 				if (currentDirection.equals(Direction.EAST)) {
-					g.drawImage(avatar5, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar5, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar5), scaleImgHeight(avatar5),
 							null);
 				}
@@ -340,7 +340,7 @@ public class Player implements Serializable {
 			switch (currentPlayerDirection) {
 			case NORTH:
 				if (currentDirection.equals(Direction.SOUTH)) {
-					g.drawImage(avatar6, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar6, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar6), scaleImgHeight(avatar6),
 							null);
 
@@ -348,21 +348,21 @@ public class Player implements Serializable {
 				break;
 			case EAST:
 				if (currentDirection.equals(Direction.WEST)) {
-					g.drawImage(avatar6, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar6, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar6), scaleImgHeight(avatar6),
 							null);
 				}
 				break;
 			case SOUTH:
 				if (currentDirection.equals(Direction.NORTH)) {
-					g.drawImage(avatar6, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar6, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar6), scaleImgHeight(avatar6),
 							null);
 				}
 				break;
 			case WEST:
 				if (currentDirection.equals(Direction.EAST)) {
-					g.drawImage(avatar6, scaleImgPos(250), scaleImgPos(115),
+					g.drawImage(avatar6, scaleImgPos(.44, cWidth), scaleImgPos(.37, cHeight),
 							scaleImgWidth(avatar6), scaleImgHeight(avatar6),
 							null);
 				}
@@ -372,12 +372,11 @@ public class Player implements Serializable {
 		}
 	}
 
-
 	/*---------------ITEM IMAGE SCALING---------------
 	 * These methods help with scaling the item in accordance to the player's screen resolution
 	 */
-	protected static int scaleImgPos(int imgPos) {
-		return (int) (imgPos * Item.IMG_POS_RESCALE);
+	protected static int scaleImgPos(double imgPos, int i) {
+		return (int) (imgPos * i);
 	}
 
 	protected static int scaleImgWidth(Image img) {
@@ -389,7 +388,7 @@ public class Player implements Serializable {
 	}
 
 	/*---------------LOAD PLAYER IMAGES---------------*/
-	private static final BufferedImage avatar1 = GameCanvas
+	static final BufferedImage avatar1 = GameCanvas
 			.loadImage("/images/avatar1.png");
 	private static final BufferedImage avatar2 = GameCanvas
 			.loadImage("/images/avatar2.png");

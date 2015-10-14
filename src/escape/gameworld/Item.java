@@ -74,7 +74,7 @@ public class Item implements Serializable {
 
 	/**
 	 * Allows player to pick up this item
-	 * 
+	 *
 	 * @param p
 	 */
 	public void pickUp(Player p) {
@@ -82,18 +82,18 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * Creates a bounding box for this item
-	 * 
+	 *
 	 * @param x
 	 *            x position in the game canvas
 	 *
 	 * @param y
 	 *            y position in the game canvas
-	 * 
+	 *
 	 * @param w
 	 *            width of the item
-	 * 
+	 *
 	 * @param h
 	 *            height of the item
 	 */
@@ -102,54 +102,55 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * Draws all the items in the room the player is currently in, and in the
-	 * 
+	 *
 	 * direction that the player is facing
 	 *
 	 * @param g
 	 *            Graphics
-	 * 
+	 *
 	 * @param r
 	 *            Current room player is in
-	 * 
+	 *
 	 * @param d
 	 *            Direction player is facing
 	 */
-	public void draw(Graphics g, Room r, Direction d) {
+	public void draw(Graphics g, Room r, Direction d, int w, int h) {
 		for (Item i : r.getItems()) {
-			drawItem(g, i, d);
+			drawItem(g, i, d, w, h);
 		}
 	}
 
 	/**
 	 * Draws items in a room, from a distance
-	 * 
+	 *
 	 * @param g
 	 *            - Graphics
-	 * 
+	 *
 	 * @param string
 	 *            - Room name which items are drawn in
 	 */
-	public static void draw(Graphics g, String adjRoom, boolean display) {
+	public static void draw(Graphics g, String adjRoom, boolean display, int cWidth, int cHeight) {
 		switch (adjRoom) {
 		case "Kitchen":
-			g.drawImage(kitchenTable, scaleInsideImgPos(225),
-					scaleInsideImgPos(250), scaleInsideImgWidth(kitchenTable),
+			g.drawImage(kitchenTable, scaleInsideImgPos(0.4, cWidth),
+					scaleInsideImgPos(0.49, cHeight), scaleInsideImgWidth(kitchenTable),
 					scaleInsideImgHeight(kitchenTable), null);
 			if (!display) {
-				g.drawImage(kitchenPicture, scaleInsideImgPos(500),
-						scaleInsideImgPos(400),
+				g.drawImage(kitchenPicture, scaleInsideImgPos(0.8, cWidth),
+						scaleInsideImgPos(0.68, cHeight),
 						scaleInsideImgWidth(kitchenPicture),
 						scaleInsideImgHeight(kitchenPicture), null);
 			}
 			break;
 		case "Living Room":
-			g.drawImage(sofa, scaleInsideImgPos(285), scaleInsideImgPos(215),
+			g.drawImage(sofa, scaleInsideImgPos(0.5, cWidth),
+					scaleInsideImgPos(0.44, cHeight),
 					scaleInsideImgWidth(kitchenTable),
 					scaleInsideImgHeight(kitchenTable), null);
-			g.drawImage(longTable, scaleInsideImgPos(310),
-					scaleInsideImgPos(300), scaleInsideImgWidth(longTable),
+			g.drawImage(longTable, scaleInsideImgPos(0.53, cWidth),
+					scaleInsideImgPos(0.54, cHeight), scaleInsideImgWidth(longTable),
 					scaleInsideImgHeight(longTable), null);
 			break;
 		}
@@ -157,33 +158,33 @@ public class Item implements Serializable {
 
 	/*---------------ITEM IMAGE DIRECTION HELPER METHOD---------------*/
 	/**
-	 * 
+	 *
 	 * Draws an item depending on the player's direction *
-	 * 
+	 *
 	 * @param g
 	 *            Graphics
 	 *
 	 * @param i
 	 *            Item to be drawn
-	 * 
+	 *
 	 * @param d
 	 *            Player's current direction
 	 */
-	private void drawItem(Graphics g, Item i, Direction d) {
+	private void drawItem(Graphics g, Item i, Direction d, int cWidth, int cHeight) {
 		String itemName = i.getName();
 		switch (itemName) {
 		case "Bed":
 			switch (d) {
 			case NORTH:
-				g.drawImage(bedSide, scaleImgPos(300), scaleImgPos(220),
+				g.drawImage(bedSide, scaleImgPos(0.66, cWidth), scaleImgPos(0.4,cHeight),
 						scaleImgWidth(bedSide), scaleImgHeight(bedSide), null);
-				i.boundingBox(scaleImgPos(300), scaleImgPos(220),
+				i.boundingBox(scaleImgPos(0.66, cWidth), scaleImgPos(0.4,cHeight),
 						scaleImgWidth(bedSide), scaleImgHeight(bedSide));
 				break;
 			case EAST:
-				g.drawImage(bed, scaleImgPos(40), scaleImgPos(260),
+				g.drawImage(bed, scaleImgPos(0.06, cWidth), scaleImgPos(0.45,cHeight),
 						scaleImgWidth(bed), scaleImgHeight(bed), null);
-				i.boundingBox(scaleImgPos(40), scaleImgPos(260),
+				i.boundingBox(scaleImgPos(0.06, cWidth), scaleImgPos(0.45,cHeight),
 						scaleImgWidth(bed), scaleImgHeight(bed));
 				break;
 			}
@@ -191,47 +192,49 @@ public class Item implements Serializable {
 		case "Bedroom Door":
 			switch (d) {
 			case SOUTH:
-				g.drawImage(bedroomDoor, scaleImgPos(239), scaleImgPos(102),
+				g.drawImage(bedroomDoor, scaleImgPos(0.42, cWidth), scaleImgPos(0.28, cHeight),
 						scaleImgWidth(bedroomDoor),
 						scaleImgHeight(bedroomDoor), null);
-				i.boundingBox(scaleImgPos(239), scaleImgPos(102),
-						scaleImgWidth(bedroomDoor), scaleImgHeight(bedroomDoor));
+				i.boundingBox(scaleImgPos(0.42, cWidth), scaleImgPos(0.28, cHeight),
+						scaleImgWidth(bedroomDoor),
+						scaleImgHeight(bedroomDoor));
 				break;
 			}
 			break;
 		case "Bedroom Lamp":
 			switch (d) {
 			case NORTH:
-				g.drawImage(bedroomLamp, scaleImgPos(490), scaleImgPos(120),
+				g.drawImage(bedroomLamp, scaleImgPos(0.9, cWidth), scaleImgPos(0.3, cHeight),
 						scaleImgWidth(bedroomLamp),
 						scaleImgHeight(bedroomLamp), null);
-
-				i.boundingBox(scaleImgPos(490), scaleImgPos(120),
-						scaleImgWidth(bedroomLamp), scaleImgHeight(bedroomLamp));
+				i.boundingBox(scaleImgPos(0.9, cWidth), scaleImgPos(0.3, cHeight),
+						scaleImgWidth(bedroomLamp),
+						scaleImgHeight(bedroomLamp));
 				break;
 			case EAST:
-				g.drawImage(bedroomLamp, scaleImgPos(18), scaleImgPos(120),
+				g.drawImage(bedroomLamp, scaleImgPos(0.05, cWidth), scaleImgPos(0.3, cHeight),
 						scaleImgWidth(bedroomLamp),
 						scaleImgHeight(bedroomLamp), null);
-				i.boundingBox(scaleImgPos(18), scaleImgPos(120),
-						scaleImgWidth(bedroomLamp), scaleImgHeight(bedroomLamp));
+				i.boundingBox(scaleImgPos(0.05, cWidth), scaleImgPos(0.3, cHeight),
+						scaleImgWidth(bedroomLamp),
+						scaleImgHeight(bedroomLamp));
 				break;
 			}
 			break;
 		case "Chair":
 			switch (d) {
 			case NORTH:
-				g.drawImage(chair, scaleImgPos(250), scaleImgPos(185),
+				g.drawImage(chair, scaleImgPos(.4,cWidth), scaleImgPos(.4,cHeight),
 						scaleImgWidth(chair), scaleImgHeight(chair), null);
-				i.boundingBox(scaleImgPos(250), scaleImgPos(185),
+				i.boundingBox(scaleImgPos(.4,cWidth), scaleImgPos(.4,cHeight),
 						scaleImgWidth(chair), scaleImgHeight(chair));
 				break;
 			case EAST:
 
-				g.drawImage(chairSide, scaleImgPos(100), scaleImgPos(220),
+				g.drawImage(chairSide, scaleImgPos(.15,cWidth), scaleImgPos(.41,cHeight),
 						scaleImgWidth(chairSide), scaleImgHeight(chairSide),
 						null);
-				i.boundingBox(scaleImgPos(100), scaleImgPos(220),
+				i.boundingBox(scaleImgPos(.15,cWidth), scaleImgPos(.41,cHeight),
 						scaleImgWidth(chairSide), scaleImgHeight(chairSide));
 				break;
 			}
@@ -239,10 +242,10 @@ public class Item implements Serializable {
 		case "Frame":
 			switch (d) {
 			case EAST:
-				g.drawImage(pictureFrame, scaleImgPos(224), scaleImgPos(80),
+				g.drawImage(pictureFrame, scaleImgPos(0.4, cWidth), scaleImgPos(0.12, cHeight),
 						scaleImgWidth(pictureFrame),
 						scaleImgHeight(pictureFrame), null);
-				i.boundingBox(scaleImgPos(224), scaleImgPos(80),
+				i.boundingBox(scaleImgPos(0.4, cWidth), scaleImgPos(0.12, cHeight),
 						scaleImgWidth(pictureFrame),
 						scaleImgHeight(pictureFrame));
 				break;
@@ -251,15 +254,15 @@ public class Item implements Serializable {
 		case "Desk":
 			switch (d) {
 			case NORTH:
-				g.drawImage(desk, scaleImgPos(175), scaleImgPos(240),
+				g.drawImage(desk, scaleImgPos(.31,cWidth), scaleImgPos(.465,cHeight),
 						scaleImgWidth(desk), scaleImgHeight(desk), null);
-				i.boundingBox(scaleImgPos(175), scaleImgPos(240),
+				i.boundingBox(scaleImgPos(.31,cWidth), scaleImgPos(.465,cHeight),
 						scaleImgWidth(desk), scaleImgHeight(desk));
 				break;
 			case EAST:
-				g.drawImage(deskSide, scaleImgPos(160), scaleImgPos(260),
+				g.drawImage(deskSide, scaleImgPos(.24,cWidth), scaleImgPos(.46,cHeight),
 						scaleImgWidth(deskSide), scaleImgHeight(deskSide), null);
-				i.boundingBox(scaleImgPos(160), scaleImgPos(260),
+				i.boundingBox(scaleImgPos(.24,cWidth), scaleImgPos(.46,cHeight),
 						scaleImgWidth(deskSide), scaleImgHeight(deskSide));
 				break;
 			}
@@ -267,18 +270,18 @@ public class Item implements Serializable {
 		case "Kitchen Picture":
 			switch (d) {
 			case EAST:
-				g.drawImage(kitchenPicture, scaleImgPos(490), scaleImgPos(370),
+				g.drawImage(kitchenPicture, scaleImgPos(0.7, cWidth), scaleImgPos(0.64, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
-				i.boundingBox(scaleImgPos(490), scaleImgPos(370),
+				i.boundingBox( scaleImgPos(0.7, cWidth), scaleImgPos(0.64, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture));
 				break;
 			case SOUTH:
-				g.drawImage(kitchenPicture, scaleImgPos(100), scaleImgPos(370),
+				g.drawImage(kitchenPicture, scaleImgPos(0.24, cWidth), scaleImgPos(0.64, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
-				i.boundingBox(scaleImgPos(100), scaleImgPos(370),
+				i.boundingBox(scaleImgPos(0.24, cWidth), scaleImgPos(0.64, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture));
 				break;
@@ -287,18 +290,19 @@ public class Item implements Serializable {
 		case "Kitchen Table":
 			switch (d) {
 			case NORTH:
-				g.drawImage(kitchenTable, scaleImgPos(140), scaleImgPos(250),
+				g.drawImage(kitchenTable, scaleImgPos(0.30, cWidth), scaleImgPos(0.448, cHeight),
 						scaleImgWidth(kitchenTable),
 						scaleImgHeight(kitchenTable), null);
-				i.boundingBox(scaleImgPos(140), scaleImgPos(250),
+				i.boundingBox(scaleImgPos(0.30, cWidth), scaleImgPos(0.448, cHeight),
 						scaleImgWidth(kitchenTable),
 						scaleImgHeight(kitchenTable));
 				break;
 			case EAST:
-				g.drawImage(kitchenTableLeft, scaleImgPos(160),
-						scaleImgPos(250), scaleImgWidth(kitchenTableLeft),
+				g.drawImage(kitchenTableLeft, scaleImgPos(0.34, cWidth),
+						scaleImgPos(0.454, cHeight), scaleImgWidth(kitchenTableLeft),
 						scaleImgHeight(kitchenTableLeft), null);
-				i.boundingBox(scaleImgPos(160), scaleImgPos(250),
+				i.boundingBox(scaleImgPos(0.34, cWidth),
+						scaleImgPos(0.454, cHeight),
 						scaleImgWidth(kitchenTableLeft),
 						scaleImgHeight(kitchenTableLeft));
 				break;
@@ -308,11 +312,9 @@ public class Item implements Serializable {
 		case "Living Room Picture":
 			switch (d) {
 			case EAST:
-				g.drawImage(livingRoomPicture, scaleImgPos(400),
-						scaleImgPos(80), scaleImgWidth(livingRoomPicture),
+				g.drawImage(livingRoomPicture, scaleImgPos(0.7, cWidth), scaleImgPos(0.12, cHeight), scaleImgWidth(livingRoomPicture),
 						scaleImgHeight(livingRoomPicture), null);
-				i.boundingBox(scaleImgPos(400), scaleImgPos(80),
-						scaleImgWidth(livingRoomPicture),
+				i.boundingBox(scaleImgPos(0.7, cWidth), scaleImgPos(0.12, cHeight), scaleImgWidth(livingRoomPicture),
 						scaleImgHeight(livingRoomPicture));
 				break;
 			}
@@ -320,17 +322,17 @@ public class Item implements Serializable {
 		case "Long Table":
 			switch (d) {
 			case NORTH:
-				g.drawImage(longTable, scaleImgPos(227), scaleImgPos(292),
+				g.drawImage(longTable, scaleImgPos(0.4, cWidth), scaleImgPos(0.52, cHeight),
 						scaleImgWidth(longTable), scaleImgHeight(longTable),
 						null);
-				i.boundingBox(scaleImgPos(227), scaleImgPos(292),
+				i.boundingBox(scaleImgPos(0.4, cWidth), scaleImgPos(0.52, cHeight),
 						scaleImgWidth(longTable), scaleImgHeight(longTable));
 				break;
 			case EAST:
-				g.drawImage(longTableSide, scaleImgPos(205), scaleImgPos(280),
+				g.drawImage(longTableSide, scaleImgPos(0.3, cWidth), scaleImgPos(0.52, cHeight),
 						scaleImgWidth(longTableSide),
 						scaleImgHeight(longTableSide), null);
-				i.boundingBox(scaleImgPos(205), scaleImgPos(280),
+				i.boundingBox(scaleImgPos(0.3, cWidth), scaleImgPos(0.52, cHeight),
 						scaleImgWidth(longTableSide),
 						scaleImgHeight(longTableSide));
 				break;
@@ -339,9 +341,9 @@ public class Item implements Serializable {
 		case "Portrait":
 			switch (d) {
 			case EAST:
-				g.drawImage(portrait, scaleImgPos(60), scaleImgPos(80),
+				g.drawImage(portrait, scaleImgPos(0.12, cWidth), scaleImgPos(0.12, cHeight),
 						scaleImgWidth(portrait), scaleImgHeight(portrait), null);
-				i.boundingBox(scaleImgPos(60), scaleImgPos(80),
+				i.boundingBox(scaleImgPos(0.12, cWidth), scaleImgPos(0.12, cHeight),
 						scaleImgWidth(portrait), scaleImgHeight(portrait));
 				break;
 			}
@@ -349,17 +351,17 @@ public class Item implements Serializable {
 		case "Short Table":
 			switch (d) {
 			case NORTH:
-				g.drawImage(shortTable, scaleImgPos(125), scaleImgPos(285),
+				g.drawImage(shortTable, scaleImgPos(0.25, cWidth), scaleImgPos(0.52, cHeight),
 						scaleImgWidth(shortTable), scaleImgHeight(shortTable),
 						null);
-				i.boundingBox(scaleImgPos(125), scaleImgPos(285),
+				i.boundingBox(scaleImgPos(0.25, cWidth), scaleImgPos(0.52, cHeight),
 						scaleImgWidth(shortTable), scaleImgHeight(shortTable));
 				break;
 			case WEST:
-				g.drawImage(shortTableSide, scaleImgPos(325), scaleImgPos(285),
+				g.drawImage(shortTableSide, scaleImgPos(0.4, cWidth), scaleImgPos(0.52, cHeight),
 						scaleImgWidth(shortTableSide),
 						scaleImgHeight(shortTableSide), null);
-				i.boundingBox(scaleImgPos(325), scaleImgPos(285),
+				i.boundingBox(scaleImgPos(0.4, cWidth), scaleImgPos(0.52, cHeight),
 						scaleImgWidth(shortTableSide),
 						scaleImgHeight(shortTableSide));
 				break;
@@ -368,15 +370,15 @@ public class Item implements Serializable {
 		case "Sofa":
 			switch (d) {
 			case NORTH:
-				g.drawImage(sofa, scaleImgPos(200), scaleImgPos(200),
+				g.drawImage(sofa, scaleImgPos(0.37, cWidth), scaleImgPos(0.41, cHeight),
 						scaleImgWidth(sofa), scaleImgHeight(sofa), null);
-				i.boundingBox(scaleImgPos(200), scaleImgPos(200),
+				i.boundingBox(scaleImgPos(0.37, cWidth), scaleImgPos(0.41, cHeight),
 						scaleImgWidth(sofa), scaleImgHeight(sofa));
 				break;
 			case EAST:
-				g.drawImage(sofaLeft, scaleImgPos(15), scaleImgPos(220),
+				g.drawImage(sofaLeft, scaleImgPos(0.08, cWidth), scaleImgPos(0.45, cHeight),
 						scaleImgWidth(sofaLeft), scaleImgHeight(sofaLeft), null);
-				i.boundingBox(scaleImgPos(15), scaleImgPos(220),
+				i.boundingBox(scaleImgPos(0.08, cWidth), scaleImgPos(0.45, cHeight),
 						scaleImgWidth(sofaLeft), scaleImgHeight(sofaLeft));
 				break;
 			}
@@ -384,10 +386,10 @@ public class Item implements Serializable {
 		case "Study Door":
 			switch (d) {
 			case SOUTH:
-				g.drawImage(studyDoor, scaleImgPos(239), scaleImgPos(95),
+				g.drawImage(studyDoor, scaleImgPos(.45,cWidth), scaleImgPos(.27,cHeight),
 						scaleImgWidth(studyDoor), scaleImgHeight(studyDoor),
 						null);
-				i.boundingBox(scaleImgPos(239), scaleImgPos(95),
+				i.boundingBox(scaleImgPos(.45,cWidth), scaleImgPos(.27,cHeight),
 						scaleImgWidth(studyDoor), scaleImgHeight(studyDoor));
 				break;
 			}
@@ -397,53 +399,52 @@ public class Item implements Serializable {
 
 	/**
 	 * Draws the items in the inventory
-	 * 
+	 *
 	 * @param g
 	 * @param itemOrder
 	 */
-	public void drawInventoryItem(Graphics g, int itemOrder) {
-
+	public void drawInventoryItem(Graphics g, int itemOrder, int cWidth, int cHeight) {
 		String invItem = this.name;
 		switch (invItem) {
 		case "Kitchen Picture":
 			switch (itemOrder) {
 			case 0:
-				g.drawImage(kitchenPicture, scaleImgPos(48), scaleImgPos(525),
+				g.drawImage(kitchenPicture, scaleImgPos(0.10, cWidth), scaleImgPos(0.88, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
-				this.boundingBox(scaleImgPos(48), scaleImgPos(525),
+				this.boundingBox(scaleImgPos(0.10, cWidth), scaleImgPos(0.88, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture));
 				break;
 			case 1:
-				g.drawImage(kitchenPicture, scaleImgPos(147), scaleImgPos(525),
+				g.drawImage(kitchenPicture, scaleImgPos(0.280, cWidth), scaleImgPos(0.88, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
-				this.boundingBox(scaleImgPos(147), scaleImgPos(525),
+				this.boundingBox(scaleImgPos(0.280, cWidth), scaleImgPos(0.88, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture));
 				break;
 			case 2:
-				g.drawImage(kitchenPicture, scaleImgPos(259), scaleImgPos(525),
+				g.drawImage(kitchenPicture, scaleImgPos(0.450, cWidth), scaleImgPos(0.88, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
-				this.boundingBox(scaleImgPos(259), scaleImgPos(525),
+				this.boundingBox(scaleImgPos(0.450, cWidth), scaleImgPos(0.88, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture));
 				break;
 			case 3:
-				g.drawImage(kitchenPicture, scaleImgPos(362), scaleImgPos(525),
+				g.drawImage(kitchenPicture, scaleImgPos(0.629, cWidth), scaleImgPos(0.88, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
-				this.boundingBox(scaleImgPos(362), scaleImgPos(525),
+				this.boundingBox(scaleImgPos(0.629, cWidth), scaleImgPos(0.88, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture));
 				break;
 			case 4:
-				g.drawImage(kitchenPicture, scaleImgPos(463), scaleImgPos(525),
+				g.drawImage(kitchenPicture, scaleImgPos(0.795, cWidth), scaleImgPos(0.88, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture), null);
-				this.boundingBox(scaleImgPos(463), scaleImgPos(525),
+				this.boundingBox(scaleImgPos(0.795, cWidth), scaleImgPos(0.88, cHeight),
 						scaleImgWidth(kitchenPicture),
 						scaleImgHeight(kitchenPicture));
 				break;
@@ -452,33 +453,33 @@ public class Item implements Serializable {
 		case "Paper":
 			switch (itemOrder) {
 			case 0:
-				g.drawImage(paper, scaleImgPos(50), scaleImgPos(530),
+				g.drawImage(paper, scaleImgPos(0.12, cWidth), scaleImgPos(0.879, cHeight),
 						scaleImgWidth(paper), scaleImgHeight(paper), null);
-				this.boundingBox(scaleImgPos(50), scaleImgPos(530),
+				this.boundingBox(scaleImgPos(0.12, cWidth), scaleImgPos(0.879, cHeight),
 						scaleImgWidth(paper), scaleImgHeight(paper));
 				break;
 			case 1:
-				g.drawImage(paper, scaleImgPos(147), scaleImgPos(530),
+				g.drawImage(paper, scaleImgPos(0.29, cWidth), scaleImgPos(0.879, cHeight),
 						scaleImgWidth(paper), scaleImgHeight(paper), null);
-				this.boundingBox(scaleImgPos(147), scaleImgPos(530),
+				this.boundingBox(scaleImgPos(0.29, cWidth), scaleImgPos(0.879, cHeight),
 						scaleImgWidth(paper), scaleImgHeight(paper));
 				break;
 			case 2:
-				g.drawImage(paper, scaleImgPos(259), scaleImgPos(530),
+				g.drawImage(paper, scaleImgPos(0.46, cWidth), scaleImgPos(0.879, cHeight),
 						scaleImgWidth(paper), scaleImgHeight(paper), null);
-				this.boundingBox(scaleImgPos(259), scaleImgPos(530),
+				this.boundingBox(scaleImgPos(0.46, cWidth), scaleImgPos(0.879, cHeight),
 						scaleImgWidth(paper), scaleImgHeight(paper));
 				break;
 			case 3:
-				g.drawImage(paper, scaleImgPos(362), scaleImgPos(530),
+				g.drawImage(paper, scaleImgPos(0.63, cWidth), scaleImgPos(0.879, cHeight),
 						scaleImgWidth(paper), scaleImgHeight(paper), null);
-				this.boundingBox(scaleImgPos(362), scaleImgPos(530),
+				this.boundingBox(scaleImgPos(0.63, cWidth), scaleImgPos(0.879, cHeight),
 						scaleImgWidth(paper), scaleImgHeight(paper));
 				break;
 			case 4:
-				g.drawImage(paper, scaleImgPos(465), scaleImgPos(530),
+				g.drawImage(paper, scaleImgPos(0.82, cWidth), scaleImgPos(0.879, cHeight),
 						scaleImgWidth(paper), scaleImgHeight(paper), null);
-				this.boundingBox(scaleImgPos(465), scaleImgPos(530),
+				this.boundingBox(scaleImgPos(0.82, cWidth), scaleImgPos(0.879, cHeight),
 						scaleImgWidth(paper), scaleImgHeight(paper));
 				break;
 			}
@@ -486,208 +487,222 @@ public class Item implements Serializable {
 		case "Key":
 			switch (itemOrder) {
 			case 0:
-				g.drawImage(mainKey, scaleImgPos(50), scaleImgPos(502), 70, 70,
+				g.drawImage(mainKey, scaleImgPos(0.11, cWidth), scaleImgPos(0.85, cHeight), 70, 70,
 						null);
-				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.11, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 1:
-				g.drawImage(mainKey, scaleImgPos(147), scaleImgPos(502), 70,
-						70, null);
-				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 70, 70);
+				g.drawImage(mainKey, scaleImgPos(0.28, cWidth), scaleImgPos(0.85, cHeight), 70, 70,
+						null);
+				this.boundingBox(scaleImgPos(0.28, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 2:
-				g.drawImage(mainKey, scaleImgPos(259), scaleImgPos(502), 70,
-						70, null);
-				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 70, 70);
+				g.drawImage(mainKey, scaleImgPos(0.46, cWidth), scaleImgPos(0.85, cHeight), 70, 70,
+						null);
+				this.boundingBox(scaleImgPos(0.46, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 3:
-				g.drawImage(mainKey, scaleImgPos(362), scaleImgPos(502), 70,
-						70, null);
-				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 70, 70);
+				g.drawImage(mainKey, scaleImgPos(0.63, cWidth), scaleImgPos(0.85, cHeight), 70, 70,
+						null);
+				this.boundingBox(scaleImgPos(0.63, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 4:
-				g.drawImage(mainKey, scaleImgPos(465), scaleImgPos(502), 70,
-						70, null);
-				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 70, 70);
+				g.drawImage(mainKey, scaleImgPos(0.80, cWidth), scaleImgPos(0.85, cHeight), 70, 70,
+						null);
+				this.boundingBox(scaleImgPos(0.80, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			}
 			break;
 		case "Bedroom Safe Key":
 			switch (itemOrder) {
 			case 0:
-				g.drawImage(bedroomSafeKey, scaleImgPos(50), scaleImgPos(502),
+				g.drawImage(bedroomSafeKey, scaleImgPos(0.11, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.11, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 1:
-				g.drawImage(bedroomSafeKey, scaleImgPos(147), scaleImgPos(502),
+				g.drawImage(bedroomSafeKey, scaleImgPos(0.28, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.28, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 2:
-				g.drawImage(bedroomSafeKey, scaleImgPos(259), scaleImgPos(502),
+				g.drawImage(bedroomSafeKey, scaleImgPos(0.46, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 70, 70);
+				this.boundingBox( scaleImgPos(0.46, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 3:
-				g.drawImage(bedroomSafeKey, scaleImgPos(362), scaleImgPos(502),
+				g.drawImage(bedroomSafeKey, scaleImgPos(0.63, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.63, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 4:
-				g.drawImage(bedroomSafeKey, scaleImgPos(465), scaleImgPos(502),
+				g.drawImage(bedroomSafeKey, scaleImgPos(0.80, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.80, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			}
 			break;
 		case "Cupboard Key":
 			switch (itemOrder) {
 			case 0:
-				g.drawImage(cupboardKey, scaleImgPos(50), scaleImgPos(502), 70,
+				g.drawImage(cupboardKey, scaleImgPos(0.11, cWidth), scaleImgPos(0.85, cHeight), 70,
 						70, null);
-				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.11, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 1:
-				g.drawImage(cupboardKey, scaleImgPos(147), scaleImgPos(502),
+				g.drawImage(cupboardKey, scaleImgPos(0.28, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.28, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 2:
-				g.drawImage(cupboardKey, scaleImgPos(259), scaleImgPos(502),
+				g.drawImage(cupboardKey, scaleImgPos(0.46, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.46, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 3:
-				g.drawImage(cupboardKey, scaleImgPos(362), scaleImgPos(502),
+				g.drawImage(cupboardKey, scaleImgPos(0.63, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.63, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 4:
-				g.drawImage(cupboardKey, scaleImgPos(465), scaleImgPos(502),
+				g.drawImage(cupboardKey, scaleImgPos(0.80, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.80, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			}
 			break;
 		case "Study Room Key":
 			switch (itemOrder) {
 			case 0:
-				g.drawImage(studyRoomKey, scaleImgPos(50), scaleImgPos(502),
+				g.drawImage(studyRoomKey, scaleImgPos(0.11, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.11, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 1:
-				g.drawImage(studyRoomKey, scaleImgPos(147), scaleImgPos(502),
+				g.drawImage(studyRoomKey, scaleImgPos(0.28, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.28, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 2:
-				g.drawImage(studyRoomKey, scaleImgPos(259), scaleImgPos(502),
+				g.drawImage(studyRoomKey, scaleImgPos(0.46, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.46, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 3:
-				g.drawImage(studyRoomKey, scaleImgPos(362), scaleImgPos(502),
+				g.drawImage(studyRoomKey, scaleImgPos(0.63, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.63, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 4:
-				g.drawImage(studyRoomKey, scaleImgPos(465), scaleImgPos(502),
+				g.drawImage(studyRoomKey, scaleImgPos(0.80, cWidth), scaleImgPos(0.85, cHeight),
 						70, 70, null);
-				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 70, 70);
+				this.boundingBox(scaleImgPos(0.80, cWidth), scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			}
 			break;
 		case "Study Room Safe Key":
 			switch (itemOrder) {
 			case 0:
-				g.drawImage(studyRoomSafeKey, scaleImgPos(50),
-						scaleImgPos(502), 70, 70, null);
-				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 70, 70);
+				g.drawImage(studyRoomSafeKey, scaleImgPos(0.11, cWidth),
+						scaleImgPos(0.85, cHeight), 70, 70, null);
+				this.boundingBox(scaleImgPos(0.11, cWidth),
+						scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 1:
-				g.drawImage(studyRoomSafeKey, scaleImgPos(147),
-						scaleImgPos(502), 70, 70, null);
-				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 70, 70);
+				g.drawImage(studyRoomSafeKey, scaleImgPos(0.28, cWidth),
+						scaleImgPos(0.85, cHeight), 70, 70, null);
+				this.boundingBox(scaleImgPos(0.28, cWidth),
+						scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 2:
-				g.drawImage(studyRoomSafeKey, scaleImgPos(259),
-						scaleImgPos(502), 70, 70, null);
-				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 70, 70);
+				g.drawImage(studyRoomSafeKey, scaleImgPos(0.46, cWidth),
+						scaleImgPos(0.85, cHeight), 70, 70, null);
+				this.boundingBox(scaleImgPos(0.46, cWidth),
+						scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 3:
-				g.drawImage(studyRoomSafeKey, scaleImgPos(362),
-						scaleImgPos(502), 70, 70, null);
-				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 70, 70);
+				g.drawImage(studyRoomSafeKey, scaleImgPos(0.63, cWidth),
+						scaleImgPos(0.85, cHeight), 70, 70, null);
+				this.boundingBox(scaleImgPos(0.63, cWidth),
+						scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			case 4:
-				g.drawImage(studyRoomSafeKey, scaleImgPos(465),
-						scaleImgPos(502), 70, 70, null);
-				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 70, 70);
+				g.drawImage(studyRoomSafeKey, scaleImgPos(0.80, cWidth),
+						scaleImgPos(0.85, cHeight), 70, 70, null);
+				this.boundingBox(scaleImgPos(0.80, cWidth),
+						scaleImgPos(0.85, cHeight), 70, 70);
 				break;
 			}
 			break;
 		case "Matches":
 			switch (itemOrder) {
 			case 0:
-				g.drawImage(matches, scaleImgPos(50), scaleImgPos(502), 60, 70,
+				g.drawImage(matches, scaleImgPos(.1,cWidth), scaleImgPos(.85,cHeight), 60, 70,
 						null);
-				this.boundingBox(scaleImgPos(50), scaleImgPos(502), 60, 70);
+				this.boundingBox(scaleImgPos(.1,cWidth), scaleImgPos(.85,cHeight), 60, 70);
 				break;
 			case 1:
-				g.drawImage(matches, scaleImgPos(147), scaleImgPos(502), 60,
-						70, null);
-				this.boundingBox(scaleImgPos(147), scaleImgPos(502), 60, 70);
+				g.drawImage(matches, scaleImgPos(.29,cWidth), scaleImgPos(.85,cHeight), 60, 70,
+						null);
+
+				this.boundingBox(scaleImgPos(.29,cWidth), scaleImgPos(.85,cHeight), 60, 70);
 				break;
 			case 2:
-				g.drawImage(matches, scaleImgPos(259), scaleImgPos(502), 60,
-						70, null);
-				this.boundingBox(scaleImgPos(259), scaleImgPos(502), 60, 70);
+				g.drawImage(matches, scaleImgPos(.46,cWidth), scaleImgPos(.85,cHeight), 60, 70,
+						null);
+
+				this.boundingBox(scaleImgPos(.46,cWidth), scaleImgPos(.85,cHeight), 60, 70);
 				break;
 			case 3:
-				g.drawImage(matches, scaleImgPos(362), scaleImgPos(502), 60,
-						70, null);
-				this.boundingBox(scaleImgPos(362), scaleImgPos(502), 60, 70);
+				g.drawImage(matches, scaleImgPos(.64,cWidth), scaleImgPos(.85,cHeight), 60, 70,
+						null);
+
+				this.boundingBox(scaleImgPos(.64,cWidth), scaleImgPos(.85,cHeight), 60, 70);
 				break;
 			case 4:
-				g.drawImage(matches, scaleImgPos(465), scaleImgPos(502), 60,
-						70, null);
-				this.boundingBox(scaleImgPos(465), scaleImgPos(502), 60, 70);
+				g.drawImage(matches, scaleImgPos(.81,cWidth), scaleImgPos(.85,cHeight), 60, 70,
+						null);
+				this.boundingBox(scaleImgPos(.81,cWidth), scaleImgPos(.85,cHeight), 60, 70);
 				break;
 			}
 			break;
 		case "Lamp":
 			switch (itemOrder) {
 			case 0:
-				g.drawImage(lamp, scaleImgPos(65), scaleImgPos(508), 30, 60,
+				g.drawImage(lamp, scaleImgPos(0.13, cWidth), scaleImgPos(0.86, cHeight), 30, 60,
 						null);
-				this.boundingBox(scaleImgPos(65), scaleImgPos(508), 30, 60);
+
+
+				this.boundingBox(scaleImgPos(0.13, cWidth), scaleImgPos(0.86, cHeight), 30, 60);
 				break;
 			case 1:
-				g.drawImage(lamp, scaleImgPos(176), scaleImgPos(508), 30, 60,
+				g.drawImage(lamp, scaleImgPos(0.30, cWidth), scaleImgPos(0.86, cHeight), 30, 60,
 						null);
-				this.boundingBox(scaleImgPos(176), scaleImgPos(508), 30, 60);
+
+				this.boundingBox(scaleImgPos(0.30, cWidth), scaleImgPos(0.86, cHeight), 30, 60);
 				break;
 			case 2:
-				g.drawImage(lamp, scaleImgPos(284), scaleImgPos(508), 30, 60,
+				g.drawImage(lamp, scaleImgPos(0.48, cWidth), scaleImgPos(0.86, cHeight), 30, 60,
 						null);
-				this.boundingBox(scaleImgPos(284), scaleImgPos(508), 30, 60);
+
+				this.boundingBox(scaleImgPos(0.48, cWidth), scaleImgPos(0.86, cHeight), 30, 60);
 				break;
 			case 3:
-				g.drawImage(lamp, scaleImgPos(388), scaleImgPos(508), 30, 60,
+				g.drawImage(lamp, scaleImgPos(0.65, cWidth), scaleImgPos(0.86, cHeight), 30, 60,
 						null);
-				this.boundingBox(scaleImgPos(388), scaleImgPos(508), 30, 60);
+
+				this.boundingBox(scaleImgPos(0.65, cWidth), scaleImgPos(0.86, cHeight), 30, 60);
 				break;
 			case 4:
-				g.drawImage(lamp, scaleImgPos(490), scaleImgPos(508), 30, 60,
+				g.drawImage(lamp, scaleImgPos(0.824, cWidth), scaleImgPos(0.86, cHeight), 30, 60,
 						null);
-				this.boundingBox(scaleImgPos(490), scaleImgPos(508), 30, 60);
+				this.boundingBox(scaleImgPos(0.824, cWidth), scaleImgPos(0.86, cHeight), 30, 60);
 				break;
 			}
 
 		}
 	}
+
 
 	/*---------------ITEM IMAGE SCALING---------------
 	 * These constants and methods help with scaling the item in accordance
@@ -699,8 +714,8 @@ public class Item implements Serializable {
 	private static final double INNER_BACKGROUND_WIDTH_SCALE = 0.58;
 	private static final double INNER_BACKGROUND_HEIGHT_SCALE = 0.58;
 
-	protected static int scaleInsideImgPos(int i) {
-		return (int) (i * IMG_POS_RESCALE * IMG_POS_RESCALE);
+	protected static int scaleInsideImgPos(double imgPos, int i) {
+		return (int) (imgPos * i * IMG_POS_RESCALE);
 	}
 
 	protected static int scaleInsideImgWidth(Image img) {
@@ -711,8 +726,12 @@ public class Item implements Serializable {
 		return (int) (img.getHeight(null) * INNER_BACKGROUND_HEIGHT_SCALE);
 	}
 
-	protected static int scaleImgPos(int imgPos) {
-		return (int) (imgPos * IMG_POS_RESCALE);
+	protected static int scaleImgPos(double imgPos, int v) {
+		return (int) (imgPos * v);
+	}
+
+	protected static int scaleImgPos(int v) {
+		return (int) (v);
 	}
 
 	protected static int scaleImgWidth(Image img) {
@@ -775,7 +794,7 @@ public class Item implements Serializable {
 	private static final Image studyRoomKey = GameCanvas
 			.loadImage("/images/studyroomkey.png");
 	private static final Image studyRoomSafeKey = GameCanvas
-			.loadImage("/images/studyRoomSafeKey.png");
+			.loadImage("/images/studyroomsafekey.png");
 	private static final Image matches = GameCanvas
 			.loadImage("/images/matches.png");
 	private static final Image lamp = GameCanvas.loadImage("/images/lamp.png");

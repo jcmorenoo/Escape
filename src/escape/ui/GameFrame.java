@@ -555,7 +555,7 @@ public class GameFrame extends JFrame implements ActionListener {
 				return;
 			}
 			// for inventory box
-			else if (e.getY() >= 410) {
+			else if (e.getY() >= canvas.getHeight() * 0.85) {
 				for (Item i : player.getItems()) {
 					if (i.getBoundingBox().contains(e.getX(), e.getY() - 40)) {
 						game.setSelectedInventory(i);
@@ -650,13 +650,17 @@ public class GameFrame extends JFrame implements ActionListener {
 													(Container) selectedItem,
 													game.getSelectedInventory()
 															.getName())) {
-												System.out
-														.println("You opened "
-																+ selectedItem
-																		.getName()
-																+ " using "
-																+ game.getSelectedInventory()
-																		.getName());
+												JOptionPane
+														.showMessageDialog(
+																null,
+																"You opened "
+																		+ selectedItem
+																				.getName()
+																		+ " using "
+																		+ game.getSelectedInventory()
+																				.getName(),
+																"Got an item!",
+																JOptionPane.NO_OPTION);
 												game.setSelectedInventory(null);
 												return;
 											}
@@ -671,7 +675,8 @@ public class GameFrame extends JFrame implements ActionListener {
 												System.out.println(k.getName());
 											}
 											game.setSelectedInventory(null);
-											// added return statement, in order for duplicate items to not occur
+											// added return statement, in order
+											// for duplicate items to not occur
 											return;
 										}
 									} else {

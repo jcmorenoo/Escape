@@ -75,6 +75,8 @@ public class GameCanvas extends JPanel {
 	public GameCanvas(Player p) {
 		player = p;
 		getPreferredSize();
+
+		System.out.println(h + " " + w);
 	}
 
 	public void paint(Graphics g) {
@@ -132,8 +134,8 @@ public class GameCanvas extends JPanel {
 								displayPicture = true;
 							}
 					}
-					Item.draw(g, "Kitchen", displayPicture);
-					Container.draw(g, "Kitchen");
+					Item.draw(g, "Kitchen", displayPicture, w, h);
+					Container.draw(g, "Kitchen", w, h);
 					// g.drawImage(hallLeftKitchen, 0, 0,
 					// scaleImgWidth(hallLeftStudy),
 					// scaleImgHeight(hallLeftStudy), null);
@@ -144,12 +146,13 @@ public class GameCanvas extends JPanel {
 					// g.drawImage(wall, scaleInsideImgPos(58),
 					// scaleInsideImgPos(0), scaleInsideImgWidth(wall),
 					// scaleInsideImgHeight(wall), null);
+					wall = convertImage(wall);
 					g.drawImage(wall, scaleInsideImgPos((int) (w * 0.19)),
 							scaleInsideImgPos((int) (h * 0.08)),
 							scaleInsideImgWidth(wall),
 							scaleInsideImgHeight(wall), null);
-					Item.draw(g, "Living Room", true);
-					Container.draw(g, "Living Room");
+					Item.draw(g, "Living Room", true, w, h);
+					Container.draw(g, "Living Room", w, h);
 					// g.drawImage(hallRightLivingRoom, 0, 0,
 					// scaleImgWidth(hallRightLivingRoom),
 					// scaleImgHeight(hallRightLivingRoom), null);
@@ -187,27 +190,28 @@ public class GameCanvas extends JPanel {
 					}
 					break;
 				case "Study":
+					wall = convertImage(wall);
 					g.drawImage(wall, 0, 0, null);
 					break;
 				}
 
 				for (Item i : currentRoom.getItems()) {
-					i.draw(g, currentRoom, currentDirection);
+					i.draw(g, currentRoom, currentDirection, w, h);
 				}
 				for (Container c : currentRoom.getContainer()) {
-					c.draw(g, currentRoom, currentDirection);
+					c.draw(g, currentRoom, currentDirection, w, h);
 				}
 				for (Player p : currentRoom.getPlayers()) {
 					if (p.getId() != player.getId()) {
 						p.draw(g, p.getId(), p.getDirection(),
-								player.getDirection());
+								player.getDirection(), w, h);
 					}
 				}
 
 				int itemOrder = 0;
 				if (player.getItems() != null) {
 					for (Item i : player.getItems()) {
-						i.drawInventoryItem(g, itemOrder);
+						i.drawInventoryItem(g, itemOrder, w, h);
 						itemOrder++;
 					}
 
@@ -218,11 +222,11 @@ public class GameCanvas extends JPanel {
 		// player
 		else if (state == 3) {
 			if (client.isWinner()) {
-				g.drawImage(won, 0, 0, scaleImgWidth(won), scaleImgHeight(won),
-						null);
+				won = convertImage(won);
+				g.drawImage(won, 0, 0, null);
 			} else {
-				g.drawImage(lost, 0, 0, scaleImgWidth(lost),
-						scaleImgHeight(lost), null);
+				lost = convertImage(lost);
+				g.drawImage(lost, 0, 0, null);
 			}
 		}
 		repaint();
@@ -241,8 +245,8 @@ public class GameCanvas extends JPanel {
 	 *            - Graphics
 	 */
 	protected void drawLoadScreen(Graphics g) {
-		g.drawImage(loadScreen, 0, 0, scaleImgWidth(loadScreen),
-				scaleImgHeight(loadScreen), null);
+		loadScreen = convertImage(loadScreen);
+		g.drawImage(loadScreen, 0, 0, null);
 	}
 
 	public void setResizable(boolean b) {
