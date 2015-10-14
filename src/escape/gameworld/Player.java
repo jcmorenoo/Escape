@@ -2,6 +2,7 @@ package escape.gameworld;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -388,16 +389,16 @@ public class Player implements Serializable {
 	}
 
 	/*---------------LOAD PLAYER IMAGES---------------*/
-	private static final Image avatar1 = GameCanvas
+	private static final BufferedImage avatar1 = GameCanvas
 			.loadImage("/images/avatar1.png");
-	private static final Image avatar2 = GameCanvas
+	private static final BufferedImage avatar2 = GameCanvas
 			.loadImage("/images/avatar2.png");
-	 private static final Image avatar3 =
+	 private static final BufferedImage avatar3 =
 	 GameCanvas.loadImage("/images/avatar3.png");
-	 private static final Image avatar4 =
+	 private static final BufferedImage avatar4 =
 	 GameCanvas.loadImage("/images/avatar4.png");
-	 private static final Image avatar5 =
+	 private static final BufferedImage avatar5 =
 	 GameCanvas.loadImage("/images/avatar5.png");
-	 private static final Image avatar6 =
+	 private static final BufferedImage avatar6 =
 	 GameCanvas.loadImage("/images/avatar6.png");
 }
