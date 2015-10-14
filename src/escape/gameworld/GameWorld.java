@@ -398,9 +398,7 @@ public class GameWorld {
 		// if the room is a locked door, check if the player have the key
 
 		if (r.isLocked()) {
-			// selectedInventory = items.get("Study Room Key");
 			if (selectedInventory == null) {
-				System.out.println("Find the key!");
 				return false;
 			}
 			if (selectedInventory.getName().equals(r.getKey())) {
@@ -524,7 +522,6 @@ public class GameWorld {
 	public boolean useItem(Player p, Container con, String key) {
 		//Placing an item in an unlocked container
 		if(!con.isLocked()){
-			System.out.println("hi");
 			con.add(this.selectedInventory);
 			p.removeItem(this.selectedInventory.getName());
 			return true;

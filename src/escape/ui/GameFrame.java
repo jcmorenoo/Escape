@@ -80,7 +80,6 @@ public class GameFrame extends JFrame implements ActionListener {
 
 		saveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Save Game");
 				if (game == null) {
 					return;
 				}
@@ -214,18 +213,14 @@ public class GameFrame extends JFrame implements ActionListener {
 					client.setFrame(f);
 					client.start();
 
-					System.out.println("ADDRESS OF SERVER: " + server.getIp());
 					String url = server.getIp();
 					JOptionPane.showMessageDialog(null, "URL: " + url,
 							"Server URL", JOptionPane.NO_OPTION);
 					while (client.getPlayer() == null) {
 
 						canvas.drawLoadScreen(canvas.getGraphics());
-
-						// System.out.println("Client has no player");
+						
 						if (client.getPlayer() != null) {
-							System.out.println("Client player name:"
-									+ client.getPlayer().getName());
 							player = client.getPlayer();
 							game.addPlayer(player);
 							break;
@@ -271,8 +266,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					while (client.getPlayer() == null) {
 						canvas.drawLoadScreen(canvas.getGraphics());
 						if (client.getPlayer() != null) {
-							System.out.println("Client player name:"
-									+ client.getPlayer().getName());
 							player = client.getPlayer();
 							game.addPlayer(player);
 							break;
@@ -296,7 +289,6 @@ public class GameFrame extends JFrame implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Load Game");
 				XMLFile xml = new XMLFile();
 				game = xml.loadGame("SavedGame.xml");
 				setSt(1);
@@ -341,7 +333,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					if (game.enterRoom(player, game.getRooms().get("Study"))) {
 						client.sendEvent(new EnterRoomEvent(player, "Study"));
 						game.setSelectedInventory(null);
-						System.out.println("player entering study");
 					} else {
 						JOptionPane
 								.showMessageDialog(
@@ -551,7 +542,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					|| currentRoom.equals("Hall - Study")
 					|| currentRoom.equals("Hall - Living Room") || currentRoom
 						.equals("Exit Door")) && e.getY() < 410) {
-				System.out.println("Nothing to click here.");
 				return;
 			}
 			// for inventory box
@@ -580,8 +570,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					}
 				}
 			} else {
-				System.out.println("Mouse x: " + e.getX() + "\nMouse Y: "
-						+ e.getY());
 				HashMap<String, String[][]> currentLoc = player.getRoom()
 						.getItemsByDirection();
 				Direction d = player.getDirection();
@@ -672,7 +660,6 @@ public class GameFrame extends JFrame implements ActionListener {
 													"");
 											for (Item k : ((Container) selectedItem)
 													.getItems()) {
-												System.out.println(k.getName());
 											}
 											game.setSelectedInventory(null);
 											// added return statement, in order
@@ -703,9 +690,6 @@ public class GameFrame extends JFrame implements ActionListener {
 														+ "?", "Drop item?",
 												JOptionPane.YES_NO_OPTION);
 								if (n == JOptionPane.YES_OPTION) {
-									System.out.println(game
-											.getSelectedInventory().getName()
-											+ " is now in the rubbish bin.");
 									game.dropItem(player);
 									game.setSelectedInventory(null);
 									return;

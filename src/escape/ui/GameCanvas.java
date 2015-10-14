@@ -54,7 +54,6 @@ public class GameCanvas extends JPanel {
 	private static final double WINDOW_HEIGHT_SCALE = 0.6;
 	private static final double WINDOW_WIDTH_SCALE = 0.375;
 	private static final double BACKGROUND_WIDTH_SCALE = 0.8;
-	private static final double BACKGROUND_HEIGHT_SCALE = 0.814;
 	private static final double INNER_BACKGROUND_WIDTH_SCALE = 0.71;
 	private static final double INNER_BACKGROUND_HEIGHT_SCALE = 0.71;
 
@@ -75,8 +74,6 @@ public class GameCanvas extends JPanel {
 	public GameCanvas(Player p) {
 		player = p;
 		getPreferredSize();
-
-		System.out.println(h + " " + w);
 	}
 
 	public void paint(Graphics g) {
@@ -86,8 +83,6 @@ public class GameCanvas extends JPanel {
 
 		// Draws wall backgrounds depending on player's current room
 		if (state == 0) { // Main Menu - Game has not been created
-			// g.drawImage(mainMenu, 0, 0, scaleImgWidth(mainMenu),
-			// scaleImgHeight(mainMenu), null);
 			mainMenu = convertImage(mainMenu);
 			g.drawImage(mainMenu, 0, 0, null);
 		} else if (state == 1) { // Game has been created and started
@@ -97,29 +92,18 @@ public class GameCanvas extends JPanel {
 				switch (currentRoom.getName()) {
 
 				case "Main Hall":
-					// g.drawImage(hallMain, 0, 0, scaleImgWidth(hallMain),
-					// scaleImgHeight(hallMain), null);
 					hallMain = convertImage(hallMain);
 					g.drawImage(hallMain, 0, 0, null);
 					break;
 				case "Hall - Study":
-					// g.drawImage(hallLeftStudy, 0, 0,
-					// scaleImgWidth(hallLeftStudy),
-					// scaleImgHeight(hallLeftStudy), null);
 					hallLeftStudy = convertImage(hallLeftStudy);
 					g.drawImage(hallLeftStudy, 0, 0, null);
 					break;
 				case "Hall - Bedroom":
-					// g.drawImage(hallRightBedroom, 0, 0,
-					// scaleImgWidth(hallRightBedroom),
-					// scaleImgHeight(hallRightBedroom), null);
 					hallRightBedroom = convertImage(hallRightBedroom);
 					g.drawImage(hallRightBedroom, 0, 0, null);
 					break;
 				case "Hall - Kitchen":
-					// g.drawImage(wall, scaleInsideImgPos(58),
-					// scaleInsideImgPos(0), scaleInsideImgWidth(wall),
-					// scaleInsideImgHeight(wall), null);
 					wall = convertImage(wall);
 					g.drawImage(wall, scaleInsideImgPos((int) (w * 0.19)),
 							scaleInsideImgPos((int) (h * 0.08)),
@@ -136,16 +120,10 @@ public class GameCanvas extends JPanel {
 					}
 					Item.draw(g, "Kitchen", displayPicture, w, h);
 					Container.draw(g, "Kitchen", w, h);
-					// g.drawImage(hallLeftKitchen, 0, 0,
-					// scaleImgWidth(hallLeftStudy),
-					// scaleImgHeight(hallLeftStudy), null);
 					hallLeftKitchen = convertImage(hallLeftKitchen);
 					g.drawImage(hallLeftKitchen, 0, 0, null);
 					break;
 				case "Hall - Living Room":
-					// g.drawImage(wall, scaleInsideImgPos(58),
-					// scaleInsideImgPos(0), scaleInsideImgWidth(wall),
-					// scaleInsideImgHeight(wall), null);
 					wall = convertImage(wall);
 					g.drawImage(wall, scaleInsideImgPos((int) (w * 0.19)),
 							scaleInsideImgPos((int) (h * 0.08)),
@@ -153,15 +131,10 @@ public class GameCanvas extends JPanel {
 							scaleInsideImgHeight(wall), null);
 					Item.draw(g, "Living Room", true, w, h);
 					Container.draw(g, "Living Room", w, h);
-					// g.drawImage(hallRightLivingRoom, 0, 0,
-					// scaleImgWidth(hallRightLivingRoom),
-					// scaleImgHeight(hallRightLivingRoom), null);
 					hallRightLivingRoom = convertImage(hallRightLivingRoom);
 					g.drawImage(hallRightLivingRoom, 0, 0, null);
 					break;
 				case "Bedroom":
-					// g.drawImage(darkWall, 0, 0, scaleImgWidth(darkWall),
-					// scaleImgHeight(darkWall), null);
 					darkWall = convertImage(darkWall);
 					g.drawImage(darkWall, 0, 0, null);
 					break;
@@ -170,18 +143,11 @@ public class GameCanvas extends JPanel {
 					// Draws the hall inside the entrance way when facing SOUTH
 					// in the Kitchen or Living Room
 					if (player.getDirection().equals(Direction.SOUTH)) {
-						// g.drawImage(hall, scaleInsideImgPos(58),
-						// scaleInsideImgPos(0),
-						// scaleInsideImgWidth(hall),
-						// scaleInsideImgHeight(hall), null);
 						hall = convertImage(hall);
 						g.drawImage(hall, scaleInsideImgPos((int) (w * 0.185)),
 								scaleInsideImgPos((int) (h * 0.08)),
 								scaleInsideImgWidth(wall),
 								scaleInsideImgHeight(wall), null);
-						// g.drawImage(wallToHall, 0, 0,
-						// scaleImgWidth(wallToHall),
-						// scaleImgHeight(wallToHall), null);
 						wallToHall = convertImage(wallToHall);
 						g.drawImage(wallToHall, 0, 0, null);
 					} else {
@@ -265,14 +231,6 @@ public class GameCanvas extends JPanel {
 
 	private static int scaleInsideImgHeight(Image img) {
 		return (int) (img.getHeight(null) * INNER_BACKGROUND_HEIGHT_SCALE);
-	}
-
-	private static int scaleImgWidth(Image img) {
-		return (int) (img.getWidth(null) * BACKGROUND_WIDTH_SCALE);
-	}
-
-	private static int scaleImgHeight(Image img) {
-		return (int) (img.getHeight(null) * BACKGROUND_HEIGHT_SCALE);
 	}
 
 	/*---------------LOAD IMAGE---------------*/

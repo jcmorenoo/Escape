@@ -9,9 +9,6 @@ import escape.gameworld.Player.Direction;
 import escape.ui.GameCanvas;
 
 public class Container extends Item {
-	// private String name;
-	// private String description;
-	//
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private boolean locked;
 	private String key;
@@ -135,7 +132,7 @@ public class Container extends Item {
 			case WEST:
 				g.drawImage(safeSide, scaleImgPos(0.05, cWidth), scaleImgPos(0.52, cHeight),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide), null);
-				i.boundingBox(scaleImgPos(18), scaleImgPos(275),
+				i.boundingBox(scaleImgPos(0.05, cWidth), scaleImgPos(0.52, cHeight),
 						scaleImgWidth(safeSide), scaleImgHeight(safeSide));
 				break;
 			}
@@ -215,7 +212,7 @@ public class Container extends Item {
 			case NORTH:
 				g.drawImage(bin, scaleImgPos(0.05, cWidth), scaleImgPos(0.48, cHeight),
 						scaleImgWidth(bin), scaleImgHeight(bin), null);
-				i.boundingBox(scaleImgPos(18), scaleImgPos(255),
+				i.boundingBox(scaleImgPos(0.05, cWidth), scaleImgPos(0.48, cHeight),
 						scaleImgWidth(bin), scaleImgHeight(bin));
 				break;
 			case WEST:

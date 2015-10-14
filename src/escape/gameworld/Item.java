@@ -1,6 +1,5 @@
 package escape.gameworld;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -728,10 +727,6 @@ public class Item implements Serializable {
 
 	protected static int scaleImgPos(double imgPos, int v) {
 		return (int) (imgPos * v);
-	}
-
-	protected static int scaleImgPos(int v) {
-		return (int) (v);
 	}
 
 	protected static int scaleImgWidth(Image img) {
