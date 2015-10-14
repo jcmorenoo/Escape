@@ -33,20 +33,18 @@ public class GameFrame extends JFrame implements ActionListener {
 	public GameFrame f;
 
 	public static JFrame frame;
-	private GameCanvas menuCanvas;
+	private GameCanvas canvas;
 	private final JPanel btnPanel;
 	private static Player player = null;
 	private JPanel mouse = new JPanel();
 	private GameWorld game;
 	private String currentRoom;
-
 	private Server server;
 	private Client client;
 
 	private Item selectedItem;
 	private Item selectedInventory;
 
-	// Testing purposes for now
 	private static int state;
 
 	static int state() {
@@ -59,7 +57,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
 	public GameFrame() {
 		frame = new JFrame();
-		menuCanvas = new GameCanvas(player);
+		canvas = new GameCanvas(player);
 		btnPanel = new JPanel();
 
 		btnPanel.setBackground(Color.BLACK);
@@ -77,7 +75,7 @@ public class GameFrame extends JFrame implements ActionListener {
 		headerMenu.add(exit);
 
 		// Initialise Menu Screen Buttons
-		menuBtns();
+		initialiseMenuBtns();
 
 		saveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -102,8 +100,10 @@ public class GameFrame extends JFrame implements ActionListener {
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ObjButtons[] = { "Yes", "No" };
-				int PromptResult = JOptionPane.showOptionDialog(null, "Are you sure you want to exit?",
-						"Exit 'Escape!'?", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, ObjButtons,
+				int PromptResult = JOptionPane.showOptionDialog(null,
+						"Are you sure you want to exit?", "Exit 'Escape!'?",
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.WARNING_MESSAGE, null, ObjButtons,
 						ObjButtons[1]);
 				if (PromptResult == 0) {
 					System.exit(0);
@@ -112,12 +112,8 @@ public class GameFrame extends JFrame implements ActionListener {
 		});
 
 		frame.addMouseListener(new MouseEvents());
-		// JPanel mouse = new JPanel();
-		// mouse.setBackground(Color.BLACK);
-		// mouse.addMouseListener(new MouseEvents());
-		// frame.add(mouse);
 
-		frame.add(menuCanvas, BorderLayout.NORTH);
+		frame.add(canvas, BorderLayout.NORTH);
 		frame.add(btnPanel, BorderLayout.SOUTH);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -132,7 +128,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
 	/*---------------BUTTON INITIALISATION---------------*/
 
-	void menuBtns() {
+	void initialiseMenuBtns() {
 		JButton newGameButton = new JButton("New Game");
 		btnPanel.add(newGameButton);
 		this.newGame(newGameButton);
@@ -142,7 +138,7 @@ public class GameFrame extends JFrame implements ActionListener {
 		this.loadGame(loadGameButton);
 	}
 
-	void gameBtns() {
+	void initialiseGameBtns() {
 		initialiseCurrentRoom(client);
 		player = client.getPlayer();
 
@@ -174,29 +170,38 @@ public class GameFrame extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String ObjButtons[] = { "Join", "Host" };
-				int gameType = JOptionPane.showOptionDialog(null, "Do you want to host or join a game?", "New Game",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, ObjButtons, ObjButtons[1]);
+				int gameType = JOptionPane.showOptionDialog(null,
+						"Do you want to host or join a game?", "New Game",
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.WARNING_MESSAGE, null, ObjButtons,
+						ObjButtons[1]);
 
 				// Host a game
 				if (gameType == 1) {
 					Object[] numOptions = { 1, 2, 3, 4, 5, 6 };
-					int numPlayers = (int) JOptionPane.showInputDialog(frame, "How many players?", "Choose a number",
-							JOptionPane.QUESTION_MESSAGE, null, numOptions, numOptions[0]);
+					int numPlayers = (int) JOptionPane.showInputDialog(frame,
+							"How many players?", "Choose a number",
+							JOptionPane.QUESTION_MESSAGE, null, numOptions,
+							numOptions[0]);
 
 					// Lets player enter a username
 					JTextField nameInput = new JTextField();
-					Object[] usernamePrompt = { "Enter a username: ", nameInput.getText() };
-					final String username = JOptionPane.showInputDialog(null, usernamePrompt, "Player Username",
+					Object[] usernamePrompt = { "Enter a username: ",
+							nameInput.getText() };
+					final String username = JOptionPane.showInputDialog(null,
+							usernamePrompt, "Player Username",
 							JOptionPane.INFORMATION_MESSAGE);
-							// player = new Player(1, username, new Room("Main
-							// Hall",
-							// false, "No key"));
+					// player = new Player(1, username, new Room("Main
+					// Hall",
+					// false, "No key"));
 
 					// Lets the host to specify a unique Game ID for other
 					// players wanting to join, to enter in
 					JTextField gameIdInput = new JTextField();
-					Object[] gameIdPrompt = { "Enter a Game ID: ", gameIdInput.getText() };
-					final String gameID = JOptionPane.showInputDialog(null, gameIdPrompt, "Game ID",
+					Object[] gameIdPrompt = { "Enter a Game ID: ",
+							gameIdInput.getText() };
+					final String gameID = JOptionPane.showInputDialog(null,
+							gameIdPrompt, "Game ID",
 							JOptionPane.INFORMATION_MESSAGE);
 
 					game = new GameWorld(gameID);
@@ -210,13 +215,16 @@ public class GameFrame extends JFrame implements ActionListener {
 
 					System.out.println("ADDRESS OF SERVER: " + server.getIp());
 					String url = server.getIp();
-					JOptionPane.showMessageDialog(null, "URL: " + url, "Server URL", JOptionPane.NO_OPTION);
+					JOptionPane.showMessageDialog(null, "URL: " + url,
+							"Server URL", JOptionPane.NO_OPTION);
 					while (client.getPlayer() == null) {
 
-						menuCanvas.drawLoadScreen(menuCanvas.getGraphics());
+						canvas.drawLoadScreen(canvas.getGraphics());
+
 						// System.out.println("Client has no player");
 						if (client.getPlayer() != null) {
-							System.out.println("Client player name:" + client.getPlayer().getName());
+							System.out.println("Client player name:"
+									+ client.getPlayer().getName());
 							player = client.getPlayer();
 							game.addPlayer(player);
 							break;
@@ -231,20 +239,27 @@ public class GameFrame extends JFrame implements ActionListener {
 
 					// Lets the player enter a username
 					JTextField nameInput = new JTextField();
-					Object[] usernamePrompt = { "Enter a username: ", nameInput.getText() };
-					final String username = JOptionPane.showInputDialog(null, usernamePrompt, "Player Username",
+					Object[] usernamePrompt = { "Enter a username: ",
+							nameInput.getText() };
+					final String username = JOptionPane.showInputDialog(null,
+							usernamePrompt, "Player Username",
 							JOptionPane.INFORMATION_MESSAGE);
 
 					// Lets the player enter IP address of the server
 					JTextField serverAddrInput = new JTextField();
-					Object[] serverAddrPrompt = { "Enter IP address of server: ", serverAddrInput.getText() };
-					final String serverAddr = JOptionPane.showInputDialog(null, serverAddrPrompt, "Server IP Address",
+					Object[] serverAddrPrompt = {
+							"Enter IP address of server: ",
+							serverAddrInput.getText() };
+					final String serverAddr = JOptionPane.showInputDialog(null,
+							serverAddrPrompt, "Server IP Address",
 							JOptionPane.INFORMATION_MESSAGE);
 
 					// Lets the player enter a Game ID to join that game
 					JTextField gameIdInput = new JTextField();
-					Object[] gameIdPrompt = { "Enter a Game ID: ", gameIdInput.getText() };
-					final String gameID = JOptionPane.showInputDialog(null, gameIdPrompt, "Game ID",
+					Object[] gameIdPrompt = { "Enter a Game ID: ",
+							gameIdInput.getText() };
+					final String gameID = JOptionPane.showInputDialog(null,
+							gameIdPrompt, "Game ID",
 							JOptionPane.INFORMATION_MESSAGE);
 
 					game = new GameWorld(gameID);
@@ -253,9 +268,10 @@ public class GameFrame extends JFrame implements ActionListener {
 					client.start();
 
 					while (client.getPlayer() == null) {
-						menuCanvas.drawLoadScreen(menuCanvas.getGraphics());
+						canvas.drawLoadScreen(canvas.getGraphics());
 						if (client.getPlayer() != null) {
-							System.out.println("Client player name:" + client.getPlayer().getName());
+							System.out.println("Client player name:"
+									+ client.getPlayer().getName());
 							player = client.getPlayer();
 							game.addPlayer(player);
 							break;
@@ -296,18 +312,20 @@ public class GameFrame extends JFrame implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Walking Forward");
-
 				switch (player.getRoom().getName()) {
 				case "Main Hall":
-					System.out.println("Going through Main Door");
-
 					if (game.enterRoom(player, game.getRooms().get("Exit Door"))) {
-
 						client.sendEvent(new WinnerEvent(player));
 						player.enterRoom(game.getRooms().get("Exit Door"));
 						client.setWinner();
 						endGame();
+					} else {
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"The Door is locked. You need to find the key!",
+										"Locked Door",
+										JOptionPane.WARNING_MESSAGE);
 					}
 					break;
 				case "Hall - Bedroom":
@@ -319,18 +337,17 @@ public class GameFrame extends JFrame implements ActionListener {
 					player.enterRoom(game.getRooms().get("Living Room"));
 					break;
 				case "Hall - Study":
-					// for testing purposes: to enter the study
-					// player.getItems().add(game.getItems().get("Study Room
-					// Key"));
-					// game.setSelectedInventory(game.getItems().get("Study Room
-					// Key"));
 					if (game.enterRoom(player, game.getRooms().get("Study"))) {
 						client.sendEvent(new EnterRoomEvent(player, "Study"));
 						game.setSelectedInventory(null);
 						System.out.println("player entering study");
 					} else {
-						JOptionPane.showMessageDialog(null, "The Door is locked. You need to find the key!",
-								"Locked Room", JOptionPane.WARNING_MESSAGE);
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"The Door is locked. You need to find the key!",
+										"Locked Room",
+										JOptionPane.WARNING_MESSAGE);
 					}
 					break;
 				case "Hall - Kitchen":
@@ -339,27 +356,29 @@ public class GameFrame extends JFrame implements ActionListener {
 					break;
 				}
 
-				// TESTING
-				System.out.println(player.getName() + " is facing " + player.getDirection().toString());
-
 				// If player is leaving any of these rooms: Kitchen, Living
 				// Room, Study, Bedroom
 				if (player.getDirection().equals(Direction.SOUTH)) {
 					switch (currentRoom) {
 					case "Kitchen":
-						client.sendEvent(new EnterRoomEvent(player, "Hall - Kitchen"));
+						client.sendEvent(new EnterRoomEvent(player,
+								"Hall - Kitchen"));
 						player.enterRoom(game.getRooms().get("Hall - Kitchen"));
 						break;
 					case "Living Room":
-						client.sendEvent(new EnterRoomEvent(player, "Hall - Living Room"));
-						player.enterRoom(game.getRooms().get("Hall - Living Room"));
+						client.sendEvent(new EnterRoomEvent(player,
+								"Hall - Living Room"));
+						player.enterRoom(game.getRooms().get(
+								"Hall - Living Room"));
 						break;
 					case "Study":
-						client.sendEvent(new EnterRoomEvent(player, "Hall - Study"));
+						client.sendEvent(new EnterRoomEvent(player,
+								"Hall - Study"));
 						player.enterRoom(game.getRooms().get("Hall - Study"));
 						break;
 					case "Bedroom":
-						client.sendEvent(new EnterRoomEvent(player, "Hall - Bedroom"));
+						client.sendEvent(new EnterRoomEvent(player,
+								"Hall - Bedroom"));
 						player.enterRoom(game.getRooms().get("Hall - Bedroom"));
 						break;
 					}
@@ -368,9 +387,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					client.sendEvent(new ChangeDirectionEvent(player, "NORTH"));
 					player.setDirection(Direction.NORTH);
 				}
-
-				// TESTING
-				System.out.println(player.getName() + " is in the " + currentRoom);
 			}
 		});
 	}
@@ -383,9 +399,6 @@ public class GameFrame extends JFrame implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TESTING
-				System.out.println(player.getName() + " is facing " + player.getDirection().toString());
-
 				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
@@ -410,15 +423,18 @@ public class GameFrame extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				switch (player.getRoom().getName()) {
 				case "Main Hall":
-					client.sendEvent(new EnterRoomEvent(player, "Hall - Bedroom"));
+					client.sendEvent(new EnterRoomEvent(player,
+							"Hall - Bedroom"));
 					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
 					break;
 				case "Hall - Bedroom":
-					client.sendEvent(new EnterRoomEvent(player, "Hall - Living Room"));
+					client.sendEvent(new EnterRoomEvent(player,
+							"Hall - Living Room"));
 					player.enterRoom(game.getRooms().get("Hall - Living Room"));
 					break;
 				case "Hall - Living Room":
-					JOptionPane.showMessageDialog(null, "No more rooms that way!", "Ooops",
+					JOptionPane.showMessageDialog(null,
+							"No more rooms that way!", "Ooops",
 							JOptionPane.WARNING_MESSAGE);
 					break;
 				case "Hall - Study":
@@ -431,8 +447,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					break;
 				}
 
-				// TESTING
-				System.out.println(player.getName() + " is facing " + player.getDirection().toString());
 				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
@@ -453,9 +467,6 @@ public class GameFrame extends JFrame implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TESTING
-				System.out.println(player.getName() + " is facing " + player.getDirection().toString());
-
 				switch (player.getRoom().getName()) {
 				case "Living Room":
 				case "Kitchen":
@@ -484,11 +495,13 @@ public class GameFrame extends JFrame implements ActionListener {
 					player.enterRoom(game.getRooms().get("Hall - Study"));
 					break;
 				case "Hall - Study":
-					client.sendEvent(new EnterRoomEvent(player, "Hall - Kitchen"));
+					client.sendEvent(new EnterRoomEvent(player,
+							"Hall - Kitchen"));
 					player.enterRoom(game.getRooms().get("Hall - Kitchen"));
 					break;
 				case "Hall - Kitchen":
-					JOptionPane.showMessageDialog(null, "No more rooms that way!", "Ooops",
+					JOptionPane.showMessageDialog(null,
+							"No more rooms that way!", "Ooops",
 							JOptionPane.WARNING_MESSAGE);
 					break;
 				case "Hall - Bedroom":
@@ -496,7 +509,8 @@ public class GameFrame extends JFrame implements ActionListener {
 					player.enterRoom(game.getRooms().get("Main Hall"));
 					break;
 				case "Hall - Living Room":
-					client.sendEvent(new EnterRoomEvent(player, "Hall - Bedroom"));
+					client.sendEvent(new EnterRoomEvent(player,
+							"Hall - Bedroom"));
 					player.enterRoom(game.getRooms().get("Hall - Bedroom"));
 					break;
 				}
@@ -509,9 +523,6 @@ public class GameFrame extends JFrame implements ActionListener {
 					player.setDirection(Direction.WEST);
 					client.sendEvent(new ChangeDirectionEvent(player, "WEST"));
 				}
-
-				// TESTING
-				System.out.println(player.getName() + " is facing " + player.getDirection().toString());
 			}
 		});
 	}
@@ -533,10 +544,12 @@ public class GameFrame extends JFrame implements ActionListener {
 			if (game == null || player == null)
 				return;
 			String currentRoom = player.getRoom().getName();
-			// System.out.print("You are in " + currentRoom);
-			if ((currentRoom.equals("Main Hall") || currentRoom.equals("Hall - Bedroom")
-					|| currentRoom.equals("Hall - Kitchen") || currentRoom.equals("Hall - Study")
-					|| currentRoom.equals("Hall - Living Room") || currentRoom.equals("Exit Door")) && e.getY() < 410) {
+			if ((currentRoom.equals("Main Hall")
+					|| currentRoom.equals("Hall - Bedroom")
+					|| currentRoom.equals("Hall - Kitchen")
+					|| currentRoom.equals("Hall - Study")
+					|| currentRoom.equals("Hall - Living Room") || currentRoom
+						.equals("Exit Door")) && e.getY() < 410) {
 				System.out.println("Nothing to click here.");
 				return;
 			}
@@ -546,12 +559,18 @@ public class GameFrame extends JFrame implements ActionListener {
 					if (i.getBoundingBox().contains(e.getX(), e.getY() - 40)) {
 						game.setSelectedInventory(i);
 						Item selectedInventory = game.getSelectedInventory();
-						JOptionPane.showMessageDialog(null,
-								"You have selected " + selectedInventory.getName() + " from your inventory.",
-								"Selected Inventory Item", JOptionPane.NO_OPTION);
+						JOptionPane.showMessageDialog(
+								null,
+								"You have selected "
+										+ selectedInventory.getName()
+										+ " from your inventory.",
+								"Selected Inventory Item",
+								JOptionPane.NO_OPTION);
 						if (SwingUtilities.isRightMouseButton(e)) {
-							JOptionPane.showMessageDialog(null, selectedInventory.getDescription(),
-									selectedInventory.getName(), JOptionPane.NO_OPTION);
+							JOptionPane.showMessageDialog(null,
+									selectedInventory.getDescription(),
+									selectedInventory.getName(),
+									JOptionPane.NO_OPTION);
 						} else {
 							return;
 						}
@@ -560,8 +579,10 @@ public class GameFrame extends JFrame implements ActionListener {
 					}
 				}
 			} else {
-				System.out.println("Mouse x: " + e.getX() + "\nMouse Y: " + e.getY());
-				HashMap<String, String[][]> currentLoc = player.getRoom().getItemsByDirection();
+				System.out.println("Mouse x: " + e.getX() + "\nMouse Y: "
+						+ e.getY());
+				HashMap<String, String[][]> currentLoc = player.getRoom()
+						.getItemsByDirection();
 				Direction d = player.getDirection();
 				String[][] items = null;
 				switch (d) {
@@ -587,7 +608,8 @@ public class GameFrame extends JFrame implements ActionListener {
 							if (it == null) {
 								continue;
 							}
-							if (it.getBoundingBox().contains(e.getX(), e.getY() - 40)) {
+							if (it.getBoundingBox().contains(e.getX(),
+									e.getY() - 40)) {
 								game.setSelectedItem(it);
 								Item selectedItem = game.getSelectedItem();
 								// inspecting an item
@@ -596,44 +618,68 @@ public class GameFrame extends JFrame implements ActionListener {
 								}
 								if (SwingUtilities.isRightMouseButton(e)) {
 									// Examining item
-									JOptionPane.showMessageDialog(null, selectedItem.getDescription(),
-											selectedItem.getName(), JOptionPane.NO_OPTION);
+									JOptionPane.showMessageDialog(null,
+											selectedItem.getDescription(),
+											selectedItem.getName(),
+											JOptionPane.NO_OPTION);
 									// if it's not locked, get whatever is
 									// inside
-									if (selectedItem instanceof Container && !((Container) selectedItem).isLocked()) {
-										game.openContainer(player, (Container) selectedItem);
+									if (selectedItem instanceof Container
+											&& !((Container) selectedItem)
+													.isLocked()) {
+										game.openContainer(player,
+												(Container) selectedItem);
 										return;
 									}
 								} else {
 									if (player.pickUpItem(selectedItem)) {
-										JOptionPane.showMessageDialog(null, "You picked up " + selectedItem.getName(),
-												"Picked up an item!", JOptionPane.NO_OPTION);
+										JOptionPane.showMessageDialog(
+												null,
+												"You picked up "
+														+ selectedItem
+																.getName(),
+												"Picked up an item!",
+												JOptionPane.NO_OPTION);
 										return;
-									} else
-										if (game.getSelectedInventory() != null && selectedItem instanceof Container) {
-										if (((Container) selectedItem).isLocked()) {
-											if (game.useItem(player, (Container) selectedItem,
-													game.getSelectedInventory().getName())) {
-												System.out.println("You opened " + selectedItem.getName() + " using "
-														+ game.getSelectedInventory().getName());
+									} else if (game.getSelectedInventory() != null
+											&& selectedItem instanceof Container) {
+										if (((Container) selectedItem)
+												.isLocked()) {
+											if (game.useItem(player,
+													(Container) selectedItem,
+													game.getSelectedInventory()
+															.getName())) {
+												System.out
+														.println("You opened "
+																+ selectedItem
+																		.getName()
+																+ " using "
+																+ game.getSelectedInventory()
+																		.getName());
 												game.setSelectedInventory(null);
 												return;
 											}
 										}
 										// unlocked container
 										else {
-											game.useItem(player, (Container) selectedItem, "");
-											for (Item k : ((Container) selectedItem).getItems()) {
+											game.useItem(player,
+													(Container) selectedItem,
+													"");
+											for (Item k : ((Container) selectedItem)
+													.getItems()) {
 												System.out.println(k.getName());
 											}
 											game.setSelectedInventory(null);
-											// added return statement, cos it is
-											// causing duplicate items.
+											// added return statement, in order for duplicate items to not occur
 											return;
 										}
 									} else {
-										JOptionPane.showMessageDialog(null, "Can't pick up that item!", "Oooops",
-												JOptionPane.NO_OPTION);
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Can't pick up that item!",
+														"Oooops",
+														JOptionPane.NO_OPTION);
 										return;
 									}
 
@@ -642,12 +688,18 @@ public class GameFrame extends JFrame implements ActionListener {
 									return;
 							} else if (game.getSelectedInventory() != null
 									&& !(game.getSelectedItem() instanceof Container)) {
-								int n = JOptionPane.showConfirmDialog(null,
-										"Are you sure you want to drop " + game.getSelectedInventory().getName() + "?",
-										"Drop item?", JOptionPane.YES_NO_OPTION);
+								int n = JOptionPane
+										.showConfirmDialog(
+												null,
+												"Are you sure you want to drop "
+														+ game.getSelectedInventory()
+																.getName()
+														+ "?", "Drop item?",
+												JOptionPane.YES_NO_OPTION);
 								if (n == JOptionPane.YES_OPTION) {
-									System.out.println(
-											game.getSelectedInventory().getName() + " is now in the rubbish bin.");
+									System.out.println(game
+											.getSelectedInventory().getName()
+											+ " is now in the rubbish bin.");
 									game.dropItem(player);
 									game.setSelectedInventory(null);
 									return;
@@ -675,20 +727,20 @@ public class GameFrame extends JFrame implements ActionListener {
 	}
 
 	public void updateFrame() {
-		frame.remove(menuCanvas);
-		menuCanvas = new GameCanvas(client);
+		frame.remove(canvas);
+		canvas = new GameCanvas(client);
 		btnPanel.removeAll();
-		gameBtns();
-		frame.add(menuCanvas, BorderLayout.NORTH);
+		initialiseGameBtns();
+		frame.add(canvas, BorderLayout.NORTH);
 		mouse.addMouseListener(new MouseEvents());
 		frame.add(mouse);
 		frame.pack();
 
 		if (state == 3) {
-			frame.remove(menuCanvas);
-			menuCanvas = new GameCanvas(client);
+			frame.remove(canvas);
+			canvas = new GameCanvas(client);
 			btnPanel.removeAll();
-			frame.add(menuCanvas, BorderLayout.NORTH);
+			frame.add(canvas, BorderLayout.NORTH);
 			mouse.addMouseListener(new MouseEvents());
 			frame.add(mouse);
 			frame.pack();
@@ -713,7 +765,7 @@ public class GameFrame extends JFrame implements ActionListener {
 		// menuCanvas.drawEndGameScreen(menuCanvas.getGraphics());
 	}
 
-	public void newG() {
+	public void newGame() {
 		// updateFrame();
 		setSt(0);
 
