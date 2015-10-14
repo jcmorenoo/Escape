@@ -4,12 +4,17 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import escape.client.Client;
+import escape.event.EnterRoomEvent;
+import escape.event.Event;
 import escape.gameworld.Container;
 import escape.gameworld.EscapeException;
 import escape.gameworld.GameWorld;
 import escape.gameworld.Item;
 import escape.gameworld.Player;
 import escape.gameworld.Room;
+import escape.server.Server;
+import escape.ui.GameFrame;
 
 public class GameTest {
 
@@ -149,6 +154,74 @@ private GameWorld game = new GameWorld(null);
 		game.pickUpItem(p, i);
 		assert(game.openContainer(p, con));
 	}
+	
+	@Test
+	public void client_serverTest(){
+		GameWorld clientGame=new GameWorld("testC");
+		GameWorld serverGame=null;
+		Client c1 = null;
+		Player p1 = null;
+		Server server = null;
+		GameFrame f = null;
+		
+		//test for server with 2 players
+		server = new Server(1,"test");
+		server.start();
+		c1 = new Client("", "testClient");
+		c1.start();
+		
+		boolean i = true;
+		while(i){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(c1.getPlayer()!=null){
+				p1=c1.getPlayer();
+				i = false;
+				break;
+			}
+			else{
+				i=true;
+			}
+			
+		}
+		serverGame = server.getGameWorld();
+		
+		clientGame.addPlayer(p1);
+		
+		//test if server player1 has same name as client player 
+		assertTrue(serverGame.getPlayers().get(0).getName().equals(p1.getName()));
+		
+		
+		//test if player changes room..
+		
+		clientGame.enterRoom(p1, clientGame.getRooms().get("Kitchen"));
+		p1.enterRoom(clientGame.getRooms().get("Kitchen"));
+		EnterRoomEvent enter = new EnterRoomEvent(p1,"Kitchen");
+		c1.sendEvent((Event)enter);
+		
+		
+		//wait please cos server and client sending info...
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// here server game is updated.. Player is in different room now.
+		assertTrue(serverGame.getPlayers().get(0).getRoom().getName().equals(p1.getRoom().getName()));
+		
+		
+		
+		c1.stop();
+		server.shutdown();
+		
+		
+	}
+	
+
 //	
 //	@Test
 //	public void isGameOver1(){

@@ -67,11 +67,9 @@ public class Server extends Thread{
 			int id = 0;
 			updateThread = new UpdateThread(this);
 			updateThread.start();
-			System.out.println("Waiting for connections");
 			stopped = false;
 			while(clients.size()<limit){
 				Socket clientSocket = serverSocket.accept(); 
-				System.out.println("Client + " + id + " connected");
 				this.clients.put(id, new Connection(clientSocket, new ObjectOutputStream(clientSocket.getOutputStream())));
 				//only limited number of players.
 				if(this.clients.size()>this.limit){
@@ -81,7 +79,6 @@ public class Server extends Thread{
 				}
 				ServerThread serverThread = new ServerThread(clientSocket,this,id);
 				serverThread.start();
-				System.out.println("ServerThread started");
 
 				//game will only start once we reach the limit of players. or everyone has joined.
 				if(clients.size() >= this.limit){
@@ -92,15 +89,7 @@ public class Server extends Thread{
 				}
 
 
-				//create a new player with an id.
-				//then we should add this player into the game.
-				//				Player player = new Player(id);
-
-				//add new player
-				//send a player to client.
-				//with a default starting room.
-
-				//setUp players..??
+				
 				id++;
 
 

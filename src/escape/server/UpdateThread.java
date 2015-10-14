@@ -8,7 +8,6 @@ import escape.event.EnterRoomEvent;
 import escape.event.Event;
 import escape.event.GameOverEvent;
 import escape.event.GameWorldUpdateEvent;
-import escape.event.InspectItemEvent;
 import escape.event.PickUpItemEvent;
 import escape.event.PlayerSetupEvent;
 import escape.event.TestEvent;
@@ -75,7 +74,6 @@ public class UpdateThread extends Thread {
 			}
 
 			else if (event instanceof UserSetupEvent) {
-				System.out.println("setup received");
 				UserSetupEvent setup = (UserSetupEvent) event;
 				int id = setup.getId();
 				String username = setup.getName();
@@ -98,6 +96,7 @@ public class UpdateThread extends Thread {
 				Player player = e.getPlayer();
 				String roomName = e.getRoom();
 				Room room = game.getRooms().get(roomName);
+				
 
 				if (game.enterRoom(player, room)) {
 					if(room.getName().equals("Exit Door")){
@@ -105,7 +104,7 @@ public class UpdateThread extends Thread {
 						sendToAllClients((Event)gameOver);
 					}
 					else{
-						player.enterRoom(room);
+						game.enterRoom(game.getPlayers().get(player.getId()),room);
 						GameWorldUpdateEvent enterRoom = new GameWorldUpdateEvent(
 								player, player.getRoom());
 						sendToAllClients((Event) enterRoom);
@@ -137,7 +136,8 @@ public class UpdateThread extends Thread {
 				GameWorldUpdateEvent changeDirection = new GameWorldUpdateEvent(
 						player, player.getRoom());
 				sendToAllClients((Event) changeDirection);
-
+				
+//not needed anymore
 			}else if (event instanceof PickUpItemEvent){
 				PickUpItemEvent e = (PickUpItemEvent) event;
 				Player player = e.getPlayer();
@@ -152,7 +152,7 @@ public class UpdateThread extends Thread {
 				//else ??
 
 			} 
-
+//not needed anymore
 			else if (event instanceof DropItemEvent) {
 				DropItemEvent e = (DropItemEvent) event;
 				Player player = e.getPlayer();
@@ -165,26 +165,8 @@ public class UpdateThread extends Thread {
 					}
 				}
 			}
-			// else if(event instanceof RoomEvent){
-			// EnterRoomEvent e = (EnterRoomEvent) event;
-			// String roomName = e.getRoom();
-			// Room room = game.getRooms().get(roomName);
-			// Player p = e.getPlayer();
-			//
-			// game.enterRoom(p, room);
-			//
-			// Room newRoom = p.getRoom();
-			//
-			// GameWorldUpdateEvent ev = new GameWorldUpdateEvent(p,newRoom);
-			// sendClient((Event)ev,server.getClients().get(p.getId()));
-			//
-			// }
-			else if (event instanceof InspectItemEvent) {
-				InspectItemEvent e = (InspectItemEvent) event;
-
-			} else if (event instanceof PickUpItemEvent) {
-				PickUpItemEvent e = (PickUpItemEvent) event;
-			}
+			
+			
 			
 			else if(event instanceof WinnerEvent){
 				WinnerEvent e = (WinnerEvent) event;

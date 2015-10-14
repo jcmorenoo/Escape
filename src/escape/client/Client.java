@@ -48,7 +48,7 @@ public class Client extends Thread {
 
 	private GameFrame frame;
 
-	private User user;
+	//	private User user;
 	private Player player = null;
 
 	public Player getPlayer() {
@@ -91,20 +91,20 @@ public class Client extends Thread {
 		}
 
 		initialiseConnection();
-
 	}
-	
+
+	/**
+	 * Method to set this Client a WINNER!!
+	 */
 	public void setWinner(){
 		this.winner = true;
 	}
 
+
 	/**
-	 * Method returning the user. Probably not needed
-	 * @return User
+	 * Method which returns true if Client is running
+	 * @return
 	 */
-	public User getUser(){
-		return this.user;
-	}
 
 	public boolean isRunning(){
 		return running;
@@ -118,13 +118,11 @@ public class Client extends Thread {
 	/**
 	 * Method which initialises connection to the Server. Called when constructing a new Client.
 	 */
-
 	public void initialiseConnection(){
 
 		try{
 			InetAddress ip = InetAddress.getByName(ipAddress);
 			this.socket = new Socket(ip, Server.PORT);
-			System.out.println("Connection Made");
 			this.output = new ObjectOutputStream(socket.getOutputStream());
 			this.input = new ObjectInputStream(socket.getInputStream());
 		}catch(IOException e){
@@ -170,16 +168,24 @@ public class Client extends Thread {
 
 		else if(e instanceof PlayerSetupEvent){
 			PlayerSetupEvent event = ((PlayerSetupEvent)e);
-			System.out.println("PlayerSetupReceived");
 			if(this.player == null && event.getPlayer().getId() == this.id){
 				this.player=event.getPlayer();
 				this.room=event.getRoom();
-				frame.updateFrame();
+				if(this.frame==null){
+					this.player=event.getPlayer();
+				}
+				else{
+					frame.updateFrame();
+				}
 			}
 			else{
-				this.frame.getGame().addPlayer(event.getPlayer());
+				if(frame == null){
+					this.player=event.getPlayer();
+				}
+				else{
+					this.frame.getGame().addPlayer(event.getPlayer());
+				}
 			}
-			//			frame.updateFrame();
 
 		}
 		else if(e instanceof GameWorldUpdateEvent){
@@ -198,39 +204,22 @@ public class Client extends Thread {
 			}
 
 
-			//update the player and the room.
-			//			if(this.player != null){
-			//				if (event.getPlayer().getName().equals(this.player.getName())){
-			//					this.player = event.getPlayer();
-			//					this.room = event.getRoom();
-			//				}
-			//				
-			//			}
-			//
-			//			//if no player has been set to the client.
-			//			else if(this.player == null && event.getPlayer().getId() == this.id){
-			//				this.player = event.getPlayer();
-			//				this.room = event.getRoom();
-			//			}
+			if(frame!=null){
+				frame.updateFrame();
+			}
 
-			frame.updateFrame();
-			System.out.println(player.getName() + " is in "
-					+ player.getRoom().getName());
 		}
 
 		else if(e instanceof GameOverEvent){
 			GameOverEvent event = ((GameOverEvent)e);
 			//if the winner is this player then set player to winner. else false
-			System.out.println("received gameoverevent");
 			if(event.getPlayer().getId()==(this.id)){
-				System.out.println("winner");
 				this.winner = true;
 				this.frame.endGame();
 				//call some method to say that the player won...
 			}
 			else{
 				this.winner = false;
-				System.out.println("loser");
 				this.frame.endGame();
 				//call some method which will end the game..
 			}
@@ -240,11 +229,11 @@ public class Client extends Thread {
 			RemovePlayerEvent event = ((RemovePlayerEvent)e);
 			Player p = event.getPlayer();
 			Room r = p.getRoom();
-			
+
 			Player player = null;
 			Room room = null;
 			Iterator it = this.frame.getGame().getPlayers().entrySet().iterator();
-			
+
 			while(it.hasNext()){
 				HashMap.Entry pair = (HashMap.Entry)it.next();
 				player = ((Player)pair.getValue());
@@ -259,9 +248,9 @@ public class Client extends Thread {
 					}
 				}
 			}
-			
-			
-			
+
+
+
 		}
 
 		else if(e instanceof ConnectionDeniedEvent){
@@ -324,20 +313,17 @@ public class Client extends Thread {
 				this.events.offer((Event) in);
 			}
 			//for testing only, will keep sending test event to server.
-			//			testSend();
 			update();
 		}
 		try {
 			socket.close();
-			System.out.println("Host disconnected. Cannot continue game");
 			JOptionPane.showMessageDialog(null, "Host disconnected from the Game. Game will not continue.",
 					"Host Disconnected", JOptionPane.ERROR_MESSAGE);
 			frame.newGame();
 			running = false;
 			this.stop();
-			
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -357,6 +343,10 @@ public class Client extends Thread {
 		}
 	}
 
+	/**
+	 * Method which returns true if this is winner
+	 * @return Boolean Winner
+	 */
 	public boolean isWinner(){
 		return this.winner;
 	}
